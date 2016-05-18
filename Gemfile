@@ -16,6 +16,7 @@ gem 'coffee-rails', '~> 4.1.0'
 
 gem 'argyle'
 gem 'pry-rails'
+gem 'json'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
