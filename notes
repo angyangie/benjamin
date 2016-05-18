@@ -1,0 +1,13 @@
+Users
+has_many :public_tokens
+has_many :accounts
+
+Public Tokens
+belong_to :user
+has_many  :accounts
+
+Accounts
+belongs_to :public_token
+belongs_to :user
+
+Transactions
