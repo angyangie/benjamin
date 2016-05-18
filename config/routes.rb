@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
   root 'application#index'
   post '/accounts', to: 'application#accounts'
-  
-=======
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -58,5 +56,4 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
->>>>>>> parent of 490c876... added argyle and set up for config
 end
