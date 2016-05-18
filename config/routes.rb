@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  root 'home#index'
   resources :users, except: [:new, :create]
 
   get '/signup', to: 'users#new', as: 'signup'
@@ -8,9 +9,6 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new', as: 'login'
   post '/login', to: 'sessions#create'
 
-  root 'home#index'
-
   post '/accounts', to: 'plaidapi#add_account'
-
 
 end
