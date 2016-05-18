@@ -1,10 +1,10 @@
-class PlaidAPIController < ApplicationController
-  
+class PlaidapiController < ApplicationController
+
   def add_account
     #1 generate a public token for the user
     public_token = params[:public_token]
 
-    #2 save public token to user's cashflow account 
+    #2 save public token to user's cashflow account
     # save_public_token(public_token) <<<UNCOMMENT ONCE USER MODEL IS BUILT>>>
 
     #3 Exchange the Link public_token for a Plaid API access token
@@ -20,7 +20,7 @@ class PlaidAPIController < ApplicationController
 
   private
   # def save_public_token(token)
-  #   @user.public_tokens << token  
+  #   @user.public_tokens << token
   # end
 
   def create_accounts(plaid_user_accounts)
@@ -53,7 +53,6 @@ class PlaidAPIController < ApplicationController
           acct_type: acct.type
           )
       end
-      binding.pry
     end
   end
 
