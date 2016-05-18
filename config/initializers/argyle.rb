@@ -1,8 +1,5 @@
-require_relative '../../plaidkeys.rb'
-
 Argyle.configure do |config|
-  config.key = @public_key         # Public key from Plaid
-  config.secret = @secret   # Secret from Plaid
-  config.customer_id = @client_id  # Client ID from Plaid
-  config.product = "connect" 
+  config.key = 'test_key'         # Public key from Plaid
+  config.secret = "test_secret"   # Secret from Plaid
+  config.customer_id = "test_id"  # Client ID from Plaid
 end

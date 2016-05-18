@@ -15,8 +15,11 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 
 gem 'argyle'
+<<<<<<< HEAD
 gem 'pry-rails'
 gem 'json'
+=======
+>>>>>>> parent of 490c876... added argyle and set up for config
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

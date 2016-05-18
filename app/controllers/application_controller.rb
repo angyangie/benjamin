@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+<<<<<<< HEAD
 
   def index
 
@@ -40,4 +41,6 @@ class ApplicationController < ActionController::Base
   # { accounts: transformed_accounts }.to_json
 end
 
+=======
+>>>>>>> parent of 490c876... added argyle and set up for config
 end
