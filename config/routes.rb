@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  root 'application#index'
-  
-  post '/accounts', to: 'application#show', as: 'accounts'
 
   resources :users, except: [:new, :create]
 
@@ -10,5 +7,10 @@ Rails.application.routes.draw do
 
   get '/login', to: 'sessions#new', as: 'login'
   post '/login', to: 'sessions#create'
+
+  root 'home#index'
+
+  post '/accounts', to: 'plaidapi#add_account'
+
 
 end
