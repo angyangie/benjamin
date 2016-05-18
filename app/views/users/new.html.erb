@@ -1,0 +1,9 @@
+<h1>Welcome to BetterMint.</h1><br>
+<h3>Please create an account below:</h3><br><br>
+
+<%= form_for :user, url: '/signup' do |f| %>
+Email: <%= f.text_field :email %><br><br>
+Password: <%= f.password_field :password %><br><br>
+Password Confirmation: <%= f.password_field :password_confirmation %><br><br>
+<%= f.submit "Submit" %>
+<% end %>
