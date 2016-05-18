@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'application#index'
+  root 'home#index'
   post '/accounts', to: 'application#accounts'
-  
+
 end
