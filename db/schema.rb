@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160518214713) do
+ActiveRecord::Schema.define(version: 20160519174803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,27 @@ ActiveRecord::Schema.define(version: 20160518214713) do
     t.integer  "user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+  end
+
+  create_table "transactions", id: false, force: :cascade do |t|
+    t.string   "plaid_trans_id"
+    t.string   "account_id"
+    t.float    "amount"
+    t.string   "trans_name"
+    t.integer  "plaid_cat_id"
+    t.string   "plaid_cat_type"
+    t.date     "date"
+    t.string   "vendor_address"
+    t.string   "vendor_city"
+    t.string   "vendor_state"
+    t.string   "vendor_zip"
+    t.float    "vendor_lat"
+    t.float    "vendor_lon"
+    t.boolean  "pending"
+    t.string   "pending_transaction"
+    t.integer  "name_score"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "users", force: :cascade do |t|
