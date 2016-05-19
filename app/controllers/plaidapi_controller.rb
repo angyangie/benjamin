@@ -60,7 +60,7 @@ class PlaidapiController < ApplicationController
     plaid_user_transactions.each do |transaction|
       newtrans = Transaction.find_by(plaid_trans_id: transaction.id)
       loc_keys = transaction.location.keys
-      
+
       vendor_address = transaction.location["address"]
       vendor_city = transaction.location["city"]
       vendor_state = transaction.location["state"]

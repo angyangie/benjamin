@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
 
   def new
-    
+
   end
 
-  def index 
+  def index
 
   end
 
@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
      if @user.save
        session[:user_id] = @user.id
-       redirect_to users_path
+       redirect_to user_path(@user)
      else
       flash[:error] = "Your Passwords did not match!"
       redirect_to signup_path
@@ -20,11 +20,13 @@ class UsersController < ApplicationController
 
   end
 
-  private 
+  def show
+  end
+
+  private
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
 end
-
