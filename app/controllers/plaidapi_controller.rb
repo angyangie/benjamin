@@ -13,6 +13,7 @@ class PlaidapiController < ApplicationController
 
     #4 Initialize a Plaid user
     @plaid_user = Argyle.plaid_client.set_user(exchange_token_response.access_token, ['connect'])
+
     #5 pass data for parsing
     create_accounts(@plaid_user.accounts)
     create_transactions(@plaid_user.transactions)
@@ -57,86 +58,65 @@ class PlaidapiController < ApplicationController
 
   def create_transactions(plaid_user_transactions)
     plaid_user_transactions.each do |transaction|
-      transaction = Transaction.find_by(plaid_trans_id: transaction.id)
-      if transaction
-        transaction.update(
+      newtrans = Transaction.find_by(plaid_trans_id: transaction.id)
+      loc_keys = transaction.location.keys
+      
+      vendor_address = transaction.location["address"]
+      vendor_city = transaction.location["city"]
+      vendor_state = transaction.location["state"]
+      vendor_zip = transaction.location["zip"]
+
+      if !transaction.location["coordinates"].nil?
+        vendor_lat = transaction.location["coordinates"]["lat"]
+        vendor_lon = transaction.location["coordinates"]["lon"]
+      else
+        vendor_lat = nil
+        vendor_lon = nil
+      end
+
+      if newtrans
+        newtrans.update(
           plaid_trans_id: transaction.id,
-          plaid_acct_id: transaction.account,
+          account_id: transaction.account,
           amount: transaction.amount,
           trans_name: transaction.name,
-          plaid_cat_id: transaction.category_id,
+          plaid_cat_id: transaction.category_id.to_i,
           plaid_cat_type: transaction.type["primary"],
-          date: transaction.date,
+          date: transaction.date.to_date,
 
-          vender_address: transaction.location["address"],
-          vender_city: transaction.location["city"],
-          vender_state: transaction.location["state"],
-          vender_zip: transaction.location["zip"],
-          vender_lat: transaction.location["coordinates"]["lat"],
-          vender_lon: transaction.location["coordinates"]["lon"],
+          vendor_address: vendor_address,
+          vendor_city: vendor_city,
+          vendor_state: vendor_state,
+          vendor_zip: vendor_zip,
+          vendor_lat: vendor_lat,
+          vendor_lon: vendor_lon,
 
-          trans_meta: transaction.meta,
           pending: transaction.pending,
           pending_transaction: transaction.pending_transaction,
-          name_score: transaction.score["name"],
-          loc_score: transaction.score["location"]
+          name_score: transaction.score["name"]
         )
       else
         Transaction.create(
           plaid_trans_id: transaction.id,
-          plaid_acct_id: transaction.account,
+          account_id: transaction.account,
           amount: transaction.amount,
           trans_name: transaction.name,
-          plaid_cat_id: transaction.category_id,
+          plaid_cat_id: transaction.category_id.to_i,
           plaid_cat_type: transaction.type["primary"],
-          date: transaction.date,
+          date: transaction.date.to_date,
 
-          vender_address: transaction.location["address"],
-          vender_city: transaction.location["city"],
-          vender_state: transaction.location["state"],
-          vender_zip: transaction.location["zip"],
-          vender_lat: transaction.location["coordinates"]["lat"],
-          vender_lon: transaction.location["coordinates"]["lon"],
+          vendor_address: vendor_address,
+          vendor_city: vendor_city,
+          vendor_state: vendor_state,
+          vendor_zip: vendor_zip,
+          vendor_lat: vendor_lat,
+          vendor_lon: vendor_lon,
 
-          trans_meta: transaction.meta,
           pending: transaction.pending,
           pending_transaction: transaction.pending_transaction,
-          name_score: transaction.score["name"],
-          loc_score: transaction.score["location"]
+          name_score: transaction.score["name"]
         )
       end
     end
   end
-
 end
-
-
-
-
-
-
-
-
-    # # Transform each account object to a simple hash
-    # transformed_accounts = @plaid_user: transaction.# transformed_accounts = plaid_user
-    #   {
-    #     balance: {
-    #       available: account.available_balance,
-    #       current: account.current_balance
-    #       },
-    #       meta: account.meta,
-    #       type: account.type
-    #     }
-    #   end
-
-    # # transformed_transactions = @plaid_user.transactions.map do |transaction|
-
-    # # end
-
-    # render :json => @plaid_user
-    # # Return the account data as a JSON response
-    # # content_type :json
-    # # { accounts: transformed_accounts }.to_json
-
-# Retrieve information about the user's accounts -- Not clear on what this does
-    # user.get('connect')
