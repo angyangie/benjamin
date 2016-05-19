@@ -9,6 +9,6 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new', as: 'login'
   post '/login', to: 'sessions#create'
 
-  post '/accounts', to: 'plaidapi#add_account'
+  post '/users/accounts', to: 'plaidapi#add_account'
 
 end

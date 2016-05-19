@@ -17,7 +17,9 @@ class PlaidapiController < ApplicationController
     #5 pass data for parsing
     create_accounts(@plaid_user.accounts, public_token)
     create_transactions(@plaid_user.transactions)
-    
+
+    @user = User.find(session[:user_id])
+    redirect_to @user
   end
 
   private
