@@ -1,4 +1,5 @@
 class PlaidapiController < ApplicationController
+  skip_before_action :require_login
 
   def add_account
     #1 generate a public token for the user
@@ -12,10 +13,9 @@ class PlaidapiController < ApplicationController
 
     #4 Initialize a Plaid user
     @plaid_user = Argyle.plaid_client.set_user(exchange_token_response.access_token, ['connect'])
-
     #5 pass data for parsing
     create_accounts(@plaid_user.accounts)
-    # create_transactions(@plaid_user.transactions) <<<UNCOMMENT ONCE TRANSACTIONS MODEL IS BUILT>>>
+    create_transactions(@plaid_user.transactions)
   end
 
   private
@@ -26,7 +26,6 @@ class PlaidapiController < ApplicationController
   def create_accounts(plaid_user_accounts)
     plaid_user_accounts.each do |acct|
       account = Account.find_by(plaid_acct_id: acct.id)
-      binding.pry
       if account
         account.update(
           account_name: acct.meta["name"],
@@ -57,7 +56,56 @@ class PlaidapiController < ApplicationController
   end
 
   def create_transactions(plaid_user_transactions)
+    plaid_user_transactions.each do |transaction|
+      transaction = Transaction.find_by(plaid_trans_id: transaction.id)
+      if transaction
+        transaction.update(
+          plaid_trans_id: transaction.id,
+          plaid_acct_id: transaction.account,
+          amount: transaction.amount,
+          trans_name: transaction.name,
+          plaid_cat_id: transaction.category_id,
+          plaid_cat_type: transaction.type["primary"],
+          date: transaction.date,
 
+          vender_address: transaction.location["address"],
+          vender_city: transaction.location["city"],
+          vender_state: transaction.location["state"],
+          vender_zip: transaction.location["zip"],
+          vender_lat: transaction.location["coordinates"]["lat"],
+          vender_lon: transaction.location["coordinates"]["lon"],
+
+          trans_meta: transaction.meta,
+          pending: transaction.pending,
+          pending_transaction: transaction.pending_transaction,
+          name_score: transaction.score["name"],
+          loc_score: transaction.score["location"]
+        )
+      else
+        Transaction.create(
+          plaid_trans_id: transaction.id,
+          plaid_acct_id: transaction.account,
+          amount: transaction.amount,
+          trans_name: transaction.name,
+          plaid_cat_id: transaction.category_id,
+          plaid_cat_type: transaction.type["primary"],
+          date: transaction.date,
+
+          vender_address: transaction.location["address"],
+          vender_city: transaction.location["city"],
+          vender_state: transaction.location["state"],
+          vender_zip: transaction.location["zip"],
+          vender_lat: transaction.location["coordinates"]["lat"],
+          vender_lon: transaction.location["coordinates"]["lon"],
+
+          trans_meta: transaction.meta,
+          pending: transaction.pending,
+          pending_transaction: transaction.pending_transaction,
+          name_score: transaction.score["name"],
+          loc_score: transaction.score["location"]
+        )
+      end
+    end
   end
 
 end
@@ -70,7 +118,7 @@ end
 
 
     # # Transform each account object to a simple hash
-    # transformed_accounts = @plaid_user.accounts.map do |account|
+    # transformed_accounts = @plaid_user: transaction.# transformed_accounts = plaid_user
     #   {
     #     balance: {
     #       available: account.available_balance,
