@@ -1,18 +1,35 @@
+<% @user = User.find(session[:user_id]) %>
+
 <h1>Hello User <%= @user.email %></h1>
 
-<%= plaid_link(name:'Tony Soprano', action:'accounts', data: {longtail: true}) %>
+<%= plaid_link(name:'Bob', action:'accounts', data: {longtail: true}) %>
 
 <br>
 <br>
 <br>
 <%= link_to "Sign out", logout_path %>
 
+<h1>Accounts: </h1>
+<% @user.accounts.each do |acct| %>
+  <h3><%= acct.account_name %></h1>
+  <p>Type: <%= acct.acct_subtype %></p>
+  <p>Balance: $<%=acct.current_balance %></p>
+<% end %>
 
-<!-- # <% net_worth = 0 %>
-# <% Account.all.each do |account| %>
-#   <%= account.account_name %>
-#   <%= account.current_balance %><br>
-#   <% net_worth += account.current_balance %>
-# <% end %> -->
-
-<!-- <h3>Your net worth is: $<%= net_worth %></h3> -->
+<h1>Transactions: </h1>
+<table>
+  <tr>
+    <th>Vendor</th>
+    <th>Amount</th>
+    <th>Category</th>
+    <th>Account</th>
+  </tr>
+<% @user.transactions.each do |t| %>
+  <tr>
+    <td><%= t.trans_name %></td>
+    <td>$<%= t.amount %></td>
+    <td><%= t.category.name %></td>
+    <td><%= t.account.account_name %></td>
+  </tr>
+<% end %>
+</table>
