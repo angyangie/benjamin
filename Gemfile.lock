@@ -78,6 +78,9 @@ GEM
     json (1.8.3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
+    ltree_hierarchy (0.0.8)
+      activerecord (>= 3.1.0)
+      pg
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
@@ -175,6 +178,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   json
+  ltree_hierarchy
   pg (~> 0.15)
   pry-rails
   rails (= 4.2.6)
