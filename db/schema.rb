@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519190449) do
+ActiveRecord::Schema.define(version: 20160520145834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "ltree"
 
   create_table "accounts", id: false, force: :cascade do |t|
     t.string   "plaid_acct_id"
@@ -31,6 +32,15 @@ ActiveRecord::Schema.define(version: 20160519190449) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "public_token_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "parent_id"
+    t.ltree    "path"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "default",    default: false
   end
 
   create_table "public_tokens", force: :cascade do |t|

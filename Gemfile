@@ -21,6 +21,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'argyle'
 gem 'pry-rails'
 gem 'json'
+gem 'ltree_hierarchy'
 
 gem 'bcrypt'
 # Use jquery as the JavaScript library
