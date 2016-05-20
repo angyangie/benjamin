@@ -1,6 +1,11 @@
-<h1>Hello User</h1>
+<h1>Hello User <%= @user.email %></h1>
 
 <%= plaid_link(name:'Tony Soprano', action:'accounts', data: {longtail: true}) %>
+
+<br>
+<br>
+<br>
+<%= link_to "Sign out", logout_path %>
 
 
 <!-- # <% net_worth = 0 %>

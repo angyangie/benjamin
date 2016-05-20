@@ -1,9 +1,40 @@
 <h1>Welcome to BetterMint.</h1><br>
-<h3>Please create an account below:</h3><br><br>
+<h3>Please create an account below:</h3>
 
-<%= form_for :user, url: '/signup' do |f| %>
-Email: <%= f.text_field :email %><br><br>
-Password: <%= f.password_field :password %><br><br>
-Password Confirmation: <%= f.password_field :password_confirmation %><br><br>
-<%= f.submit "Submit" %>
+<font color="red"><% if flash[:errors] %>
+<h5><%= flash[:message] %>
+  <% flash[:errors].each do |error| %>
+  <li><%= error %></li>
+  <% end %>
+<% end %><br>
+
+</h5></font>
+
+<div class="row">
+  <div class="col-md-6 ">
+    <div class="col-md-6 ">
+      <%= form_for :user, url: '/signup' do |f| %>
+      Email: <%= f.email_field :email, class: 'form-control' %>
+            <br>
+            <br>
+
+      Password: <%= f.password_field :password, class: 'form-control' %>
+            <br>
+            <br>
+
+      Password Confirmation: <%= f.password_field :password_confirmation, class: 'form-control'%><br><br>
+
+      <%= f.submit "Sign up", class: "btn btn-primary" %>
+
+
+      
+      <br>
+      <br>
+
+      <p>Already have an account? <%= link_to "Login now!", login_path %></p>
+
+
 <% end %>
+</div>
+</div>
+</div>
