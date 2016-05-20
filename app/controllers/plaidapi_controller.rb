@@ -122,10 +122,8 @@ class PlaidapiController < ApplicationController
           name_score: transaction.score["name"]
         )
       end
-      binding.pry
       newtrans.category = PlaidCategory.find_by(plaid_cat_id: newtrans.plaid_cat_id).category
       newtrans.save
-      binding.pry
     end
   end
 end
