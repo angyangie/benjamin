@@ -3,7 +3,7 @@ class PlaidapiController < ApplicationController
 
   def add_account
     #1 generate a public token for the user
-    public_token = PublicToken.create(token: params[:public_token])
+    public_token = PublicToken.find_or_create_by(token: params[:public_token])
 
     #2 save public token to user's cashflow account
     save_public_token(public_token) if session[:user_id]
@@ -65,7 +65,6 @@ class PlaidapiController < ApplicationController
   def create_transactions(plaid_user_transactions)
     plaid_user_transactions.each do |transaction|
       newtrans = Transaction.find_by(plaid_trans_id: transaction.id)
-      loc_keys = transaction.location.keys
 
       vendor_address = transaction.location["address"]
       vendor_city = transaction.location["city"]
@@ -102,7 +101,7 @@ class PlaidapiController < ApplicationController
           name_score: transaction.score["name"]
         )
       else
-        Transaction.create(
+        newtrans = Transaction.create(
           plaid_trans_id: transaction.id,
           account_id: transaction.account,
           amount: transaction.amount,
@@ -123,6 +122,8 @@ class PlaidapiController < ApplicationController
           name_score: transaction.score["name"]
         )
       end
+      newtrans.category = PlaidCategory.find_by(plaid_cat_id: newtrans.plaid_cat_id).category
+      newtrans.save
     end
   end
 end

@@ -14,6 +14,20 @@ other = Category.create!(name: "Other Expenses", parent: expenses, default: true
 specialexp = Category.create!(name: "Special", parent: expenses, default: true)
 variable = Category.create!(name: "Variable", parent: expenses, default: true)
 
+#income categories
+Category.create!(name: "Bonus", parent: income, default: true)
+Category.create!(name: "Interest Income", parent: income, default: true)
+Category.create!(name: "Other Income", parent: income, default: true)
+Category.create!(name: "Reimbursements", parent: income, default: true)
+Category.create!(name: "Salary", parent: income, default: true)
+
+#special
+Category.create!(name: "Benefits", parent: special, default: true)
+Category.create!(name: "Loan", parent: special, default: true)
+Category.create!(name: "Taxes", parent: special, default: true)
+Category.create!(name: "Transfer", parent: special, default: true)
+
+
 #discretionary level three
 Category.create!(name: "Home", parent: discretionary, default: true)
 Category.create!(name: "Shopping", parent: discretionary, default: true)
