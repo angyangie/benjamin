@@ -1,9 +1,13 @@
 <% @user = User.find(session[:user_id]) %>
 
-<h1>Hello Bob</h1>
+<h1>Hello User <%= @user.email %></h1>
 
 <%= plaid_link(name:'Bob', action:'accounts', data: {longtail: true}) %>
 
+<br>
+<br>
+<br>
+<%= link_to "Sign out", logout_path %>
 
 <h1>Accounts: </h1>
 <% @user.accounts.each do |acct| %>
