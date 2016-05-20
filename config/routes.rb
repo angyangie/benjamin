@@ -11,4 +11,7 @@ Rails.application.routes.draw do
 
   post '/users/accounts', to: 'plaidapi#add_account'
 
+  get 'graph/index'
+  get 'graph/data', :defaults => { :format => 'json' }
+
 end
