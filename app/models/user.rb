@@ -10,4 +10,16 @@ class User < ActiveRecord::Base
     has_many :transactions, through: :accounts
     has_many :categories, through: :transactions
 
+  def net_worth
+    worth = 0
+    accounts.each do |acct|
+      if acct.acct_subtype == "savings" || acct.acct_subtype == "checking"
+        worth += acct.current_balance
+      else
+        worth -= acct.current_balance
+      end
+    end
+     worth
+  end
+
 end
