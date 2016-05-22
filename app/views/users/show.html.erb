@@ -2,7 +2,19 @@
 
 <h1>Hello User <%= @user.email %></h1>
 
-<%= plaid_link(name:'Bob', action:'accounts', data: {longtail: true}) %>
+<!-- begin plaid link form and script -->
+<%= form_tag("/users/accounts", id: "some-id", method: "post") do %>
+<% end %>
+<script
+  src="https://cdn.plaid.com/link/stable/link-initialize.js"
+  data-client-name="Bob"
+  data-form-id="some-id"
+  data-key="b53f747ad95159afdea9c498495fce"
+  data-product="connect"
+  data-env="tartan"
+  data-longtail="true">
+</script>
+<!-- end of plaid link form and script -->
 
 <br>
 <br>
