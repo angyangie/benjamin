@@ -1,17 +1,14 @@
 <h1>Hello User <%= @user.email %></h1>
 
 <!-- begin plaid link form and script -->
-<%= form_tag("/users/accounts", id: "some-id", method: "post") do %>
-<% end %>
-<script
-  src="https://cdn.plaid.com/link/stable/link-initialize.js"
-  data-client-name="Bob"
-  data-form-id="some-id"
-  data-key="b53f747ad95159afdea9c498495fce"
-  data-product="connect"
-  data-env="tartan"
-  data-longtail="true">
-</script>
+
+<h1>Hello <%= @user.email %></h1>
+        
+<div id="add-account">    
+  <%= plaid_link(name:@user.email, action:'accounts', data: {longtail: true}) %>     
+</div>
+
+
 <!-- end of plaid link form and script -->
 <br>
 <br>
@@ -47,6 +44,7 @@
 
 <div id="main-table-area">
   <div id="main-table">
+  <% if !@user.accounts.empty? %>
     <table class="table">  
       <thead class="thead-inverse">
         <tr class="table-headers">
@@ -63,7 +61,7 @@
           <th class="row-label" scope="row">Total Income</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Income"] %>
-          <td><%= !x.nil? || x != 0 ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
           <% end %>
         </tr>
         <tr class="root expenses">
@@ -74,6 +72,9 @@
         </tr>
       </tbody>
     </table>
+    <% else %>
+      <p>Please add an account using the link above.</p>
+    <% end %>
   </div>
 </div>
 
