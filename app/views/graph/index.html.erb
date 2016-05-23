@@ -1,2 +1,31 @@
+<div id="chart"></div>
 
-<svg id="graph"></svg>
+<div id="monthly"></div>
+<button onClick="changeData()">Change Data</button>
+<script>
+
+var salesData=[
+	{label:"Discretionary", color:"#3366CC", value: 523},
+	{label:"Recurring", color:"#DC3912", value: 2422},
+	{label:"Life", color:"#FF9900", value: 1200},
+	{label:"Other", color:"#02D1CE", value: 203},
+	{label:"Special", color:"#990099", value: 337},
+  {label:"Variable", color:"#109618", value: 548}
+];
+
+
+var svg = d3.select("body").append("svg").attr("width",700).attr("height",300);
+
+svg.append("g").attr("id","salesDonut");
+
+Donut3D.draw("salesDonut", randomData(), 150, 150, 130, 100, 30, 0.4);
+
+function changeData(){
+	Donut3D.transition("salesDonut", randomData(), 130, 100, 30, 0.4);
+}
+
+function randomData(){
+	return salesData.map(function(d){
+		return {label:d.label, value:d.value, color:d.color};});
+}
+</script>

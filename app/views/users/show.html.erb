@@ -22,7 +22,7 @@
   <p>Balance: $<%=acct.current_balance %></p>
 <% end %>
 
-<!-- Annual 
+<!-- Annual
   Shows line-items by year total (since start)
 -->
 
@@ -30,20 +30,21 @@
   Shows line-items by monthly total (12 months?)
 -->
 
-<!-- Weekly 
+<!-- Weekly
   Shows line-items by weekly total (6 weeks)
 -->
 
-<!-- Daily 
+<!-- Daily
   Shows line-items by daily total (7 days)
 -->
 
 <!-- Today
-  Shows line-items relative to budget 
+  Shows line-items relative to budget
 -->
 
 <div id="main-table-area">
   <div id="main-table">
+
   <% if !@user.accounts.empty? %>
     <table class="table">  
       <thead class="thead-inverse">
@@ -174,6 +175,8 @@
     <% else %>
       <p>Please add an account using the link above.</p>
     <% end %>
+
+
   </div>
 </div>
 
@@ -198,4 +201,4 @@
 <% end %>
 </table>
 
-<svg id="net-worth"></svg>
+<div id="chart"></div>
