@@ -19,7 +19,6 @@ class PlaidapiController < ApplicationController
 
     Transaction.create_accounts(@plaid_user.accounts, public_token, @user.id)
     Transaction.create_transactions(@plaid_user.transactions)
-    
     redirect_to @user
   end
 

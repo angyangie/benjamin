@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520172929) do
+ActiveRecord::Schema.define(version: 20160523004356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,11 @@ ActiveRecord::Schema.define(version: 20160520172929) do
     t.boolean  "default",    default: false
   end
 
+  create_table "income_statements", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "plaid_categories", force: :cascade do |t|
     t.integer  "plaid_cat_id"
     t.integer  "category_id"
@@ -53,6 +58,11 @@ ActiveRecord::Schema.define(version: 20160520172929) do
   create_table "public_tokens", force: :cascade do |t|
     t.string "token"
     t.string "user_id"
+  end
+
+  create_table "time_periods", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "transactions", id: false, force: :cascade do |t|

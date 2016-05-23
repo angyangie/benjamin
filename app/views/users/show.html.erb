@@ -1,9 +1,10 @@
 <% @user = User.find(session[:user_id]) %>
 
-<h1>Hello User <%= @user.email %></h1>
+<h1>Hello <%= @user.email %></h1>
 
-<%= plaid_link(name:'Bob', action:'accounts', data: {longtail: true}) %>
-
+<div id="add-account">
+  <%= plaid_link(name:@user.email, action:'accounts', data: {longtail: true}) %>
+</div>
 <br>
 <br>
 <br>
@@ -15,6 +16,33 @@
   <p>Type: <%= acct.acct_subtype %></p>
   <p>Balance: $<%=acct.current_balance %></p>
 <% end %>
+
+<!-- Annual 
+  Shows line-items by year total (since start)
+-->
+
+<!-- Monthly
+  Shows line-items by monthly total (12 months?)
+-->
+
+<!-- Weekly 
+  Shows line-items by weekly total (6 weeks)
+-->
+
+<!-- Daily 
+  Shows line-items by daily total (7 days)
+-->
+
+<!-- Today
+  Shows line-items relative to budget 
+-->
+
+<div id="main-table-area">
+  <div id="main-table">
+    
+  </div>
+</div>
+
 
 <h1>Transactions: </h1>
 <table>
