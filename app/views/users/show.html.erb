@@ -1,13 +1,13 @@
-<% @user = User.find(session[:user_id]) %>
+<h1>Hello <%= @user.email %></h1>
 
-<h1>Hello User <%= @user.email %></h1>
-
-<%= plaid_link(name:'Bob', action:'accounts', data: {longtail: true}) %>
+<%= plaid_link(name:"#{@user.email}", action:'accounts', data: {longtail: true}) %>
 
 <br>
 <br>
 <br>
 <%= link_to "Sign out", logout_path %>
+
+<h1>Current Net Worth: <%= number_to_currency(@user.net_worth) %></h1><br>
 
 <h1>Accounts: </h1>
 <% @user.accounts.each do |acct| %>
@@ -23,6 +23,7 @@
     <th>Amount</th>
     <th>Category</th>
     <th>Account</th>
+    <th>Date</th>
   </tr>
 <% @user.transactions.each do |t| %>
   <tr>
@@ -30,6 +31,9 @@
     <td>$<%= t.amount %></td>
     <td><%= t.category.name %></td>
     <td><%= t.account.account_name %></td>
+    <td><%= t.date %></td>
   </tr>
 <% end %>
 </table>
+
+<svg id="net-worth"></svg>
