@@ -11,8 +11,7 @@ class Category < ActiveRecord::Base
     special = Category.create!(name: "Special", default: true)
     
     #level two categories
-    discretionary = Category.create!(n
-        ame: "Discretionary", parent: expenses, default: true)
+    discretionary = Category.create!(name: "Discretionary", parent: expenses, default: true)
     recurring = Category.create!(name: "Fixed & Recurring", parent: expenses, default: true)
     life = Category.create!(name: "Life", parent: expenses, default: true)
     other = Category.create!(name: "Other Expenses", parent: expenses, default: true)
