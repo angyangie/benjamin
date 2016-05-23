@@ -1,8 +1,9 @@
 class IncomeStatement < ActiveRecord::Base
 
-  @user = User.find(1) #replace with actual find-by functionality
+  
 
-  def self.monthly_view
+  def self.monthly_view(user_id)
+    @user = User.find(user_id)
     array_range = []
 
     TimePeriod.monthly.each do |month|
