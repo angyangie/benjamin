@@ -57,6 +57,51 @@
       </thead>
       <tbody>
         <% table_data = IncomeStatement.monthly_view(@user.id) %>
+        
+                <div class="subcategories income">
+
+        <tr class="salary">
+          <td class="row-label">Salary</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Salary"] %>
+          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+          <% end %>
+        </tr>
+
+        <tr class="bonus">
+          <td class="row-label">Bonus</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Bonus"] %>
+          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+          <% end %>
+        </tr>
+
+        <tr class="interest income">
+          <td class="row-label">Interest Income</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Interest Income"] %>
+          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+          <% end %>
+        </tr>
+
+        <tr class="other income">
+          <td class="row-label">Other Income</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Other Income"] %>
+          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+          <% end %>
+        </tr>
+
+        <tr class="reimbursements">
+          <td class="row-label">Reimbursements</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Reimbursements"] %>
+          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+          <% end %>
+        </tr>
+
+        </div>
+
         <tr class="root income">
           <th class="row-label" scope="row">Total Income</td>
           <% table_data.each do |m| %>
@@ -64,12 +109,66 @@
           <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
           <% end %>
         </tr>
+
+        <div class="subcategories expenses">
+
+        <tr class="expenses" id="fixed">
+        <td class="row-label" scope="row">Fixed & Recurring</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Fixed & Recurring"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+      </tr>
+
+       <tr class="expenses" id="variable">
+        <td class="row-label" scope="row">Variable</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Variable"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+      </tr>
+
+      <tr class="expenses" id="discretionary">
+        <td class="row-label" scope="row">Discretionary</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Discretionary"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+      </tr>
+
+      <tr class="expenses" id="life">
+        <td class="row-label" scope="row">Life</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Life"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+      </tr>
+
+      <tr class="expenses" id="other-exp">
+        <td class="row-label" scope="row">Other</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Other Expenses"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+      </tr>
+
+      <tr class="expenses" id="uncategorized">
+        <td class="row-label" scope="row">Uncategorized</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Special Expenses"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+      </tr>
+
+      </div>
+
         <tr class="root expenses">
           <th class="row-label" scope="row">Total Expenses</td>
           <% table_data.each do |m| %>
           <td><%= number_to_currency(m[m.keys.first]["Expenses"], {precision: 0}) %></td>
           <% end %>
         </tr>
+
       </tbody>
     </table>
     <% else %>
