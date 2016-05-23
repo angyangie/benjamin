@@ -1,7 +1,6 @@
 class IncomeStatement < ActiveRecord::Base
 
   
-
   def self.monthly_view(user_id)
     @user = User.find(user_id)
     array_range = []
