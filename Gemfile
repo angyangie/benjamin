@@ -25,6 +25,8 @@ gem 'argyle'
 gem 'pry-rails'
 gem 'json'
 gem 'ltree_hierarchy'
+gem 'httparty'
+gem 'hashie'
 
 gem 'bcrypt'
 # Use jquery as the JavaScript library

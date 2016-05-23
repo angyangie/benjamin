@@ -22,6 +22,12 @@ class PlaidapiController < ApplicationController
     redirect_to @user
   end
 
+  def update_accounts
+    @user = User.find(session[:user_id])
+    Transaction.all_account_refresh(@user)
+    redirect_to @user
+  end
+
   private
   def save_public_token(token)
     cashflow_current_user = User.find_by(id: session[:user_id])

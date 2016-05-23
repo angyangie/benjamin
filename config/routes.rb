@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   root 'home#index'
+  patch '/users/accounts', to: 'plaidapi#update_accounts'
   resources :users, except: [:new, :create]
 
   get '/signup', to: 'users#new', as: 'signup'

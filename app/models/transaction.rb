@@ -109,4 +109,71 @@ class Transaction < ActiveRecord::Base
       end
     end
   end
+
+  def self.all_account_refresh(user)
+    user.public_tokens.each do |token|
+      exchange_token_response = Argyle.plaid_client.exchange_token(token.token)
+      updated_response = HTTParty.post('https://tartan.plaid.com/connect/get', :body => {"client_id" => ENV["CLIENT_ID"], "secret" => ENV["SECRET"], "access_token" => exchange_token_response.access_token})
+      user_obj = Hashie::Mash.new(updated_response)
+      Transaction.update_accounts(user_obj.accounts, token)
+      Transaction.update_transactions(user_obj.transactions, @user)
+    end
+  end
+
+  def self.update_accounts(user_accounts, public_token)
+    user_accounts.each do |acct|
+      account = Account.find_by(plaid_acct_id: acct._id)
+      if account
+        account.update(
+          available_balance: acct.balance.available,
+          current_balance: acct.balance.current,
+          name: acct.meta.name
+          )
+      else
+        account = Account.create(
+          plaid_acct_id: acct._id,
+          account_name: acct.meta.name,
+          account_number: acct.meta.number,
+          available_balance: acct.balance.available,
+          current_balance: acct.balance.current,
+          institution_type: acct.institution_type,
+          name: acct.meta.name,
+          numbers: acct.meta.number,
+          acct_subtype: acct.subtype,
+          acct_type: acct.type,
+          user_id: public_token.user.id,
+          public_token_id: public_token.id
+          )
+
+      end
+    end
+  end
+
+  def self.update_transactions(user_transactions, user)
+    user_transactions.each do |transaction|
+      trans = Transaction.find_by(plaid_trans_id: transaction._id)
+      if trans == nil
+        trans = Transaction.create(
+          plaid_trans_id: transaction._id,
+          account_id: transaction._account,
+          amount: transaction.amount,
+          trans_name: transaction.name,
+          plaid_cat_id: transaction.category_id.to_i,
+          plaid_cat_type: transaction.type.primary,
+          date: transaction.date.to_date,
+
+          vendor_address: transaction.meta.location.address,
+          vendor_city: transaction.meta.location.city,
+          vendor_state: transaction.meta.location.state,
+          vendor_zip: transaction.meta.location.zip,
+          vendor_lat: transaction.meta.location.coordinates.lat,
+          vendor_lon: transaction.meta.location.coordinates.lon,
+
+          pending: transaction.pending,
+          pending_transaction: transaction.pending_transaction,
+          name_score: transaction.score.name
+          )
+      end
+    end
+  end
 end
