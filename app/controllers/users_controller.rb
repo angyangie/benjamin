@@ -14,7 +14,7 @@ before_action :set_user, only: [:show, :edit, :update, :destroy, :data]
           flash[:message] = "Please fix the following errors:"
           @user.errors.each do |k,v|
               flash[:errors] << "#{k}: #{v}"
-            end
+          end
           redirect_to signup_path
         else
            session[:user_id] = @user.id
