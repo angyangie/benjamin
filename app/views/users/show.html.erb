@@ -1,15 +1,11 @@
+<script type="text/javascript" src="income_statement.js"></script>
+
+
 <h1>Hello User <%= @user.email %></h1>
 
-<!-- begin plaid link form and script -->
-
-<h1>Hello <%= @user.email %></h1>
-        
 <div id="add-account">    
   <%= plaid_link(name:@user.email, action:'accounts', data: {longtail: true}) %>     
 </div>
-
-
-<!-- end of plaid link form and script -->
 <br>
 <br>
 <br>
@@ -17,10 +13,10 @@
 
 <h1>Accounts: </h1>
 <% @user.accounts.each do |acct| %>
-  <h3><%= acct.account_name %></h1>
+<h3><%= acct.account_name %></h1>
   <p>Type: <%= acct.acct_subtype %></p>
   <p>Balance: $<%=acct.current_balance %></p>
-<% end %>
+  <% end %>
 
 <!-- Annual 
   Shows line-items by year total (since start)
@@ -44,138 +40,139 @@
 
 <div id="main-table-area">
   <div id="main-table">
-  <% if !@user.accounts.empty? %>
-    <table class="table">  
-      <thead class="thead-inverse">
+
+    <% if !@user.accounts.empty? %>
+
+    <table class="table table-hover">  
+      <thead>
         <tr class="table-headers">
           <th id="row_label_header_spacer"></th>
           
           <% TimePeriod.monthly.each do |m| %>
           <th><%= m.first.strftime('%b') %></th>
           <% end %>
+
         </tr>
       </thead>
+
       <tbody>
         <% table_data = IncomeStatement.monthly_view(@user.id) %>
-        
-                <div class="subcategories income">
-
-        <tr class="salary">
-          <td class="row-label">Salary</td>
+        <!-- Begin Income -->
+        <!-- Begin Subcategories -->
+        <tr class="income subcategory" id="salary">
+          <td class="row-label">&nbsp&nbsp Salary</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Salary"] %>
           <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
           <% end %>
         </tr>
-
-        <tr class="bonus">
-          <td class="row-label">Bonus</td>
+        <tr class="income subcategory" id="bonus">
+          <td class="row-label">&nbsp&nbsp Bonus</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Bonus"] %>
           <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
           <% end %>
         </tr>
-
-        <tr class="interest income">
-          <td class="row-label">Interest Income</td>
+        <tr class="income subcategory" id="interest-income">
+          <td class="row-label">&nbsp&nbsp Interest Income</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Interest Income"] %>
           <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
           <% end %>
         </tr>
-
-        <tr class="other income">
-          <td class="row-label">Other Income</td>
+        <tr class="income subcategory" id="other-income">
+          <td class="row-label">&nbsp&nbsp Other Income</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Other Income"] %>
           <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
           <% end %>
         </tr>
-
-        <tr class="reimbursements">
-          <td class="row-label">Reimbursements</td>
+        <tr class="income subcategory" id="reimbursements">
+          <td class="row-label">&nbsp&nbsp Reimbursements</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Reimbursements"] %>
           <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
           <% end %>
         </tr>
+        <!-- End Income Subcategories -->
 
-        </div>
-
-        <tr class="root income">
+        <tr class="table-success income root">
           <th class="row-label" scope="row">Total Income</td>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Income"] %>
-          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
-          <% end %>
-        </tr>
+            <% table_data.each do |m| %>
+            <% x = m[m.keys.first]["Income"] %>
+            <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+            <% end %>
+          </tr>
+          <!-- End Income -->
 
-        <div class="subcategories expenses">
+          <!-- Begin Expenses -->
+          <!-- Begin Subcategories -->
 
-        <tr class="expenses" id="fixed">
-        <td class="row-label" scope="row">Fixed & Recurring</td>
-        <% table_data.each do |m| %>
-        <% x = m[m.keys.first]["Fixed & Recurring"] %>
-          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
-          <% end %>
-      </tr>
+          <tr class="expenses subcategory" id="fixed">
+            <td class="row-label" scope="row">&nbsp&nbsp Fixed & Recurring</td>
+            <% table_data.each do |m| %>
+            <% x = m[m.keys.first]["Fixed & Recurring"] %>
+            <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+            <% end %>
+          </tr>
 
-       <tr class="expenses" id="variable">
-        <td class="row-label" scope="row">Variable</td>
-        <% table_data.each do |m| %>
-        <% x = m[m.keys.first]["Variable"] %>
-          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
-          <% end %>
-      </tr>
+          <tr class="expenses subcategory" id="variable">
+            <td class="row-label" scope="row">&nbsp&nbsp Variable</td>
+            <% table_data.each do |m| %>
+            <% x = m[m.keys.first]["Variable"] %>
+            <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+            <% end %>
+          </tr>
 
-      <tr class="expenses" id="discretionary">
-        <td class="row-label" scope="row">Discretionary</td>
-        <% table_data.each do |m| %>
-        <% x = m[m.keys.first]["Discretionary"] %>
-          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
-          <% end %>
-      </tr>
+          <tr class="expenses subcategory" id="discretionary">
+            <td class="row-label" scope="row">&nbsp&nbsp Discretionary</td>
+            <% table_data.each do |m| %>
+            <% x = m[m.keys.first]["Discretionary"] %>
+            <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+            <% end %>
+          </tr>
 
-      <tr class="expenses" id="life">
-        <td class="row-label" scope="row">Life</td>
-        <% table_data.each do |m| %>
-        <% x = m[m.keys.first]["Life"] %>
-          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
-          <% end %>
-      </tr>
+          <tr class="expenses subcategory" id="life">
+            <td class="row-label" scope="row">&nbsp&nbsp Life</td>
+            <% table_data.each do |m| %>
+            <% x = m[m.keys.first]["Life"] %>
+            <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+            <% end %>
+          </tr>
 
-      <tr class="expenses" id="other-exp">
-        <td class="row-label" scope="row">Other</td>
-        <% table_data.each do |m| %>
-        <% x = m[m.keys.first]["Other Expenses"] %>
-          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
-          <% end %>
-      </tr>
+          <tr class="expenses subcategory" id="other-exp">
+            <td class="row-label" scope="row">&nbsp&nbsp Other</td>
+            <% table_data.each do |m| %>
+            <% x = m[m.keys.first]["Other Expenses"] %>
+            <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+            <% end %>
+          </tr>
 
-      <tr class="expenses" id="uncategorized">
-        <td class="row-label" scope="row">Uncategorized</td>
-        <% table_data.each do |m| %>
-        <% x = m[m.keys.first]["Special Expenses"] %>
-          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
-          <% end %>
-      </tr>
-
-      </div>
-
+          <tr class="expenses subcategory" id="uncategorized">
+            <td class="row-label" scope="row">&nbsp&nbsp Uncategorized</td>
+            <% table_data.each do |m| %>
+            <% x = m[m.keys.first]["Special Expenses"] %>
+            <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+            <% end %>
+          </tr>
+        </div>
+        <!-- End Expenses Subcategories -->
         <tr class="root expenses">
           <th class="row-label" scope="row">Total Expenses</td>
-          <% table_data.each do |m| %>
-          <td><%= number_to_currency(m[m.keys.first]["Expenses"], {precision: 0}) %></td>
-          <% end %>
-        </tr>
-
-      </tbody>
-    </table>
-    <% else %>
+            <% table_data.each do |m| %>
+            <td><%= number_to_currency(m[m.keys.first]["Expenses"], {precision: 0}) %></td>
+            <% end %>
+          </tr>
+          <!-- End Expenses -->
+        </tbody>
+      </table>
+      <% else %>
       <p>Please add an account using the link above.</p>
-    <% end %>
+      <% end %>  
+    </div>
   </div>
 </div>
+
 
 
 <h1>Transactions: </h1>
@@ -187,7 +184,7 @@
     <th>Account</th>
     <th>Date</th>
   </tr>
-<% @user.transactions.each do |t| %>
+  <% @user.transactions.each do |t| %>
   <tr>
     <td><%= t.trans_name %></td>
     <td>$<%= t.amount %></td>
@@ -195,7 +192,7 @@
     <td><%= t.account.account_name %></td>
     <td><%= t.date %></td>
   </tr>
-<% end %>
+  <% end %>
 </table>
 
 <svg id="net-worth"></svg>
