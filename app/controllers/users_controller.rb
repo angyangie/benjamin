@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+before_action :set_user, only: [:show, :edit, :update, :destroy, :data]
 
   def new
   end
@@ -13,7 +14,7 @@ class UsersController < ApplicationController
           flash[:message] = "Please fix the following errors:"
           @user.errors.each do |k,v|
               flash[:errors] << "#{k}: #{v}"
-            end
+          end
           redirect_to signup_path
         else
            session[:user_id] = @user.id
@@ -22,10 +23,21 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+
+  end
+
+  def data
+    respond_to do |format|
+      format.json {
+        render :json
+      }
+    end
   end
 
   private
+  def set_user
+    @user = User.find(params[:id])
+  end
 
   def user_params
     params.require(:user).permit(:id, :first_name, :last_name, :email, :password, :password_confirmation)

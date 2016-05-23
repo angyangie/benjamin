@@ -8,11 +8,12 @@ Rails.application.routes.draw do
 
   get '/login', to: 'sessions#new', as: 'login'
   post '/login', to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
+  get '/logout', to: 'sessions#destroy'
 
   post '/users/accounts', to: 'plaidapi#add_account'
 
   get 'graph/index'
   get 'graph/data', :defaults => { :format => 'json' }
 
+  get '/users/data', :defaults => { :format => 'json' }
 end

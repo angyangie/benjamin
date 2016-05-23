@@ -18,7 +18,7 @@ private
 
   def require_login
     if !session[:user_id]
-      flash[:error] = "You are not logged in!"
+      flash[:error] = "You are not logged in"
       redirect_to login_path
     end
   

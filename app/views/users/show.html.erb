@@ -1,5 +1,3 @@
-<% @user = User.find(session[:user_id]) %>
-
 <h1>Hello User <%= @user.email %></h1>
 
 <!-- begin plaid link form and script -->
@@ -15,11 +13,12 @@
   data-longtail="true">
 </script>
 <!-- end of plaid link form and script -->
+<br>
+<br>
+<br>
+<%= link_to "Log Out", logout_path, class: "btn btn-primary"  %>
 
-<br>
-<br>
-<br>
-<%= link_to "Sign out", logout_path %>
+<h1>Current Net Worth: <%= number_to_currency(@user.net_worth) %></h1><br>
 
 <h1>Accounts: </h1>
 <% @user.accounts.each do |acct| %>
@@ -28,6 +27,33 @@
   <p>Balance: $<%=acct.current_balance %></p>
 <% end %>
 
+<!-- Annual 
+  Shows line-items by year total (since start)
+-->
+
+<!-- Monthly
+  Shows line-items by monthly total (12 months?)
+-->
+
+<!-- Weekly 
+  Shows line-items by weekly total (6 weeks)
+-->
+
+<!-- Daily 
+  Shows line-items by daily total (7 days)
+-->
+
+<!-- Today
+  Shows line-items relative to budget 
+-->
+
+<div id="main-table-area">
+  <div id="main-table">
+    
+  </div>
+</div>
+
+
 <h1>Transactions: </h1>
 <table>
   <tr>
@@ -35,6 +61,7 @@
     <th>Amount</th>
     <th>Category</th>
     <th>Account</th>
+    <th>Date</th>
   </tr>
 <% @user.transactions.each do |t| %>
   <tr>
@@ -42,6 +69,9 @@
     <td>$<%= t.amount %></td>
     <td><%= t.category.name %></td>
     <td><%= t.account.account_name %></td>
+    <td><%= t.date %></td>
   </tr>
 <% end %>
 </table>
+
+<svg id="net-worth"></svg>
