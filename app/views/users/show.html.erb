@@ -18,7 +18,7 @@
   <p>Balance: $<%=acct.current_balance %></p>
   <% end %>
 
-<!-- Annual 
+<!-- Annual
   Shows line-items by year total (since start)
 -->
 
@@ -26,16 +26,16 @@
   Shows line-items by monthly total (12 months?)
 -->
 
-<!-- Weekly 
+<!-- Weekly
   Shows line-items by weekly total (6 weeks)
 -->
 
-<!-- Daily 
+<!-- Daily
   Shows line-items by daily total (7 days)
 -->
 
 <!-- Today
-  Shows line-items relative to budget 
+  Shows line-items relative to budget
 -->
 
 <div id="main-table-area">
@@ -45,6 +45,7 @@
 
     <table class="table table-hover">  
       <thead>
+
         <tr class="table-headers">
           <th id="row_label_header_spacer"></th>
           
@@ -66,6 +67,7 @@
           <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
           <% end %>
         </tr>
+
         <tr class="income subcategory" id="bonus">
           <td class="row-label">&nbsp&nbsp Bonus</td>
           <% table_data.each do |m| %>
@@ -80,6 +82,7 @@
           <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
           <% end %>
         </tr>
+
         <tr class="income subcategory" id="other-income">
           <td class="row-label">&nbsp&nbsp Other Income</td>
           <% table_data.each do |m| %>
@@ -87,6 +90,7 @@
           <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
           <% end %>
         </tr>
+
         <tr class="income subcategory" id="reimbursements">
           <td class="row-label">&nbsp&nbsp Reimbursements</td>
           <% table_data.each do |m| %>
@@ -171,6 +175,384 @@
       <% end %>  
     </div>
   </div>
+
+  <div class="subcategories expenses">
+
+
+    <div class="subcategories fixed">
+
+      <tr class="expenses fixed" id="cell phone">
+        <td class="row-label" scope="row">Cell Phone</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Cell Phone"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses fixed" id="insurance">
+        <td class="row-label" scope="row">Insurance</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Insurance"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses fixed" id="rent & mortgage">
+        <td class="row-label" scope="row">Rent & Mortgage</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Rent & Mortgage"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses fixed" id="transportation">
+        <td class="row-label" scope="row">Transportation</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Transportation"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses fixed" id="tv & internet">
+        <td class="row-label" scope="row">TV & Internet</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["TV & Internet"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses fixed" id="utilities">
+        <td class="row-label" scope="row">Utilities</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Utilities"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+    </div>
+
+    <div class="subcategories variable">
+
+      <tr class="expenses variable" id="cars & vehicles">
+        <td class="row-label" scope="row">Cars & Vehicles</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Cars & Vehicles"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses variable" id="children">
+        <td class="row-label" scope="row">Children</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Children"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses variable" id="cleaning supplies & maids">
+        <td class="row-label" scope="row">Cleaning Supplies & Maids</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Cleaning Supplies & Maids"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses variable" id="education">
+        <td class="row-label" scope="row">Education</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Education"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses variable" id="fitness & recreation">
+        <td class="row-label" scope="row">Fitness & Recreation</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Fitness & Recreation"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses variable" id="healthcare">
+        <td class="row-label" scope="row">Healthcare</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Healthcare"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses variable" id="laundry">
+        <td class="row-label" scope="row">Laundry</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Laundry"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses variable" id="personal care">
+        <td class="row-label" scope="row">Personal Care</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Personal Care"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <tr class="expenses variable" id="pets">
+        <td class="row-label" scope="row">Pets</td>
+        <% table_data.each do |m| %>
+        <% x = m[m.keys.first]["Pets"] %>
+        <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+
+      <div class="subcategories total food in variable">
+
+        <tr class="expenses variable total food" id="alcohol & bars">
+          <td class="row-label" scope="row">Alcohol & Bars</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Alcohol & Bars"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+        </tr>
+
+        <tr class="expenses variable total food" id="coffee shops">
+          <td class="row-label" scope="row">Coffee Shops</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Coffee Shops"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+        </tr>
+
+        <tr class="expenses variable total food" id="fast food & delivery">
+          <td class="row-label" scope="row">Fast Food & Delivery</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Fast Food & Delivery"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+        </tr>
+
+        <tr class="expenses variable total food" id="groceries">
+          <td class="row-label" scope="row">Groceries</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Groceries"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+        </tr>
+
+        <tr class="expenses variable total food" id="other food">
+          <td class="row-label" scope="row">Other Food</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Other Food"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+        </tr>
+
+        <tr class="expenses variable total food" id="restaurants">
+          <td class="row-label" scope="row">Restaurants</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Restaurants"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+        </tr>
+
+        <tr class="expenses variable total food" id="work meals">
+          <td class="row-label" scope="row">Work Meals</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Work Meals"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <% end %>
+        </tr>
+      </div>
+    </div>
+
+    <tr class="expenses variable" id="total food">
+      <td class="row-label" scope="row">Total Food</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Total Food"] %>
+      <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+
+  </div>
+
+  <div class="subcategories discretionary">
+
+    <tr class="expenses discretionary" id="home">
+      <td class="row-label" scope="row">Home</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Home"] %>
+      <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+    <tr class="expenses discretionary" id="shopping">
+      <td class="row-label" scope="row">Shopping</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Shopping"] %>
+      <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+    <tr class="expenses discretionary" id="entertainment">
+      <td class="row-label" scope="row">Entertainment</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Entertainment"] %>
+      <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+    <tr class="expenses discretionary" id="rental & taxi">
+      <td class="row-label" scope="row">Rental & Taxi</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Rental & Taxi"] %>
+      <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+    <tr class="expenses discretionary" id="cash">
+      <td class="row-label" scope="row">Cash</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Cash"] %>
+      <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+    <tr class="expenses discretionary" id="other">
+      <td class="row-label" scope="row">Other</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Other"] %>
+      <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+  </div>
+
+  <div class="subcategories life">
+
+    <tr class="expenses life" id="charity & community">
+      <td class="row-label" scope="row">Charity & Community</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Charity & Community"] %>
+      <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+    <tr class="expenses life" id="gifts">
+      <td class="row-label" scope="row">Gifts</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Gifts"] %>
+      <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+    <tr class="expenses life" id="trips">
+      <td class="row-label" scope="row">Trips</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Trips"] %>
+      <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+    <tr class="expenses life" id="wedding">
+      <td class="row-label" scope="row">wedding</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["wedding"] %>
+      <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+  </div>
+
+  <div class="subcategories other-exp">
+
+   <tr class="expenses other-exp" id="adjustments">
+    <td class="row-label" scope="row">Adjustments</td>
+    <% table_data.each do |m| %>
+    <% x = m[m.keys.first]["Adjustments"] %>
+    <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+    <% end %>
+  </tr>
+
+  <tr class="expenses other-exp" id="reimbursable expenses">
+    <td class="row-label" scope="row">Reimbursable Expenses</td>
+    <% table_data.each do |m| %>
+    <% x = m[m.keys.first]["Reimbursable Expenses"] %>
+    <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+    <% end %>
+  </tr>
+
+  <tr class="expenses other-exp" id="interest & fees">
+    <td class="row-label" scope="row">Interest & Fees</td>
+    <% table_data.each do |m| %>
+    <% x = m[m.keys.first]["Interest & Fees"] %>
+    <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+    <% end %>
+  </tr>
+</div>
+
+
+</div>
+
+<tr class="root expenses">
+  <th class="row-label" scope="row">Total Expenses</td>
+    <% table_data.each do |m| %>
+    <td><%= number_to_currency(m[m.keys.first]["Expenses"], {precision: 0}) %></td>
+    <% end %>
+  </tr>
+
+  <div class="subcategories special">
+
+    <tr class="expenses" id="transfer">
+      <td class="row-label">Transfer</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Transfer"] %>
+      <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+    <tr class="expenses" id="taxes">
+      <td class="row-label">Taxes</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Taxes"] %>
+      <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+
+    <tr class="expenses" id="loan">
+      <td class="row-label">Loan</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Loan"] %>
+      <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+    <tr class="expenses" id="benefits">
+      <td class="row-label">Benefits</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Benefits"] %>
+      <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+  </div>
+
+  <tr class="root special">
+    <th class="row-label" scope="row">Total Special</td>
+      <% table_data.each do |m| %>
+      <% x = m[m.keys.first]["Special"] %>
+      <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+      <% end %>
+    </tr>
+
+  </tbody>
+</table>
+<% else %>
+<p>Please add an account using the link above.</p>
+<% end %>
+
+
+>>>>>>> master
+</div>
 </div>
 
 
@@ -195,4 +577,4 @@
   <% end %>
 </table>
 
-<svg id="net-worth"></svg>
+<div id="chart"></div>

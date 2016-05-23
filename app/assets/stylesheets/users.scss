@@ -1,3 +1,23 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 960px;
+  height: 500px;
+  position: relative;
+}
+path.slice{
+	stroke-width:2px;
+}
+polyline{
+	opacity: .3;
+	stroke: black;
+	stroke-width: 2px;
+	fill: none;
+}
+svg text.percent{
+	fill:white;
+	text-anchor:middle;
+	font-size:12px;
+}
