@@ -18,8 +18,6 @@
 <br>
 <%= link_to "Log Out", logout_path, class: "btn btn-primary"  %>
 
-<h1>Current Net Worth: <%= number_to_currency(@user.net_worth) %></h1><br>
-
 <h1>Accounts: </h1>
 <% @user.accounts.each do |acct| %>
   <h3><%= acct.account_name %></h1>
@@ -49,7 +47,28 @@
 
 <div id="main-table-area">
   <div id="main-table">
-    
+    <table class="table">  
+      <% table_data = IncomeStatement.monthly_view %>
+      <tr class="table-headers">
+        <th id="dates"></th>
+        <% TimePeriod.monthly.each do |m| %>
+          <th><%= m.first.strftime('%b') %></th>
+        <% end %>
+      </tr>
+      <tr class="root income">
+        <td class="row-label">Total Income:</td>
+        <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Income"] %>
+          <td><%= !x.nil? || x != 0 ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+        <% end %>
+      </tr>
+      <tr class="root expenses">
+        <td class="row-label">Total Expenses:</td>
+        <% table_data.each do |m| %>
+          <td><%= number_to_currency(m[m.keys.first]["Expenses"], {precision: 0}) %></td>
+        <% end %>
+      </tr>
+    </table>
   </div>
 </div>
 
