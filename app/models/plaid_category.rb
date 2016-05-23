@@ -497,7 +497,7 @@ class PlaidCategory < ActiveRecord::Base
     19016000=>"Shopping",
     19017000=>"Entertainment",
     19018000=>"Shopping",
-    19019000=>"Entertainment",
+    19019000=>"Shopping",
     19020000=>"Shopping",
     19021000=>"Shopping",
     19022000=>"Other",
