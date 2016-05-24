@@ -14,6 +14,8 @@
 
 //= require jquery
 //= require jquery_ujs
+//= require income_statement.js
+
 //= require bootstrap-sprockets
 //= require d3
 //= require turbolinks
@@ -23,6 +25,5 @@
 //= require jquery-1.10.2.min.js
 //= require modernizr-2.6.2.min.js
 //= require respond.min.js
-
 
 //= require_tree .
