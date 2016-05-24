@@ -21,3 +21,33 @@ svg text.percent{
 	text-anchor:middle;
 	font-size:12px;
 }
+div.table{
+  display: table;
+  width: 100%;
+}
+div.tRow{
+  display: block;
+  height: 30px;
+}
+div.tCell{
+  display: inline-block;
+  text-align: right;
+  width: 55px;
+}
+div.tHeader{
+  text-align: center;
+  font-weight: bold;
+}
+div.row-label{
+  text-align: left;
+  width: 200px;
+}
+div.root.net{
+  font-weight: bold;
+}
+div.income.root:hover {
+  font-weight: bold;
+}
+div.expenses.root:hover {
+  font-weight: bold;
+}

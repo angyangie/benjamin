@@ -5,9 +5,9 @@
     
     <table class="table table-hover">  
 
-      <thead>
+      <thead class="thead-default">
         <tr class="table-headers">
-          <th id="row_label_header_spacer"></th>
+          <th id="row-label"></th>
           <% TimePeriod.monthly.each do |m| %>
           <th><%= m.first.strftime('%b') %></th>
           <% end %>
@@ -24,7 +24,7 @@
           <td class="row-label">&nbsp&nbsp Salary</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Salary"] %>
-          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
           <% end %>
         </tr>
 
@@ -32,7 +32,7 @@
           <td class="row-label">&nbsp&nbsp Bonus</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Bonus"] %>
-          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
           <% end %>
         </tr>
 
@@ -40,7 +40,7 @@
           <td class="row-label">&nbsp&nbsp Interest Income</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Interest Income"] %>
-          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
           <% end %>
         </tr>
 
@@ -48,7 +48,7 @@
           <td class="row-label">&nbsp&nbsp Other Income</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Other Income"] %>
-          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
           <% end %>
         </tr>
 
@@ -56,7 +56,7 @@
           <td class="row-label">&nbsp&nbsp Reimbursements</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Reimbursements"] %>
-          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
           <% end %>
         </tr>
 
@@ -66,7 +66,7 @@
           <th class="row-label" scope="row">Total Income</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Income"] %>
-          <td><%= !x.nil? ? number_to_currency(x*-1, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
           <% end %>
         </tr>
       
@@ -79,7 +79,7 @@
                 <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Rent & Mortgage</td>
                 <% table_data.each do |m| %>
                 <% x = m[m.keys.first]["Rent & Mortgage"] %>
-                <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                 <% end %>
               </tr>
 
@@ -87,7 +87,7 @@
                 <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Utilities</td>
                 <% table_data.each do |m| %>
                 <% x = m[m.keys.first]["Utilities"] %>
-                <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                 <% end %>
               </tr>
 
@@ -95,7 +95,7 @@
                 <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp TV & Internet</td>
                 <% table_data.each do |m| %>
                 <% x = m[m.keys.first]["TV & Internet"] %>
-                <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                 <% end %>
               </tr>
 
@@ -103,7 +103,7 @@
                 <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Cell Phone</td>
                 <% table_data.each do |m| %>
                 <% x = m[m.keys.first]["Cell Phone"] %>
-                <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                 <% end %>
               </tr>
 
@@ -111,7 +111,7 @@
                 <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Insurance</td>
                 <% table_data.each do |m| %>
                 <% x = m[m.keys.first]["Insurance"] %>
-                <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                 <% end %>
               </tr>
 
@@ -119,7 +119,7 @@
                 <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Transportation</td>
                 <% table_data.each do |m| %>
                 <% x = m[m.keys.first]["Transportation"] %>
-                <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                 <% end %>
               </tr>
       
@@ -129,7 +129,7 @@
           <td class="row-label" scope="row">&nbsp&nbsp Fixed & Recurring</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Fixed & Recurring"] %>
-          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
           <% end %>
         </tr>
 
@@ -139,7 +139,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Cars & Vehicles</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Cars & Vehicles"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -147,7 +147,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Children</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Children"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -155,7 +155,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Cleaning Supplies & Maids</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Cleaning Supplies & Maids"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -163,7 +163,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Education</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Education"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -171,7 +171,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Fitness & Recreation</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Fitness & Recreation"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -179,7 +179,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Healthcare</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Healthcare"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -187,7 +187,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Laundry</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Laundry"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -195,7 +195,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Personal Care</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Personal Care"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -203,7 +203,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Pets</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Pets"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -213,7 +213,7 @@
                   <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Alcohol & Bars</td>
                   <% table_data.each do |m| %>
                   <% x = m[m.keys.first]["Alcohol & Bars"] %>
-                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                   <% end %>
                 </tr>
 
@@ -221,7 +221,7 @@
                   <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Coffee Shops</td>
                   <% table_data.each do |m| %>
                   <% x = m[m.keys.first]["Coffee Shops"] %>
-                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                   <% end %>
                 </tr>
 
@@ -229,7 +229,7 @@
                   <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Fast Food & Delivery</td>
                   <% table_data.each do |m| %>
                   <% x = m[m.keys.first]["Fast Food & Delivery"] %>
-                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                   <% end %>
                 </tr>
 
@@ -237,7 +237,7 @@
                   <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Groceries</td>
                   <% table_data.each do |m| %>
                   <% x = m[m.keys.first]["Groceries"] %>
-                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                   <% end %>
                 </tr>
 
@@ -245,7 +245,7 @@
                   <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Other Food</td>
                   <% table_data.each do |m| %>
                   <% x = m[m.keys.first]["Other Food"] %>
-                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                   <% end %>
                 </tr>
 
@@ -253,7 +253,7 @@
                   <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Restaurants</td>
                   <% table_data.each do |m| %>
                   <% x = m[m.keys.first]["Restaurants"] %>
-                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                   <% end %>
                 </tr>
 
@@ -261,7 +261,7 @@
                   <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Work Meals</td>
                   <% table_data.each do |m| %>
                   <% x = m[m.keys.first]["Work Meals"] %>
-                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+                  <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
                   <% end %>
                 </tr>
 
@@ -271,7 +271,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Total Food</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Total Food"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>      
 
@@ -281,7 +281,7 @@
           <td class="row-label" scope="row">&nbsp&nbsp Variable</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Variable"] %>
-          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
           <% end %>
         </tr>
 
@@ -291,7 +291,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Home</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Home"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -299,7 +299,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Shopping</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Shopping"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -307,7 +307,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Entertainment</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Entertainment"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -315,7 +315,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Rental & Taxi</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Rental & Taxi"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -323,7 +323,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Cash</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Cash"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -331,7 +331,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Other</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Other"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -341,7 +341,7 @@
           <td class="row-label" scope="row">&nbsp&nbsp Discretionary</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Discretionary"] %>
-          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
           <% end %>
         </tr>
 
@@ -351,7 +351,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Charity & Community</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Charity & Community"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -359,7 +359,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Gifts</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Gifts"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -367,7 +367,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Trips</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Trips"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -375,7 +375,7 @@
               <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Wedding</td>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Wedding"] %>
-              <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+              <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
               <% end %>
             </tr>
 
@@ -385,7 +385,7 @@
           <td class="row-label" scope="row">&nbsp&nbsp Life</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Life"] %>
-          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
           <% end %>
         </tr>
 
@@ -395,7 +395,7 @@
             <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Adjustments</td>
             <% table_data.each do |m| %>
             <% x = m[m.keys.first]["Adjustments"] %>
-            <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+            <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
             <% end %>
           </tr>
 
@@ -403,7 +403,7 @@
             <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Interest & Fees</td>
             <% table_data.each do |m| %>
             <% x = m[m.keys.first]["Interest & Fees"] %>
-            <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+            <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
             <% end %>
           </tr>
 
@@ -411,7 +411,7 @@
             <td class="row-label" scope="row">&nbsp&nbsp&nbsp&nbsp Reimbursable Expenses</td>
             <% table_data.each do |m| %>
             <% x = m[m.keys.first]["Reimbursable Expenses"] %>
-            <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+            <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
             <% end %>
           </tr>
 
@@ -421,7 +421,7 @@
           <td class="row-label" scope="row">&nbsp&nbsp Other</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Other Expenses"] %>
-          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
           <% end %>
         </tr>
 
@@ -429,7 +429,7 @@
           <td class="row-label" scope="row">&nbsp&nbsp Uncategorized</td>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Special Expenses"] %>
-          <td><%= !x.nil? ? number_to_currency(x, {precision: 0}) : "$0" %></td>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
           <% end %>
         </tr>
         
@@ -438,11 +438,19 @@
         <tr class="root expenses">
           <th class="row-label" scope="row">Total Expenses</td>
             <% table_data.each do |m| %>
-            <td><%= number_to_currency(m[m.keys.first]["Expenses"], {precision: 0}) %></td>
+            <td><%= number_to_currency(m[m.keys.first]["Expenses"], {precision: 0, negative_format: "(%u%n)"}) %></td>
             <% end %>
           </tr>
 
       <!-- End Expenses -->
+
+        <tr class="net">
+          <th class="row-label" scope="row">Net Savings</td>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Net"] %>
+          <td><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></td>
+          <% end %>
+        </tr>
 
       </tbody>
     </table>
