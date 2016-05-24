@@ -152,6 +152,12 @@ class Transaction < ActiveRecord::Base
   def self.update_transactions(user_transactions, user)
     user_transactions.each do |transaction|
       trans = Transaction.find_by(plaid_trans_id: transaction._id)
+      vendor_lat = nil
+      vendor_lon = nil
+      if transaction.meta.location.coordinates
+        vendor_lat = transaction.meta.location.coordinates.lat
+        vendor_lon = transaction.meta.location.coordinates.lon
+      end
       if trans == nil
         trans = Transaction.create(
           plaid_trans_id: transaction._id,
@@ -166,8 +172,8 @@ class Transaction < ActiveRecord::Base
           vendor_city: transaction.meta.location.city,
           vendor_state: transaction.meta.location.state,
           vendor_zip: transaction.meta.location.zip,
-          vendor_lat: transaction.meta.location.coordinates.lat,
-          vendor_lon: transaction.meta.location.coordinates.lon,
+          vendor_lat: vendor_lat,
+          vendor_lon: vendor_lon,
 
           pending: transaction.pending,
           pending_transaction: transaction.pending_transaction,
