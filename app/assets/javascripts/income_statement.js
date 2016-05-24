@@ -4,58 +4,76 @@ $(function(){
 })
 
 function hideYoKids(){
-  $('tr.subcategory').hide()
-  $('tr.child').hide()
-  $('tr.leaves').hide()
+  $('div.subcategory').hide()
+  $('div.child').hide()
+  $('div.leaves').hide()
 }
 
 function showSubcategories(){
-  $('tr.root.income').on('click', function(){
-    $(this).addClass('success')
-    $('tr.root.expenses').addClass('danger')
-    $('tr.subcategory.income').slideToggle()
+  $('div.root.income').on('click', function(){
+    if($(this).hasClass('root-inc-clicked')){
+      $(this).removeClass('root-inc-clicked')
+      $('div.subcategory.income').slideUp()
+    } else {
+      $(this).addClass('root-inc-clicked')
+      $('div.subcategory.income').slideDown()
+    }
   })
-  $('tr.root.expenses').on('click', function(){
-    $(this).addClass('danger')
-    $('tr.root.income').addClass('success')
-    $('tr.subcategory.expenses').slideToggle()
+
+  $('div.root.expenses').on('click', function(){
+    if($(this).hasClass('root-exp-clicked')){
+      $(this).removeClass('root-exp-clicked')
+      $('div.leaves.expenses').slideUp()
+      $('div.child.expenses').slideUp()
+      $('div.subcategory.expenses').slideUp()
+    } else {
+      $(this).addClass('root-exp-clicked')
+      $('div.subcategory.expenses').slideDown()
+    }
   })
-  $('tr#fixed').on('click', function(){
-    $('tr.child.fixed').slideToggle()
-    addActive()
+
+  $('div#fixed').on('click', function(){
+    $('div.child.fixed').slideToggle()
+    addActive(this)
   })
-  $('tr#variable').on('click', function(){
-    $('tr.child.variable').slideToggle()
-    addActive()
+
+  $('div#variable').on('click', function(){
+    $('div.child.variable').slideToggle()
+    addActive(this)
   })
-  $('tr#discretionary').on('click', function(){
-    $('tr.child.discretionary').slideToggle()
-    addActive()
+
+  $('div#discretionary').on('click', function(){
+    $('div.child.discretionary').slideToggle()
+      addActive(this)
   })
-  $('tr#life').on('click', function(){
-    $('tr.child.life').slideToggle()
-    addActive()
+
+  $('div#life').on('click', function(){
+    $('div.child.life').slideToggle()
+      addActive(this)
   })
-  $('tr#other-exp').on('click', function(){
-    $('tr.child.other-exp').slideToggle()
-    addActive()
+
+  $('div#other-exp').on('click', function(){
+    $('div.child.other-exp').slideToggle()
+      addActive(this)
   })
-  $('tr#total-food').on('click', function(){
+
+  $('div#total-food').on('click', function(){
     $(this).toggleClass('active')
-    $('tr.leaves.food').slideToggle()
+    addActive(this)
+    $('div.leaves.food').slideToggle()
   })
 }
 
-function addActive(){
-  $('tr#fixed').addClass('active')
-  $('tr#variable').addClass('active')
-  $('tr#discretionary').addClass('active')
-  $('tr#life').addClass('active')
-  $('tr#other-exp').addClass('active')
+function addActive(selection){
+  if($(selection).hasClass('active')){
+      $(selection).removeClass('active')
+    } else {
+      $(selection).addClass('active')
+    }
 }
 
 function childCheck(){
-  if($('tr.child').attr('style') === "display: none;") {
+  if($('div.child').attr('style') === "display: none;") {
     addActive()
   } 
 }

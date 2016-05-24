@@ -2,6 +2,7 @@ class Category < ActiveRecord::Base
   has_ltree_hierarchy
   has_many :plaid_categories
   has_many :transactions
+  has_many :budgets
   validates :name, uniqueness: true
 
   def self.create_categories

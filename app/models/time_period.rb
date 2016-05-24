@@ -5,7 +5,7 @@ class TimePeriod < ActiveRecord::Base
    def self.monthly
     month_array = []
     x = 1
-    while x <= @today.month
+    while x <= 12
       start = Date.new(@today.year, x, 1)
       month_array << [start, start.end_of_month]
       x +=1 
