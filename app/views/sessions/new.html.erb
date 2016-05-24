@@ -1,48 +1,100 @@
-<h1>Welcome Back to Lemmen</h1><br>
-<h3>Please enter your login information below:</h3><br>
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
 
-<div class="error_box">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SpaceLab</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <!-- Fonts from Font Awsome -->
+    <!-- CSS Animate -->
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <!-- Custom styles for this theme -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <!-- Feature detection -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
 
-  <font color="red">
-    <h5>
-      <% if flash[:message] %>
-      <%= flash[:message] %>
-      <% end %>
-    </h5>
-  </font>
-</div>
+<body class="animated fadeIn">
+    <section id="login-container">
 
-<br>
+        <div class="row">
+            <div class="col-md-3" id="login-wrapper">
+                <div class="panel panel-primary animated flipInY">
+                <h1>Welcome Back to Lemmen</h1><br>
 
-<%= form_for :user, url: '/login' do |f| %>
-<div class="row">
-  <div class="col-md-6 ">
-    <div class="col-md-6 ">
-      
-      <div class="email">
-        Email: <%= f.email_field :email, class: 'form-control' %>
-      </div>
-      <br>
-      <br>
+                    <div class="panel-heading">
+                        <h3 class="panel-title">     
+                           Sign In
+                        </h3>      
+                    </div>
+                    <div class="panel-body">
+                       <p> Login to access your account.</p>
+                           <div class="error_box">
 
-      <div class="password">
-        Password: <%= f.password_field :password, class: 'form-control' %>
-      </div>
-      <br>
-      <br>
+                            <font color="red">
+                              <h5>
+                                <% if flash[:message] %>
+                                <%= flash[:message] %>
+                                <% end %>
+                              </h5>
+                            </font>
+                          </div>
 
-      <div class="submit">
-        <%= f.submit "Log in", class: "btn btn-primary" %>
-        <% end %>
-      </div>
-      <br>
-      <br>
+                         <%= form_for :user, {:url => '/login', :class => 'form-horizontal'} do |f| %>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                  <%= f.email_field :email, class: 'form-control', placeholder: 'Email' %>
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                               <div class="col-md-12">
+                                  Password: <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
+                                    <i class="fa fa-lock"></i>
+                                    <a href="javascript:void(0)" class="help-block">Forgot Your Password?</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                               <div class="col-md-12">
+                                  <%= f.submit "Log in", class: "btn btn-primary btn-block" %>
 
-      <div class="sign_up">
-        <p>New user? <%= link_to "Sign up now!", signup_path %></p>
-      </div>
-    </div>
-  </div>
-</div>
+                                    New user? <%= link_to "Sign up now!", signup_path, class: "btn btn-default btn-block" %>
 
-</div>
+                                    <% end %>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+     <!--Global JS-->
+    <script src="assets/plugins/waypoints/waypoints.min.js"></script>
+</body>
+
+</html>
+
+</body>
+
+</html>
+

@@ -9,7 +9,9 @@ gem 'pg', '~> 0.15'
 
 gem 'd3-rails', '~> 3.5', '>= 3.5.16'
 
-gem 'bootstrap-sass', '~> 3.2.0'
+
+
+
 gem 'autoprefixer-rails'
 
 gem 'sass-rails', '~> 5.0'
@@ -46,6 +48,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+#'pretty' gem
+gem 'bootstrap-sass', '~> 3.3.6'
+
+gem "font-awesome-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

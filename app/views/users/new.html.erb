@@ -1,39 +1,84 @@
-<h1>Welcome to Lemmen</h1><br>
-<h3>Please create an account below:</h3>
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
 
-<font color="red"><% if flash[:errors] %>
-<h5><%= flash[:message] %>
-  <% flash[:errors].each do |error| %>
-  <li><%= error %></li>
-  <% end %>
-<% end %><br>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SpaceLab</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
 
-</h5></font>
+    <!-- CSS Animate -->
+    <link rel="stylesheet" href="assets/css/animate.css">
+         <!-- Off canvas menu -->
+    <link rel="stylesheet" href="assets/plugins/mmenu/jquery.mmenu.css">
+    <link rel="stylesheet" href="assets/plugins/mmenu/jquery.mmenu.positioning.css">
+    <!-- Custom styles for this theme -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <!-- Feature detection -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
 
-<div class="row">
-  <div class="col-md-6 ">
-    <div class="col-md-6 ">
-      <%= form_for :user, url: '/signup' do |f| %>
-      Email: <%= f.email_field :email, class: 'form-control' %>
-            <br>
-            <br>
+<body class="animated fadeIn">
+    <section id="login-container">
 
-      Password: <%= f.password_field :password, class: 'form-control' %>
-            <br>
-            <br>
+        <div class="row">
+            <div class="col-md-3" id="login-wrapper">
+                <div class="panel panel-primary animated flipInY">
+                    <div class="panel-heading">
+                          <p>Welcome to Lemmen</p>
 
-      Password Confirmation: <%= f.password_field :password_confirmation, class: 'form-control'%><br><br>
+                          <h3 class="panel-title">     
+                           Sign Up
+                        </h3>  
+                    </div>
+                    <div class="panel-body">
+                        <p >Already a member? <strong><%= link_to "Sign In", login_path %></strong></p> 
+                          <font color="red"><% if flash[:errors] %>
+                          <h5><%= flash[:message] %>
+                            <% flash[:errors].each do |error| %>
+                            <li><%= error %></li>
+                            <% end %>
+                          <% end %>
+                          <%= form_for :user, url: '/signup' do |f| %>
+                            <div class="form-group">
+                              <%= f.email_field :email, class: 'form-control', placeholder: 'Enter your email' %>
+                            </div>
+                             <div class="form-group">
+                             <%= f.password_field :password, class: 'form-control', placeholder: "Password"%>
+                            </div>
+                              <div class="form-group">
+                                <%= f.password_field :password_confirmation, class: 'form-control', placeholder: "Retype your password"%><br><br>
+                            </div>
+                       
+                          <%= f.submit "Sign up", class: "btn btn-primary btn-block" %>
+                        <% end %>
 
-      <%= f.submit "Sign up", class: "btn btn-primary" %>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+    </section>
+    <!--Global JS-->
+    <script src="assets/plugins/waypoints/waypoints.min.js"></script>
+</body>
 
-      
-      <br>
-      <br>
+</html>
 
-      <p>Already have an account? <%= link_to "Login now!", login_path %></p>
-
-<% end %>
-</div>
-</div>
-</div>
