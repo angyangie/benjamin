@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   get 'graph/index'
   get 'graph/data', :defaults => { :format => 'json' }
+  post 'graph/data', to: 'graph#data'
 
   get '/users/data', :defaults => { :format => 'json' }
 end

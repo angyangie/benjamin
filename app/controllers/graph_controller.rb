@@ -3,10 +3,9 @@ class GraphController < ApplicationController
   end
 
   def data
-    # respond_to do |format|
-    #   format.json {
-    #     render :json => [1,2,3,4,5]
-    #   }
-    # end
+    @user = User.find(session[:user_id])
+    respond_to do |format|
+      format.js
+    end
   end
 end
