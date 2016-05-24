@@ -152,7 +152,7 @@
             </div>
 
             <div class="tRow expenses child variable" id="cleaning supplies & maids">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Cleaning Supplies & Maids</div>
+              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Cleaning Supplies</div>
               <% table_data.each do |m| %>
               <% x = m[m.keys.first]["Cleaning Supplies & Maids"] %>
               <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>

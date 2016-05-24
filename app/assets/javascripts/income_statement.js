@@ -11,47 +11,65 @@ function hideYoKids(){
 
 function showSubcategories(){
   $('div.root.income').on('click', function(){
-    $(this).addClass('success')
-    $('div.root.expenses').addClass('danger')
-    $('div.subcategory.income').slideToggle()
+    if($(this).hasClass('root-inc-clicked')){
+      $(this).removeClass('root-inc-clicked')
+      $('div.subcategory.income').slideUp()
+    } else {
+      $(this).addClass('root-inc-clicked')
+      $('div.subcategory.income').slideDown()
+    }
   })
+
   $('div.root.expenses').on('click', function(){
-    $(this).addClass('danger')
-    $('div.root.income').addClass('success')
-    $('div.subcategory.expenses').slideToggle()
+    if($(this).hasClass('root-exp-clicked')){
+      $(this).removeClass('root-exp-clicked')
+      $('div.leaves.expenses').slideUp()
+      $('div.child.expenses').slideUp()
+      $('div.subcategory.expenses').slideUp()
+    } else {
+      $(this).addClass('root-exp-clicked')
+      $('div.subcategory.expenses').slideDown()
+    }
   })
+
   $('div#fixed').on('click', function(){
     $('div.child.fixed').slideToggle()
-    addActive()
+    addActive(this)
   })
+
   $('div#variable').on('click', function(){
     $('div.child.variable').slideToggle()
-    addActive()
+    addActive(this)
   })
+
   $('div#discretionary').on('click', function(){
     $('div.child.discretionary').slideToggle()
-    addActive()
+      addActive(this)
   })
+
   $('div#life').on('click', function(){
     $('div.child.life').slideToggle()
-    addActive()
+      addActive(this)
   })
+
   $('div#other-exp').on('click', function(){
     $('div.child.other-exp').slideToggle()
-    addActive()
+      addActive(this)
   })
+
   $('div#total-food').on('click', function(){
     $(this).toggleClass('active')
+    addActive(this)
     $('div.leaves.food').slideToggle()
   })
 }
 
-function addActive(){
-  $('div#fixed').addClass('active')
-  $('div#variable').addClass('active')
-  $('div#discretionary').addClass('active')
-  $('div#life').addClass('active')
-  $('div#other-exp').addClass('active')
+function addActive(selection){
+  if($(selection).hasClass('active')){
+      $(selection).removeClass('active')
+    } else {
+      $(selection).addClass('active')
+    }
 }
 
 function childCheck(){
