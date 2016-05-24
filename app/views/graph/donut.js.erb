@@ -1,0 +1,32 @@
+var data = []
+
+
+<%  donut_data = [ %>
+<%	{"label":"Discretionary", "color":"#3366CC", "value": 0},%>
+<%	{"label":"Recurring", "color":"#DC3912", "value": 0},    %>
+<%	{"label":"Life", "color":"#FF9900", "value": 0},         %>
+<%	{"label":"Other", "color":"#02D1CE", "value": 0},        %>
+<%	{"label":"Special", "color":"#990099", "value": 0},      %>
+<%  {"label":"Variable", "color":"#109618", "value": 0}]     %>
+
+<% table_data = IncomeStatement.monthly_view(@user.id) %>
+<% table_data.each_with_index do |m, i| %>
+
+    <% donut_data.each do |expense| %>
+      <% case expense["label"] %>
+      <% when "Discretionary" %>
+        <% expense["value"] = m[i]["Discretionary"] %>
+      <% when "Recurring" %>
+        <% expense["value"] = m[i]["Recurring"] %>
+      <% when "Life" %>
+        <% expense["value"] = m[i]["Life"] %>
+      <% when "Other" %>
+        <% expense["value"] = m[i]["Other"] %>
+      <% when "Special" %>
+        <% expense["value"] = m[i]["Special"] %>
+      <% when "Variable" %>
+        <% expense["value"] = m[i]["Variable"] %>
+      <% end %>
+    <% end %>
+    <%= binding.pry %>
+  <% end %>
