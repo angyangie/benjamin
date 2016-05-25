@@ -448,9 +448,10 @@
       
         <div class="tRow root expenses">
           <div class="tCell row-label">Total Expenses</div>
-            <% table_data.each do |m| %>
-            <div class="tCell"><%= number_to_currency(m[m.keys.first]["Expenses"], {precision: 0, negative_format: "(%u%n)"}) %></div>
-            <% end %>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Expenses"] %>
+          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <% end %>
           </div>
 
       <!-- End Expenses -->
