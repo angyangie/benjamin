@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
 
+<!DOCTYPE html>
+
+<html class="no-js">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +14,7 @@
         <header id="header">
             <!--logo start-->
             <div class="brand">
-            <span><%= link_to "Lemmen", user_path, class: :"logo" %></span>
+            <span><%= link_to "Lemmen", user_path(@user), class: :"logo" %></span>
             </div>
             <!--logo end-->
             <div class="toggle-navigation toggle-left">
@@ -197,83 +193,17 @@
         <!--main content start-->
         <section class="main-content-wrapper">
             <section id="main-content">
-                <!--tiles start-->
-                <div class="row">
-                    <div class="col-md-3 col-sm-6">
-                        <div class="dashboard-tile detail tile-red">
-                            <div class="content">
-                                <h1 class="text-left timer" data-from="0" data-to="180" data-speed="2500"> </h1>
-                                <p>Total Debt</p>
-                            </div>
-                            <div class="icon"><i class="fa fa-minus-square-o"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="dashboard-tile detail tile-turquoise">
-                            <div class="content">
-                                <h1 class="text-left timer" data-from="0" data-to="56" data-speed="2500"> </h1>
-                                <p>Total Cash</p>
-                            </div>
-                            <div class="icon"><i class="fa fa-dollar"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="dashboard-tile detail tile-blue">
-                            <div class="content">
-                                <h1 class="text-left timer" data-from="0" data-to="32" data-speed="2500"> </h1>
-                                <p>Weekly Spending v. Budget</p>
-                            </div>
-                            <div class="icon"><i class="fa fa-line-chart"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="dashboard-tile detail tile-purple">
-                            <div class="content">
-                                <h1 class="text-left timer" data-to="105" data-speed="2500"> </h1>
-                                <p> Monthly Spending v. Budget</p>
-                            </div>
-                            <div class="icon"><i class="fa fa-area-chart"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--tiles end-->
-                <!--charts space start -->
-                <div class="row">
-                  <div class="col-md-6" id="pie-chart">
-                  </div>
-                </div>
-                <!--charts end -->
-                <!--dashboard charts and income statementstart-->
-                <div class="row">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div>
-                                <%= link_to "Update All Accounts", {controller: "plaidapi", action: "update_accounts"}, method: "patch" %>
-                            </div>
-                            <%= render "income_statement_divs" %>
-                        </div>
-                    </div>
-                </div>
+              <div>
+                 <ul class="transaction-list">
+                  <% @transactions.each do |t| %>
+                    <h3><%= t.trans_name %></h3>
+                    <li class="t-attr"><%= t.category.name %></li>
+                    <li class="t-attr"><%= number_to_currency(t.amount) %></li><br><br>
+                  <% end %>
+                </ul>
+             </div>
             </section>
         </section>
     </div>
-    <!--main content end-->
-
-    <!--Global JS-->
-    <!-- <script src="assets/js/jquery-1.10.2.min.js"></script>
-    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/application.js"></script>
-    <script src="assets/plugins/navgoco/jquery.navgoco.min.js"></script>
-    <script src="assets/plugins/waypoints/waypoints.min.js"></script> -->
-
-    <!--Page Level JS-->
-    <!-- <script src="assets/plugins/countTo/jquery.countTo.js"></script>
-    <script type="text/javascript" src="income_statement.js"></script> -->
 
 </body>
-
-</html>
