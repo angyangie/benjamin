@@ -8,8 +8,8 @@
       <div class="tHead">
         <div class="tRow">
           <div class="tCell tHeader row-label"></div>
-          <% TimePeriod.monthly.each do |m| %>
-          <div class="tCell tHeader"><%= m.first.strftime('%b') %></div>
+          <% TimePeriod.monthly.each_with_index do |m, i| %>
+          <div class="tCell tHeader month"><%= link_to m.first.strftime('%b'), users_piechart_path(:month => i + 1), method: :post, remote: true%></div>
           <% end %>
         </div>
       </div>
