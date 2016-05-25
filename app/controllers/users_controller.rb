@@ -24,8 +24,8 @@ before_action :set_user, only: [:show, :edit, :update, :destroy, :data]
         end
   end
 
-  def edit
 
+  def edit
   end
 
   def update
@@ -46,13 +46,20 @@ before_action :set_user, only: [:show, :edit, :update, :destroy, :data]
     @user = User.find(session[:user_id])
   end
 
+  def piechart
+    @month = params[:month].to_i
+    @user = User.find(session[:user_id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def data
     respond_to do |format|
       format.json {
         render :json
       }
     end
-
   end
 
   private

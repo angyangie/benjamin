@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
 
   root 'home#index'
-
-  resources :users, except: [:new, :create, :index, :edit, :update]
+  post '/users/piechart', to: 'users#piechart'
+  resources :users, except: [:new, :create] do
+    resources :transactions, only: [:index, :show, :edit, :update]
+  end
 
   get '/signup', to: 'users#new', as: 'signup'
   post '/signup', to: 'users#create', as: 'create'
