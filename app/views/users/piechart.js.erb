@@ -1,4 +1,8 @@
-<% table_data = IncomeStatement.monthly_view(@user.id) %>
+<% ytd_data = IncomeStatement.year_to_date(@user.id) %>
+<% budget_data = IncomeStatement.budget(@user.id) %>
+<% ltm_data = IncomeStatement.last_twelve_months(@user.id) %>
+
+<% table_data = ytd_data.values.first + budget_data.values.first %>
 <% month_data = table_data[@month - 1][@month] %>
 
 var dataset = []
