@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root 'home#index'
   patch '/users/accounts', to: 'plaidapi#update_accounts'
   post '/users/piechart', to: 'users#piechart'
-  resources :users, except: [:new, :create]
+  resources :users, except: [:new, :create] do
+    resources :transactions, only: [:index, :show, :edit, :update]
+  end
 
   get '/signup', to: 'users#new', as: 'signup'
   post '/signup', to: 'users#create', as: 'create'
@@ -19,4 +21,5 @@ Rails.application.routes.draw do
   post 'graph/data', to: 'graph#data'
 
   get '/users/data', :defaults => { :format => 'json' }
+
 end
