@@ -11,6 +11,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Lemmen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <style>
+    .incomeLine {
+      fill:none;
+      stroke:green;
+      stroke-width:2px;
+    }
+    .expenseLine {
+      fill:none;
+      stroke:red;
+      stroke-width:2px;
+    }
+    </style>
 </head>
 
 <body class="off-canvas">
@@ -243,7 +255,11 @@
                 <!--tiles end-->
                 <!--charts space start -->
                 <div class="row">
-                  <div class="col-md-6" id="pie-chart">
+                  <div class="col-md-9" id="line-graph">
+                  </div>
+                  <div class="col-md-3" id="pie-chart">
+                    <svg id="pie-chart-svg">
+                    </svg>
                   </div>
                 </div>
                 <!--charts end -->
@@ -273,7 +289,14 @@
     <!--Page Level JS-->
     <!-- <script src="assets/plugins/countTo/jquery.countTo.js"></script>
     <script type="text/javascript" src="income_statement.js"></script> -->
-
+<script>
+  $(document).ready(function() {
+    $.ajax ({
+      url: '/users/linegraph',
+      method: 'post'
+    }).done(console.log("done"))
+  })
+</script>
 </body>
 
 </html>

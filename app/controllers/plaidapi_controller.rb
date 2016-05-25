@@ -6,7 +6,7 @@ class PlaidapiController < ApplicationController
     public_token = PublicToken.find_or_create_by(token: params[:public_token])
 
     #2 save public token to user's cashflow account
-    save_public_token(public_token) if session[:user_id]
+    save_public_token(public_token)
 
     #3 Exchange the Link public_token for a Plaid API access token
     exchange_token_response = Argyle.plaid_client.exchange_token(public_token.token)

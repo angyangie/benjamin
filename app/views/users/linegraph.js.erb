@@ -1,7 +1,8 @@
+alert("start")
 var data = []
 var format = d3.time.format("%Y-%m")
-var abbrevMonthFormat = d3.time.format("%b");
-alert("start")
+var abbrevMonthFormat = d3.time.format("%b")
+
 <% ytd_data = IncomeStatement.year_to_date(@user.id) %>
 <% budget_data = IncomeStatement.budget(@user.id) %>
 <% ltm_data = IncomeStatement.last_twelve_months(@user.id) %>
@@ -15,7 +16,6 @@ alert("start")
   line_hash["inc"] = <%= hash_obj.Income %>
   data.push(line_hash)
 <% end %>
-console.log(data)
 
 $(function() {
   var margin = {top: 20, right: 20, bottom: 30, left: 50},
@@ -32,6 +32,9 @@ $(function() {
 
   var xAxis = d3.svg.axis()
       .scale(x)
+      .ticks(d3.time.months)
+      .tickFormat(function(d, i){
+        return abbrevMonthFormat(d)})
       .orient("bottom");
 
   var yAxis = d3.svg.axis()
@@ -46,14 +49,14 @@ $(function() {
       .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d.inc); });
 
-var svg = d3.select("#chart").append("svg")
+  var svg = d3.select("#line-graph").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([
+    y.domain([-5000, 5000,
       d3.min(data, function(d) {
         if (d.inc < d.exp){return d.inc} else {return d.exp}
     }),
@@ -80,20 +83,11 @@ var svg = d3.select("#chart").append("svg")
 
     svg.append("path")
         .data([data])
-        .attr("class", "line1")
+        .attr("class", "incomeLine")
         .attr("d", incLine);
 
     svg.append("path")
         .datum(data)
-        .attr("class", "line2")
+        .attr("class", "expenseLine")
         .attr("d", expLine);
-
-
-function type(d) {
-  d.date = abbrevMonthFormat.parse(d.date);
-  d.exp = +d.exp;
-  d.inc = +d.inc;
-  return d;
-}
-
-})
+      })

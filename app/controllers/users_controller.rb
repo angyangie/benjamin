@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 before_action :set_user, only: [:show, :edit, :update, :destroy, :data]
+skip_before_action :verify_authenticity_token, only: [:linegraph]
 
   def new
   end
@@ -24,6 +25,13 @@ before_action :set_user, only: [:show, :edit, :update, :destroy, :data]
 
   def piechart
     @month = params[:month].to_i
+    @user = User.find(session[:user_id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def linegraph
     @user = User.find(session[:user_id])
     respond_to do |format|
       format.js
