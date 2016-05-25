@@ -1,0 +1,60 @@
+<% table_data = IncomeStatement.monthly_view(@user.id) %>
+<% month_data = table_data[@month - 1][@month] %>
+
+var dataset = []
+console.log(dataset)
+dataset[0] = {}; dataset[1] = {}; dataset[2] = {}; dataset[3] = {}; dataset[4] = {}; dataset[5] = {}
+dataset[0]["label"] = "Fixed & Recurring"; dataset[0]["count"] = Math.abs(<%= month_data["Fixed & Recurring"]%>)
+dataset[1]["label"] = "Variable"; dataset[1]["count"] = Math.abs(<%= month_data["Variable"]%>)
+dataset[2]["label"] = "Discretionary"; dataset[2]["count"] = Math.abs(<%= month_data["Discretionary"]%>)
+dataset[3]["label"] = "Life"; dataset[3]["count"] = Math.abs(<%= month_data["Life"]%>)
+dataset[4]["label"] = "Other"; dataset[4]["count"] = Math.abs(<%= month_data["Other"]%>)
+dataset[5]["label"] = "Uncategorized"; dataset[5]["count"] = Math.abs(<%= month_data["Special"]%>)
+console.log(dataset)
+
+var test = d3.select('svg')
+if (test[0][0] == null) {
+  var width = 300;
+  var height = 300;
+  var radius = Math.min(width, height) / 2;
+
+  var color = d3.scale.category20b();
+
+  var svg = d3.select('#pie-chart')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .append('g')
+    .attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')');
+
+  var arc = d3.svg.arc()
+  .outerRadius(radius);
+
+  var pie = d3.layout.pie()
+    .value(function(d) {return d.count;})
+    .sort(null);
+
+  var path = svg.selectAll('path')
+    .data(pie(dataset))
+    .enter()
+    .append('path')
+    .attr('d', arc)
+    .attr('fill', function(d, i) { 
+      return color(d.data.label);
+    })
+    .each(function(d) { this._current = d});
+} else {
+  console.log("semi-working?")
+  var path2 = d3.select('svg')
+    .selectAll('path')
+    .data(pie(dataset));
+  path2.transition()
+    .duration(750)
+    .attrTween('d', function(d) {
+      var interpolate = d3.interpolate(this._current, d);
+      this._current = interpolate(0);
+      return function(t) {
+        return arc(interpolate(t));
+      };
+    });
+    }
