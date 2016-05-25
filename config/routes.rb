@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   root 'home#index'
   patch '/users/accounts', to: 'plaidapi#update_accounts'
+  post '/users/piechart', to: 'users#piechart'
   resources :users, except: [:new, :create]
 
   get '/signup', to: 'users#new', as: 'signup'

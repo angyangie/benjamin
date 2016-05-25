@@ -22,8 +22,15 @@ before_action :set_user, only: [:show, :edit, :update, :destroy, :data]
         end
   end
 
-  def show
+  def piechart
+    @month = params[:month].to_i
+    @user = User.find(session[:user_id])
+    respond_to do |format|
+      format.js
+    end
+  end
 
+  def show
   end
 
   def data

@@ -14,8 +14,8 @@
           <% ltm_period = TimePeriod.last_twelve_months %>
           <% current_view_period = ytd_period + budget_period %>
 
-          <% current_view_period.each do |m| %>
-          <div class="tCell tHeader"><%= m.first.strftime('%b') %></div>
+          <% current_view_period.each_with_index do |m, i| %>
+          <div class="tCell tHeader month"><%= link_to m.first.strftime('%b'), users_piechart_path(:month => i + 1), method: :post, remote: true%></div>
           <% end %>
         </div>
       </div>
