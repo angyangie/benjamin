@@ -202,7 +202,7 @@
                     <div class="col-md-3 col-sm-6">
                         <div class="dashboard-tile detail tile-red">
                             <div class="content">
-                                <h1 class="text-left timer" data-from="0" data-to="180" data-speed="2500"><%= number_to_currency(@user.total_debt, {precision: 0, negative_format: "(%u%n)"}) %></h1>
+                                <h1 class="total-debt-box"><%= number_to_currency(@user.total_debt, {precision: 0, negative_format: "(%u%n)"}) %></h1>
                                 <p>Total Debt</p>
                             </div>
                             <div class="icon"><i class="fa fa-minus-square-o"></i>
@@ -212,7 +212,7 @@
                     <div class="col-md-3 col-sm-6">
                         <div class="dashboard-tile detail tile-turquoise">
                             <div class="content">
-                                <h1 class="text-left timer" data-from="0" data-to="56" data-speed="2500"><%= number_to_currency(@user.total_cash, {precision: 0, negative_format: "(%u%n)"}) %></h1>
+                                <h1 class="total-cash-box"><%= number_to_currency(@user.total_cash, {precision: 0, negative_format: "(%u%n)"}) %></h1>
                                 <p>Total Cash</p>
                             </div>
                             <div class="icon"><i class="fa fa-dollar"></i>
@@ -222,8 +222,8 @@
                     <div class="col-md-3 col-sm-6">
                         <div class="dashboard-tile detail tile-blue">
                             <div class="content">
-                                <h1 class="text-left timer" data-from="0" data-to="32" data-speed="2500"> </h1>
-                                <p>Weekly Spending v. Budget</p>
+                                <h1 class="weekly-budget-box"><%= number_to_currency(@user.weekly_budget, {precision: 0, negative_format: "(%u%n)"}) %></h1>
+                                <p>Weekly Spending</p>
                             </div>
                             <div class="icon"><i class="fa fa-line-chart"></i>
                             </div>
@@ -232,8 +232,8 @@
                     <div class="col-md-3 col-sm-6">
                         <div class="dashboard-tile detail tile-purple">
                             <div class="content">
-                                <h1 class="text-left timer" data-to="105" data-speed="2500"> </h1>
-                                <p> Monthly Spending v. Budget</p>
+                                <h1 class="monthly-budget-box"><%= number_to_currency(@user.monthly_budget, {precision: 0, negative_format: "(%u%n)"}) %></h1>
+                                <p> Monthly Spending</p>
                             </div>
                             <div class="icon"><i class="fa fa-area-chart"></i>
                             </div>
@@ -254,10 +254,50 @@
                             <div>
                                 <%= link_to "Update All Accounts", {controller: "plaidapi", action: "update_accounts"}, method: "patch" %>
                             </div>
-                            <%= render "income_statement_divs" %>
+                                <%= render "income_statement_divs" %>
+                            <div>
+                            <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#budetModel">
+                                  + Add a budget
+                                </button>
+
+                            <!-- Modal -->
+                                <div class="modal fade" id="budetModel" tabindex="-1" role="dialog" aria-labelledby="budetModelLabel">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-budget" id="add-budget">Budget</h4>
+                                        <p>Add a monthly budget amount and select a category</p>
+                                      </div>
+                                      <div class="modal-body">
+                                        <%= form_for Budget.new do |f| %>
+                                          <%= f.label :amount %>
+                                          <%= f.text_field :amount, placeholder: '$0' %>
+
+                                          <%= f.label :category %>
+                                          <%= f.collection_select :category_id, Category.all, :id, :name, prompt: true %>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <%= f.submit "Save Budget", class: 'btn btn-success', controller: 'budgets', action: 'create', remote: true %>
+                                        <% end %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                                  
+                        </div>
+                    </div>
+                </div>
+
             </section>
         </section>
     </div>

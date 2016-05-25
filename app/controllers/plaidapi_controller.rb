@@ -1,12 +1,11 @@
 class PlaidapiController < ApplicationController
-  skip_before_action :require_login
 
   def add_account
     #1 generate a public token for the user
     public_token = PublicToken.find_or_create_by(token: params[:public_token])
 
     #2 save public token to user's cashflow account
-    save_public_token(public_token) if session[:user_id]
+    save_public_token(public_token)
 
     #3 Exchange the Link public_token for a Plaid API access token
     exchange_token_response = Argyle.plaid_client.exchange_token(public_token.token)
@@ -24,7 +23,14 @@ class PlaidapiController < ApplicationController
 
   def update_accounts
     @user = User.find(session[:user_id])
-    Transaction.all_account_refresh(@user)
+    @user.public_tokens.each do |t|
+      if exchange_token_response = Argyle.plaid_client.exchange_token(t.token)
+        updated_response = HTTParty.post('https://tartan.plaid.com/connect/get', :body => {"client_id" => ENV["CLIENT_ID"], "secret" => ENV["SECRET"], "access_token" => exchange_token_response.access_token})
+        user_obj = Hashie::Mash.new(updated_response)
+        Transaction.update_accounts(user_obj.accounts, t)
+        Transaction.update_transactions(user_obj.transactions, @user)
+      end
+    end
     redirect_to @user
   end
 

@@ -61,7 +61,7 @@ class Category < ActiveRecord::Base
     Category.create!(name: "Interest & Fees", parent: other, default: true)
     
     # #special & untagged
-    # Category.create!(name: "Tag", parent: specialexp, default: true)
+    Category.create!(name: "Tag", parent: specialexp, default: true)
     
     #variable level three
     Category.create!(name: "Cars & Vehicles", parent: variable, default: true)

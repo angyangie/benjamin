@@ -39,10 +39,20 @@ class User < ActiveRecord::Base
     end
   end
 
-  def weekly_spending
+  def weekly_budget
+    if transactions.nil?
+      ""
+    else
+      transactions.where(date: Date.today.beginning_of_week..Date.today.end_of_week).sum(:amount)
+    end
   end
 
-  def monthly_spending
+  def monthly_budget
+    if transactions.nil?
+      ""
+    else
+      transactions.where(date: Date.today.beginning_of_month..Date.today.end_of_month).sum(:amount)
+    end
   end
   
 end
