@@ -24,7 +24,7 @@ class TimePeriod < ActiveRecord::Base
     return month_array
   end
 
-  def self.to_year_end
+  def self.budget
     month_array = []
     x = @today.month + 1
     while x <= 12

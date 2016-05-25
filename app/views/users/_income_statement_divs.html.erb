@@ -8,14 +8,25 @@
       <div class="tHead">
         <div class="tRow">
           <div class="tCell tHeader row-label"></div>
-          <% TimePeriod.monthly.each_with_index do |m, i| %>
+          
+          <% ytd_period = TimePeriod.year_to_date %>
+          <% budget_period = TimePeriod.budget %>
+          <% ltm_period = TimePeriod.last_twelve_months %>
+          <% current_view_period = ytd_period + budget_period %>
+
+          <% current_view_period.each_with_index do |m, i| %>
           <div class="tCell tHeader month"><%= link_to m.first.strftime('%b'), users_piechart_path(:month => i + 1), method: :post, remote: true%></div>
           <% end %>
         </div>
       </div>
 
       <div class="tBody">
-        <% table_data = IncomeStatement.monthly_view(@user.id) %>
+
+        <% ytd_data = IncomeStatement.year_to_date(@user.id) %>
+        <% budget_data = IncomeStatement.budget(@user.id) %>
+        <% ltm_data = IncomeStatement.last_twelve_months(@user.id) %>
+
+        <% table_data = ytd_data.values.first + budget_data.values.first %>
 
       <!-- Begin Income -->
       <!-- Begin Income Subcategories -->
