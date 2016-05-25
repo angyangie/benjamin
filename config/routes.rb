@@ -11,12 +11,14 @@ Rails.application.routes.draw do
   get '/update/:id', to: 'users#edit', as: 'edit'
   patch '/update/:id', to: 'users#update', as: 'user_update'
 
+  resources :budgets, except: [:index]
+
   get '/login', to: 'sessions#new', as: 'login'
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
 
   post '/users/accounts', to: 'plaidapi#add_account'
-  patch '/users/accounts', to: 'plaidapi#update_accounts'
+  patch '/user/:id/update_accounts', to: 'plaidapi#update_accounts'
 
   get 'graph/index'
   get 'graph/data', :defaults => { :format => 'json' }

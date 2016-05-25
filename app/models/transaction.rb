@@ -110,16 +110,6 @@ class Transaction < ActiveRecord::Base
     end
   end
 
-  def self.all_account_refresh(user)
-    user.public_tokens.each do |token|
-      exchange_token_response = Argyle.plaid_client.exchange_token(token.token)
-      updated_response = HTTParty.post('https://tartan.plaid.com/connect/get', :body => {"client_id" => ENV["CLIENT_ID"], "secret" => ENV["SECRET"], "access_token" => exchange_token_response.access_token})
-      user_obj = Hashie::Mash.new(updated_response)
-      Transaction.update_accounts(user_obj.accounts, token)
-      Transaction.update_transactions(user_obj.transactions, @user)
-    end
-  end
-
   def self.update_accounts(user_accounts, public_token)
     user_accounts.each do |acct|
       account = Account.find_by(plaid_acct_id: acct._id)
