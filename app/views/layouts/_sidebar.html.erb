@@ -1,0 +1,45 @@
+ <!--sidebar left start-->
+        <nav class="sidebar sidebar-left">
+            <h5 class="sidebar-header">Navigation</h5>
+            <ul class="nav nav-pills nav-stacked">
+
+
+                  <br>
+                  <center>
+                  <%= plaid_link(name:@user.email, action:'accounts', data: {longtail: true}) %>
+                    <i class="fa fa-table"></i>
+                    </center>
+
+
+                <li class="nav-dropdown">
+                    <%= link_to user_path(@user) do %>
+                        <i class="fa fa-television"></i>Dashboard
+                    <% end %>
+                </li>
+
+
+                <li class="nav-dropdown">
+                    <%= link_to edit_path(@user) do %>
+                    <i class="fa fa-table"></i> Profile
+                    <% end %>
+
+                </li>
+
+
+                <li class="nav-dropdown">
+                   <!--  <%#= link_to user_edit_path(@user) do %> -->
+                    <i class="fa fa-usd"></i> Transactions
+                    <%# end %>
+
+                </li>
+
+                <li class="nav-dropdown">
+                    <%#= link_to profile_path(@user) do %>
+                        <i class="fa fa-university"></i> Accounts
+                    <%# end %>
+                </li>
+                
+                    </ul>
+
+        </nav>
+        <!--sidebar left end-->

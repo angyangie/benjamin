@@ -29,8 +29,9 @@ class IncomeStatement < ActiveRecord::Base
           end
         end  
       end
-
-      category_totals[month.first.month]["Net"] = (category_totals[month.first.month]["Income"] + category_totals[month.first.month]["Expenses"])
+      category_totals[month.first.month]["Income"].nil? ? i = 0 : i = category_totals[month.first.month]["Income"]
+      category_totals[month.first.month]["Expenses"].nil? ? e = 0 : e = category_totals[month.first.month]["Expenses"]
+      category_totals[month.first.month]["Net"] = i + e
       array_range << category_totals
     end
     return array_range
