@@ -7,49 +7,43 @@
 <!--<![endif]-->
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Lemmen</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Lemmen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 
 <body class="off-canvas">
-        
-            <%= render template: "layouts/_header" %>
 
-            <%= render template: "layouts/_sidebar" %>
-
-               
-        <!--main content start-->
-        <section class="main-content-wrapper">
-            <section id="main-content">
-            <%= render template: "layouts/_tiles_top" %>
-
-              <div>
-
-              <table class="table table-striped">
-                  <thead class="thead-inverse">
-                      <tr>
-                          <th>Date</th>
-                          <th>Transaction</th>
-                          <th>Amount</th>
-                          <th>Category</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                    <% @transactions.each do |t| %>
-                    <tr>
-                        <td><%= t.date %></td>
-                        <td><%= t.trans_name %></td>
-                        <td><%= number_to_currency(t.amount) %></td>
-                        <td><%= t.category.name %></td>
-                    </tr>
-                    <% end %>
-                  </tbody>
-              </table>
-
-             </div>
-            </section>
-        </section>
-
+  <%= render template: "layouts/_header" %>
+  <%= render template: "layouts/_sidebar" %>
+  
+  <!--main content start-->
+  <section class="main-content-wrapper">
+    <section id="main-content">
+      <%= render template: "layouts/_tiles_top" %>
+      <div>
+        <table class="table table-striped">
+          <thead class="thead-inverse">
+            <tr>
+              <th>Date</th>
+              <th>Transaction</th>
+              <th>Amount</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @transactions.each do |t| %>
+            <tr>
+              <td><%= t.date %></td>
+              <td><%= t.trans_name %></td>
+              <td><%= number_to_currency(t.amount) %></td>
+              <td><%= t.category.name %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
 </body>
