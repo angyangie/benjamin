@@ -99,7 +99,14 @@
     <!--Page Level JS-->
     <!-- <script src="assets/plugins/countTo/jquery.countTo.js"></script>
     <script type="text/javascript" src="income_statement.js"></script> -->
-
+    +<script>
+   $(document).ready(function() {
+     $.ajax ({
+       url: '/users/linegraph',
+       method: 'post'
+     }).done(console.log("done"))
+   })
+ </script>
 </body>
 
 </html>
