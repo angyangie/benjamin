@@ -18,7 +18,6 @@
 
 //= require bootstrap-sprockets
 //= require d3
-//= require turbolinks
 
 //= require application.js
 //= require html5shiv.js
