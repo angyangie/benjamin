@@ -106,6 +106,10 @@
     $(function(){
         hideYoKids()
         showSubcategories()
+        $.ajax ({
+             url: '/users/linegraph',
+             method: 'post'
+           }).done(console.log("done"))
     })
     </script>
 </body>
