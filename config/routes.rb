@@ -2,8 +2,7 @@ Rails.application.routes.draw do
 
   root 'home#index'
   post '/users/piechart', to: 'users#piechart'
-
-
+  post '/users/linegraph', to: 'users#linegraph'
 
   resources :users, except: [:new, :create] do
     resources :transactions, only: [:index, :show, :edit, :update]
