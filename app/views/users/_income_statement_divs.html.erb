@@ -73,13 +73,8 @@
 
       <!-- End Income Subcategories -->
 
-        <div class="tRow table-success income root">
-          <div class="tCell row-label">Total Income</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Income"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
+       
+       
       
       <!-- End Income -->
       <!-- Begin Expenses -->
