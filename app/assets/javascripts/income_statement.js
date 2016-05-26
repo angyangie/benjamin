@@ -20,7 +20,8 @@ function showSubcategories(){
     }
   })
 
-  $('div.root.expenses').on('click', function(){
+  $('div.root.expenses').on('click', function(e){
+    e.stopPropagation
     if($(this).hasClass('root-exp-clicked')){
       $(this).removeClass('root-exp-clicked')
       $('div.leaves.expenses').slideUp()
@@ -75,5 +76,5 @@ function addActive(selection){
 function childCheck(){
   if($('div.child').attr('style') === "display: none;") {
     addActive()
-  } 
+  }
 }
