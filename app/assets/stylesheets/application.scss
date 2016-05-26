@@ -1,3 +1,5 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
 @import "css/animate.css";
 @import "css/main.css";
 @import "css/simple-line-icons.css";
@@ -9,6 +11,5 @@
 
 @import "plugins/morris/css/morris.css";
 
-@import "bootstrap-sprockets";
-@import "bootstrap";
+
 @import "users.scss"

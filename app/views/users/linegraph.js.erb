@@ -62,12 +62,12 @@ $(function() {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([-5000, 5000,
+    y.domain([
       d3.min(data, function(d) {
-        if (d.inc < d.exp){return d.inc} else {return d.exp}
+        if (d.inc < d.exp){return d.inc - 3000} else {return d.exp - 3000}
     }),
       d3.max(data, function(d) {
-        if (d.inc > d.exp){return d.inc} else {return d.exp}
+        if (d.inc > d.exp){return d.inc + 3000} else {return d.exp + 3000}
     })]);
 
 
