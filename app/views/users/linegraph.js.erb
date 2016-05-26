@@ -1,4 +1,4 @@
-alert("start")
+// alert("start")
 var data = []
 var format = d3.time.format("%Y-%m")
 var abbrevMonthFormat = d3.time.format("%b")
@@ -17,12 +17,18 @@ var abbrevMonthFormat = d3.time.format("%b")
   data.push(line_hash)
 <% end %>
 
+
 $(function() {
   var margin = {top: 20, right: 20, bottom: 30, left: 50},
       width = 720 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
 
-
+  function make_x_axis() {
+    return d3.svg.axis()
+        .scale(x)
+        .orient('bottom')
+        .ticks(data.length)
+  }
 
   var x = d3.time.scale()
       .range([0, width]);
@@ -32,7 +38,7 @@ $(function() {
 
   var xAxis = d3.svg.axis()
       .scale(x)
-      .ticks(d3.time.months)
+      .ticks(data.length)
       .tickFormat(function(d, i){
         return abbrevMonthFormat(d)})
       .orient("bottom");
@@ -90,4 +96,11 @@ $(function() {
         .datum(data)
         .attr("class", "expenseLine")
         .attr("d", expLine);
+
+    svg.append('g')
+        .attr('class', 'grid')
+        .attr('transform','translate(0,' + height + ')')
+        .call(make_x_axis()
+          .tickSize(-height,0,0)
+          .tickFormat(""))
       })

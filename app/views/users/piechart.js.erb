@@ -16,8 +16,14 @@ dataset[4]["label"] = "Other"; dataset[4]["count"] = Math.abs(<%= month_data["Ot
 dataset[5]["label"] = "Uncategorized"; dataset[5]["count"] = Math.abs(<%= month_data["Special"]%>)
 console.log(dataset)
 
-var test = d3.select('svg')
-if (test[0][0] == null) {
+$.each(dataset, function(index,value) {
+  if (isNaN(value["count"])) {
+    value["count"] = 0;
+  }
+})
+
+var test = d3.select('svg#pie-chart-svg').selectAll('g')
+if (test[0].length == 0) {
   var width = 300;
   var height = 300;
   var radius = Math.min(width, height) / 2;
@@ -48,7 +54,7 @@ if (test[0][0] == null) {
     .each(function(d) { this._current = d});
 } else {
   console.log("semi-working?")
-  var path2 = d3.select('svg')
+  var path2 = d3.select('svg#pie-chart-svg')
     .selectAll('path')
     .data(pie(dataset));
   path2.transition()
