@@ -14,12 +14,12 @@
     <style>
     .incomeLine {
       fill:none;
-      stroke:green;
+      stroke: #31a354;
       stroke-width:2px;
     }
     .expenseLine {
       fill:none;
-      stroke:red;
+      stroke: #e6550d;
       stroke-width:2px;
     }
     path.domain {
@@ -53,20 +53,42 @@
 
                 <!--charts space start -->
                 <div class="row">
-                  <div class="col-md-9" id="line-graph">
-                  </div>
-                  <div class="col-md-3" id="pie-chart">
-                    <svg id="pie-chart-svg">
-                    </svg>
-                  </div>
+                    <div class="col-md-7" >
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">Income & Spending</h2>
+                                <div class="actions pull-right">
+                                    <i class="fa fa-chevron-down"></i>
+                                    <i class="fa fa-times"></i>
+                                </div>
+                            </div>
+                           <div id="line-graph"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">Spending by Category</h2>
+                                <div class="actions pull-right">
+                                    <i class="fa fa-chevron-down"></i>
+                                    <i class="fa fa-times"></i>
+                                </div>
+                            </div>
+                            <div id="pie-chart">
+                                <svg id="pie-chart-svg"></svg>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!--charts end -->
 
-                <!--dashboard charts and income statementstart-->
+                <!--dashboard charts and income statement start-->
                 <div class="row">
+                <div class="col-md-12">
+
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <div>
+                            <div class="btn btn-default">
                                 <%= link_to "Update All Accounts", {controller: "plaidapi", action: "update_accounts"}, method: "patch" %>
                             </div>
                                 <%= render "income_statement_divs" %>
@@ -107,12 +129,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-
-                        </div>
-                    </div>
                 </div>
 
             </section>
