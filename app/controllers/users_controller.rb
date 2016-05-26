@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 before_action :set_user, only: [:show, :edit, :update, :destroy, :data]
-skip_before_action :verify_authenticity_token, only: [:linegraph]
+skip_before_action :verify_authenticity_token, only: [:linegraph, :piechart]
 
   def new
     @user = User.new

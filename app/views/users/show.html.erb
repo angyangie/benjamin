@@ -35,6 +35,15 @@
     .grid path {
       stroke-width: 0;
     }
+    #piechartkey {
+      width:150px;
+      display:inline;
+      position:absolute;
+      top:150px;
+    }
+    #pie-chart-svg {
+      display:inline;
+    }
     </style>
 </head>
 
@@ -76,6 +85,7 @@
                             </div>
                             <div id="pie-chart">
                                 <svg id="pie-chart-svg"></svg>
+                                <%= image_tag "piechartkey.png", id: 'piechartkey' %>
                             </div>
                         </div>
                     </div>
@@ -153,6 +163,11 @@
              url: '/users/linegraph',
              method: 'post'
            }).done(console.log("done"))
+        $.ajax ({
+             url: '/users/piechart',
+             method: 'post',
+             data: { 'month' : <%= Date.today.month %> },
+           })
     })
     </script>
 </body>
