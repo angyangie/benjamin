@@ -24,11 +24,11 @@ $.each(dataset, function(index,value) {
 
 var test = d3.select('svg#pie-chart-svg').selectAll('g')
 if (test[0].length == 0) {
-  var width = 300;
-  var height = 300;
-  var radius = Math.min(width, height) / 2;
+  var width = 360;
+  var height = 360;
+  var radius = Math.min(width*.8, height*.8) / 2;
 
-  var color = d3.scale.category20b();
+  var color = d3.scale.category20c();
 
   var svg = d3.select('svg#pie-chart-svg')
     .attr('width', width)

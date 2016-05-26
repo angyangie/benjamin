@@ -12,16 +12,16 @@ var abbrevMonthFormat = d3.time.format("%b")
   var line_hash = {}
   <% hash_obj = OpenStruct.new(hash[idx + 1]) %>
   line_hash["date"] = format.parse("2016-<%= idx + 1 %>")
-  line_hash["exp"] = <%= hash_obj.Expenses %>
+  line_hash["exp"] = Math.abs(<%= hash_obj.Expenses %>)
   line_hash["inc"] = <%= hash_obj.Income %>
   data.push(line_hash)
 <% end %>
 
 
 $(function() {
-  var margin = {top: 20, right: 20, bottom: 30, left: 50},
+  var margin = {top: 20, right: 20, bottom: 30, left: 60},
       width = 720 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
+      height = 360 - margin.top - margin.bottom;
 
   function make_x_axis() {
     return d3.svg.axis()
@@ -70,10 +70,10 @@ $(function() {
     x.domain(d3.extent(data, function(d) { return d.date; }));
     y.domain([
       d3.min(data, function(d) {
-        if (d.inc < d.exp){return d.inc - (.5*d.inc)} else {return d.exp + (.5*d.exp)}
+        if (d.inc < d.exp){return d.inc - (.2*d.inc)} else {return d.exp + (.2*d.exp)}
     }),
       d3.max(data, function(d) {
-        if (d.inc > d.exp){return d.inc + (.5*d.inc)} else {return d.exp - (.5*d.exp)}
+        if (d.inc > d.exp){return d.inc + (.2*d.inc)} else {return d.exp - (.2*d.exp)}
     })]);
 
 
@@ -87,8 +87,7 @@ $(function() {
         .call(yAxis)
       .append("text")
         // .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", ".71em")
+        .attr("dy", "1em")
         .attr("dx", 20)
         // .style("text-anchor", "end")
         .text("Dollars ($)");
