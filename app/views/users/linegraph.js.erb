@@ -29,6 +29,12 @@ $(function() {
         .orient('bottom')
         .ticks(data.length)
   }
+  function make_y_axis() {
+    return d3.svg.axis()
+        .scale(y)
+        .orient('left')
+        .ticks(data.length)
+  }
 
   var x = d3.time.scale()
       .range([0, width]);
@@ -64,10 +70,10 @@ $(function() {
     x.domain(d3.extent(data, function(d) { return d.date; }));
     y.domain([
       d3.min(data, function(d) {
-        if (d.inc < d.exp){return d.inc - 3000} else {return d.exp - 3000}
+        if (d.inc < d.exp){return d.inc - (.5*d.inc)} else {return d.exp + (.5*d.exp)}
     }),
       d3.max(data, function(d) {
-        if (d.inc > d.exp){return d.inc + 3000} else {return d.exp + 3000}
+        if (d.inc > d.exp){return d.inc + (.5*d.inc)} else {return d.exp - (.5*d.exp)}
     })]);
 
 
@@ -87,6 +93,12 @@ $(function() {
         // .style("text-anchor", "end")
         .text("Dollars ($)");
 
+    svg.append('g')
+        .attr('class', 'grid')
+        .call(make_y_axis()
+          .tickSize(-width,0,0)
+          .tickFormat(""))
+        
     svg.append("path")
         .data([data])
         .attr("class", "incomeLine")
@@ -96,11 +108,4 @@ $(function() {
         .datum(data)
         .attr("class", "expenseLine")
         .attr("d", expLine);
-
-    svg.append('g')
-        .attr('class', 'grid')
-        .attr('transform','translate(0,' + height + ')')
-        .call(make_x_axis()
-          .tickSize(-height,0,0)
-          .tickFormat(""))
       })
