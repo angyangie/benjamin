@@ -1,4 +1,12 @@
 <h1>Plaidapi#accounts</h1>
 <p>Find me in app/views/plaidapi/accounts.html.erb</p>
+<center> 
+<%= plaid_link(name:'Tony Soprano', action:'accounts', data: {longtail: true}, class: 'btn btn-danger') %>
+</center>
 
-<%= plaid_link(name:'Tony Soprano', action:'accounts', data: {longtail: true}) %>
+<script>
+  $(function(){
+      $('#plaid-link-button').addClass('btn btn-danger')  
+  })
+</script>
+
