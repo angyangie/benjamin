@@ -14,23 +14,28 @@
           <% ltm_period = TimePeriod.last_twelve_months %>
           <% current_view_period = ytd_period + budget_period %>
 
-          <% current_view_period.each_with_index do |m, i| %>
-          <div class="tCell tHeader month"><%= link_to m.first.strftime('%b'), users_piechart_path(:month => i + 1), method: :post, remote: true%></div>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="tBody">
-
         <% ytd_data = IncomeStatement.year_to_date(@user.id) %>
         <% budget_data = IncomeStatement.budget(@user.id) %>
         <% ltm_data = IncomeStatement.last_twelve_months(@user.id) %>
 
         <% table_data = ytd_data.values.first + budget_data.values.first %>
         <% combined_data = {} %>
-        <%# combined_data[2015] = ltm_data[2015] %>
+        <% combined_data[2015] = ltm_data[2015] %>
         <% combined_data[2016] = ytd_data[2016] %>
         <% combined_data["budg"] = budget_data[2016] %>
+        <% binding.pry %>
+
+          <% #current_view_period.each_with_index do |m, i| %>
+          <% combined_data.each do |year, year_array| %>
+            <% year_array.each do |m| %>
+          <div class="tCell tHeader month  <%= year %>"><%= link_to Date::ABBR_MONTHNAMES[m.keys.first], users_piechart_path(:month => m.keys.first, :year => year), method: :post, remote: true%></div>
+          <% end %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="tBody">
+
       <!-- Begin Income -->
       <!-- Begin Income Subcategories -->
 
@@ -55,11 +60,11 @@
         </div>
 
         <div class="tRow income subcategory" id="interest-income">
-          <div class="tCell row-label">&nbsp&nbsp Interest Income</div>
+          <div class="tCell row-label ">&nbsp&nbsp Interest Income</div>
           <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
           <% x = m[m.keys.first]["Interest Income"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
           <% end %>
         </div>
@@ -69,7 +74,7 @@
           <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
           <% x = m[m.keys.first]["Other Income"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
           <% end %>
         </div>
@@ -79,7 +84,7 @@
           <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
           <% x = m[m.keys.first]["Reimbursements"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
           <% end %>
         </div>
@@ -91,7 +96,7 @@
           <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
           <% x = m[m.keys.first]["Income"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
           <% end %>
         </div>
@@ -106,7 +111,7 @@
                 <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                 <% x = m[m.keys.first]["Rent & Mortgage"] %>
-                <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                 <% end %>
           <% end %>
               </div>
@@ -116,7 +121,7 @@
                 <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                 <% x = m[m.keys.first]["Utilities"] %>
-                <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                 <% end %>
           <% end %>
               </div>
@@ -126,7 +131,7 @@
                 <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                 <% x = m[m.keys.first]["TV & Internet"] %>
-                <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                 <% end %>
           <% end %>
               </div>
@@ -136,7 +141,7 @@
                 <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                 <% x = m[m.keys.first]["Cell Phone"] %>
-                <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                 <% end %>
           <% end %>
               </div>
@@ -146,7 +151,7 @@
                 <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                 <% x = m[m.keys.first]["Insurance"] %>
-                <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                 <% end %>
           <% end %>
               </div>
@@ -156,7 +161,7 @@
                 <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                 <% x = m[m.keys.first]["Transportation"] %>
-                <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                 <% end %>
           <% end %>
               </div>
@@ -168,7 +173,7 @@
           <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
           <% x = m[m.keys.first]["Fixed & Recurring"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
           <% end %>
         </div>
@@ -180,7 +185,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Cars & Vehicles"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -190,7 +195,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Children"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -200,7 +205,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Cleaning Supplies & Maids"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -210,7 +215,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Education"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -220,7 +225,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Fitness & Recreation"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -230,7 +235,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Healthcare"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -240,7 +245,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Laundry"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -250,7 +255,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Personal Care"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -260,7 +265,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Pets"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -272,7 +277,7 @@
                   <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                   <% x = m[m.keys.first]["Alcohol & Bars"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                  <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                   <% end %>
           <% end %>
                 </div>
@@ -282,7 +287,7 @@
                   <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                   <% x = m[m.keys.first]["Coffee Shops"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                  <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                   <% end %>
           <% end %>
                 </div>
@@ -292,7 +297,7 @@
                   <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                   <% x = m[m.keys.first]["Fast Food & Delivery"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                  <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                   <% end %>
           <% end %>
                 </div>
@@ -302,7 +307,7 @@
                   <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                   <% x = m[m.keys.first]["Groceries"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                  <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                   <% end %>
           <% end %>
                 </div>
@@ -312,7 +317,7 @@
                   <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                   <% x = m[m.keys.first]["Other Food"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                  <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                   <% end %>
           <% end %>
                 </div>
@@ -322,7 +327,7 @@
                   <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                   <% x = m[m.keys.first]["Restaurants"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                  <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                   <% end %>
           <% end %>
                 </div>
@@ -332,7 +337,7 @@
                   <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
                   <% x = m[m.keys.first]["Work Meals"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                  <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                   <% end %>
           <% end %>
                 </div>
@@ -344,7 +349,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Total Food"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>      
@@ -356,7 +361,7 @@
           <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
           <% x = m[m.keys.first]["Variable"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
           <% end %>
         </div>
@@ -378,7 +383,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Shopping"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -388,7 +393,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Entertainment"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -398,7 +403,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Rental & Taxi"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -408,7 +413,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Cash"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -418,7 +423,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Other"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -430,7 +435,7 @@
           <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
           <% x = m[m.keys.first]["Discretionary"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
           <% end %>
         </div>
@@ -442,7 +447,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Charity & Community"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -452,7 +457,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Gifts"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -462,7 +467,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Trips"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -472,7 +477,7 @@
               <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
               <% x = m[m.keys.first]["Wedding"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
           <% end %>
             </div>
@@ -484,7 +489,7 @@
           <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
           <% x = m[m.keys.first]["Life"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
           <% end %>
         </div>
@@ -496,7 +501,7 @@
             <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
             <% x = m[m.keys.first]["Adjustments"] %>
-            <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+            <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
             <% end %>
           <% end %>
           </div>
@@ -506,7 +511,7 @@
             <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
             <% x = m[m.keys.first]["Interest & Fees"] %>
-            <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+            <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
             <% end %>
           <% end %>
           </div>
@@ -516,7 +521,7 @@
             <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
             <% x = m[m.keys.first]["Reimbursable Expenses"] %>
-            <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+            <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
             <% end %>
           <% end %>
           </div>
@@ -528,7 +533,7 @@
           <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
           <% x = m[m.keys.first]["Other Expenses"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
           <% end %>
         </div>
@@ -538,7 +543,7 @@
           <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
           <% x = m[m.keys.first]["Special Expenses"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
           <% end %>
         </div>
@@ -550,7 +555,7 @@
           <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
           <% x = m[m.keys.first]["Expenses"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
           <% end %>
           </div>
@@ -562,7 +567,7 @@
           <% combined_data.each do |year, year_array| %>
             <% year_array.each do |m| %>
           <% x = m[m.keys.first]["Net"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell <%= year %>"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
           <% end %>
         </div>
