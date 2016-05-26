@@ -197,8 +197,8 @@
                  <ul class="transaction-list">
                   <% @transactions.each do |t| %>
                     <h3><%= t.trans_name %></h3>
-                    <li class="t-attr"><%= t.category.name %></li>
-                    <li class="t-attr"><%= number_to_currency(t.amount) %></li><br><br>
+                    <li class="t-attr">Category: <%= t.category.name %></li>
+                    <li class="t-attr">Amount: <%= number_to_currency(t.amount) %></li><br><br>
                   <% end %>
                 </ul>
              </div>
