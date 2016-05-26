@@ -24,7 +24,8 @@ class IncomeStatement < ActiveRecord::Base
     return_hash = {}
     return_hash[period.first.first.year] = array_range
     return return_hash
-  end  
+  end 
+
   def self.budget(user_id)
     @user = User.find(user_id)
     array_range = []
@@ -34,7 +35,11 @@ class IncomeStatement < ActiveRecord::Base
       category_totals[month.first.month] = {}
         
       @user.budgets.each do |b|
-        t = b.amount*-1
+        if b.category.root.name == "Expenses"
+          t = b.amount*-1
+        else
+          t = b.amount
+        end
         category_totals[month.first.month][b.category.name] = t
         
         b.category.ancestors.each do |a|
@@ -52,6 +57,7 @@ class IncomeStatement < ActiveRecord::Base
     return_hash[period.first.first.year] = array_range
     return return_hash
   end
+
   def self.last_twelve_months(user_id)
     @user = User.find(user_id)
     array_range = []
