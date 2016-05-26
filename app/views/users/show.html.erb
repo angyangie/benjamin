@@ -40,7 +40,7 @@
 
 <body class="off-canvas">
     <div id="container">
-        
+
             <%= render template: "layouts/_header" %>
 
             <%= render template: "layouts/_sidebar" %>
@@ -50,7 +50,7 @@
             <section id="main-content">
 
             <%= render template: "layouts/_tiles_top" %>
-               
+
                 <!--charts space start -->
                 <div class="row">
                   <div class="col-md-9" id="line-graph">
@@ -102,7 +102,7 @@
                         </div>
                         </div>
                     </div>
-                    </div> 
+                    </div>
             </div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                                  
+
                         </div>
                     </div>
                 </div>
@@ -133,8 +133,6 @@
     <script type="javascript" src="income_statement.js"></script>
     <script>
     $(function(){
-        hideYoKids()
-        showSubcategories()
         $.ajax ({
              url: '/users/linegraph',
              method: 'post'

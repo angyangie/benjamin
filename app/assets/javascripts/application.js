@@ -18,7 +18,5 @@
 
 //= require bootstrap-sprockets
 //= require d3
-
-//= require_tree ../../../vendor/assets/javascripts/.
-
+//= require manifest.js
 //= require_tree .

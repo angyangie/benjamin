@@ -2,13 +2,13 @@
   <div id="main-table">
 
     <% if !@user.accounts.empty? %>
-    
-    <div class="table">  
+
+    <div class="table">
 
       <div class="tHead">
         <div class="tRow">
           <div class="tCell tHeader row-label"></div>
-          
+
           <% ytd_period = TimePeriod.year_to_date %>
           <% budget_period = TimePeriod.budget %>
           <% ltm_period = TimePeriod.last_twelve_months %>
@@ -71,15 +71,15 @@
         </div>
 
       <!-- End Income Subcategories -->
- 
-        <div class="tRow root expenses">
+
+        <div class="tRow root income">
           <div class="tCell row-label">Total Income</div>
           <% table_data.each do |m| %>
           <% x = m[m.keys.first]["Income"] %>
           <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
         </div>
-      
+
       <!-- End Income -->
       <!-- Begin Expenses -->
       <!-- Begin Subcategories -->
@@ -132,7 +132,7 @@
                 <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
                 <% end %>
               </div>
-      
+
       <!-- End Fixed Expenses Children -->
 
         <div class="tRow expenses subcategory" id="fixed">
@@ -283,7 +283,7 @@
               <% x = m[m.keys.first]["Total Food"] %>
               <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
               <% end %>
-            </div>      
+            </div>
 
       <!-- End Variable Expenses Children -->
 
@@ -296,7 +296,7 @@
         </div>
 
       <!-- Begin Discretionary Children -->
-              
+
             <div class="tRow expenses child discretionary" id="home">
               <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Home</div>
               <% table_data.each do |m| %>
@@ -356,7 +356,7 @@
         </div>
 
       <!-- Begin Life Expenses Children -->
-      
+
             <div class="tRow expenses child life" id="charity">
               <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Charity & Community</div>
               <% table_data.each do |m| %>
@@ -442,9 +442,9 @@
           <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
         </div>
-        
+
       <!-- End Expenses Subcategories -->
-      
+
         <div class="tRow root expenses">
           <div class="tCell row-label">Total Expenses</div>
           <% table_data.each do |m| %>
@@ -465,10 +465,10 @@
 
       </div class="tbody">
     </div>
-    
+
     <% else %>
     <p>Please add an account using the link above.</p>
-    <% end %>  
+    <% end %>
 
   </div>
 </div>
