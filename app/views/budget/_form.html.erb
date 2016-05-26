@@ -1,7 +1,0 @@
-<%= form_for :budget do |f| %>
-  <%= f.label :amount %>
-  <%= f.number_area :amount %>
-
-  <%= f.label :time_period %>
-  <%= f.collection_select :budget, :category_id, Category.all, :id, :name %>
-<% end %>

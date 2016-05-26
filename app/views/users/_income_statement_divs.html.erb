@@ -27,7 +27,6 @@
         <% ltm_data = IncomeStatement.last_twelve_months(@user.id) %>
 
         <% table_data = ytd_data.values.first + budget_data.values.first %>
-
       <!-- Begin Income -->
       <!-- Begin Income Subcategories -->
 
@@ -72,9 +71,14 @@
         </div>
 
       <!-- End Income Subcategories -->
-
-       
-       
+ 
+        <div class="tRow root expenses">
+          <div class="tCell row-label">Total Income</div>
+          <% table_data.each do |m| %>
+          <% x = m[m.keys.first]["Income"] %>
+          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <% end %>
+        </div>
       
       <!-- End Income -->
       <!-- Begin Expenses -->
@@ -447,7 +451,7 @@
           <% x = m[m.keys.first]["Expenses"] %>
           <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
           <% end %>
-          </div>
+        </div>
 
       <!-- End Expenses -->
 

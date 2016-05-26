@@ -41,38 +41,40 @@
                                 <%= link_to "Update All Accounts", {controller: "plaidapi", action: "update_accounts"}, method: "patch" %>
                             </div>
                                 <%= render "income_statement_divs" %>
-                            <div>
-                            <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#budetModel">
-                                  + Add a budget
-                                </button>
 
-                            <!-- Modal -->
-                                <div class="modal fade" id="budetModel" tabindex="-1" role="dialog" aria-labelledby="budetModelLabel">
-                                  <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-budget" id="add-budget">Budget</h4>
-                                        <p>Add a monthly budget amount and select a category</p>
-                                      </div>
-                                      <div class="modal-body">
-                                        <%= form_for Budget.new do |f| %>
-                                          <%= f.label :amount %>
-                                          <%= f.text_field :amount, placeholder: '$0' %>
+            <!-- Modal start -->
+            <div>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#budetModel">
+                + Add a budget
+                </button>
 
-                                          <%= f.label :category %>
-                                          <%= f.collection_select :category_id, Category.all, :id, :name, prompt: true %>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <%= f.submit "Save Budget", class: 'btn btn-success', controller: 'budgets', action: 'create', remote: true %>
-                                        <% end %>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div> 
-                            </div>
+                <!-- Modal -->
+                  <div class="modal fade" id="budetModel" tabindex="-1" role="dialog" aria-labelledby="budetModelLabel">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-budget" id="add-budget">Budget</h4>
+                            <p>Add a monthly budget amount and select a category</p>
+                        </div>
+                        <div class="modal-body">
+                            <%= form_for [@user, Budget.new] do |f| %>
+                            <%= f.label :amount %>
+                            <%= f.text_field :amount, placeholder: '$0' %>
+
+                            <%= f.label :category %>
+                            <%= f.collection_select :category_id, Category.all, :id, :name, prompt: true %>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <%= f.submit "Save Budget", class: 'btn btn-success' %>
+                            <% end %>
+                        </div>
+                        </div>
+                    </div>
+                    </div> 
+            </div>
                         </div>
                     </div>
                 </div>
@@ -98,8 +100,14 @@
 
     <!--Page Level JS-->
     <!-- <script src="assets/plugins/countTo/jquery.countTo.js"></script>
-    <script type="text/javascript" src="income_statement.js"></script> -->
-
+     -->
+    <script type="javascript" src="income_statement.js"></script>
+    <script>
+    $(function(){
+        hideYoKids()
+        showSubcategories()
+    })
+    </script>
 </body>
 
 </html>
