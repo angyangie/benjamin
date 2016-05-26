@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SpaceLab</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
-    <!-- Fonts from Font Awsome -->
-    <!-- CSS Animate -->
-    <!-- Custom styles for this theme -->
-    <link rel="stylesheet" href="assets/css/main.css">
-    <!-- Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <!-- Feature detection -->
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="assets/js/html5shiv.js"></script>
-    <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
-</head>
-
-<body class="animated fadeIn">
     <section id="login-container">
 
         <div class="row">
@@ -38,14 +7,14 @@
                     <center><h1>Welcome to Lemmen!</h1></center><br>
 
                     <div class="panel-heading">
-                          
 
-                          <h3 class="panel-title">     
+
+                          <h3 class="panel-title">
                            Sign Up
-                        </h3>  
+                        </h3>
                     </div>
                     <div class="panel-body">
-                        <p >Already a member? <strong><%= link_to "Sign In", login_path %></strong></p> 
+                        <p >Already a member? <strong><%= link_to "Sign In", login_path %></strong></p>
                           <font color="red"><% if flash[:errors] %>
                           <h5><%= flash[:message] %>
                             <% flash[:errors].each do |error| %>
@@ -55,8 +24,8 @@
                           <br>
 
                           <%= form_for @user, url: '/signup' do |f| %>
-                          
-                          
+
+
 
                             <div class="form-group">
                               <%= f.text_field :first_name, class: 'form-control', placeholder: 'First Name' %>
@@ -75,7 +44,7 @@
                               <div class="form-group">
                                 <%= f.password_field :password_confirmation, class: 'form-control', placeholder: "Retype your password"%><br>
                             </div>
-                       
+
                           <%= f.submit "Sign up", class: "btn btn-primary btn-block" %>
                         <% end %>
 
@@ -85,9 +54,3 @@
         </div>
 
     </section>
-    <!--Global JS-->
-    <script src="assets/plugins/waypoints/waypoints.min.js"></script>
-</body>
-
-</html>
-
