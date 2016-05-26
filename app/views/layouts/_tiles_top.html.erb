@@ -1,0 +1,44 @@
+<!--tiles start-->
+<div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="dashboard-tile detail tile-red">
+                            <div class="content">
+                                <h1 class="total-debt-box"><%= number_to_currency(@user.total_debt, {precision: 0, negative_format: "(%u%n)"}) %></h1>
+                                <p>Total Debt</p>
+                            </div>
+                            <div class="icon"><i class="fa fa-minus-square-o"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="dashboard-tile detail tile-turquoise">
+                            <div class="content">
+                                <h1 class="total-cash-box"><%= number_to_currency(@user.total_cash, {precision: 0, negative_format: "(%u%n)"}) %></h1>
+                                <p>Total Cash</p>
+                            </div>
+                            <div class="icon"><i class="fa fa-dollar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="dashboard-tile detail tile-blue">
+                            <div class="content">
+                                <h1 class="weekly-budget-box"><%= number_to_currency(@user.weekly_budget, {precision: 0, negative_format: "(%u%n)"}) %></h1>
+                                <p>Weekly Spending</p>
+                            </div>
+                            <div class="icon"><i class="fa fa-line-chart"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="dashboard-tile detail tile-purple">
+                            <div class="content">
+                                <h1 class="monthly-budget-box"><%= number_to_currency(@user.monthly_budget, {precision: 0, negative_format: "(%u%n)"}) %></h1>
+                                <p> Monthly Spending</p>
+                            </div>
+                            <div class="icon"><i class="fa fa-area-chart"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--tiles end-->
