@@ -33,8 +33,8 @@ function showSubcategories(){
     }
   })
 
-  $('div#fixed').on('click', function(){
-    $('div.child.fixed').slideToggle()
+  $('div#fixed-recurring').on('click', function(){
+    $('div.child.fixed-recurring').slideToggle()
     addActive(this)
   })
 
@@ -53,8 +53,8 @@ function showSubcategories(){
       addActive(this)
   })
 
-  $('div#other-exp').on('click', function(){
-    $('div.child.other-exp').slideToggle()
+  $('div#other-expenses').on('click', function(){
+    $('div.child.other-expenses').slideToggle()
       addActive(this)
   })
 

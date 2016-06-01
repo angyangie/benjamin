@@ -1,6 +1,7 @@
 module UsersHelper
   def id_format(string)
-    return string.downcase.sub(' ','-')
+    newstring = string.sub(' & ','-')
+    return newstring.downcase.sub(' ','-')
   end
 
   def display_amount(month, key)
