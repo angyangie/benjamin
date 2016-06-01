@@ -27,433 +27,49 @@
         <% ltm_data = IncomeStatement.last_twelve_months(@user.id) %>
 
         <% table_data = ytd_data.values.first + budget_data.values.first %>
-      <!-- Begin Income -->
-      <!-- Begin Income Subcategories -->
-
-        <div class="tRow income subcategory" id="salary">
-          <div class="tCell row-label">&nbsp&nbsp Salary</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Salary"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
-
-        <div class="tRow income subcategory" id="bonus">
-          <div class="tCell row-label">&nbsp&nbsp Bonus</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Bonus"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
-
-        <div class="tRow income subcategory" id="interest-income">
-          <div class="tCell row-label">&nbsp&nbsp Interest Income</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Interest Income"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
-
-        <div class="tRow income subcategory" id="other-income">
-          <div class="tCell row-label">&nbsp&nbsp Other Income</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Other Income"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
-
-        <div class="tRow income subcategory" id="reimbursements">
-          <div class="tCell row-label">&nbsp&nbsp Reimbursements</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Reimbursements"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
-
-      <!-- End Income Subcategories -->
-
-        <div class="tRow root income">
-          <div class="tCell row-label">Total Income</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Income"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
-
-      <!-- End Income -->
-      <!-- Begin Expenses -->
-      <!-- Begin Subcategories -->
-      <!-- Begin Fixed Expenses Children -->
-
-              <div class="tRow expenses child fixed" id="rent & mortgage">
-                <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Rent & Mortgage</div>
-                <% table_data.each do |m| %>
-                <% x = m[m.keys.first]["Rent & Mortgage"] %>
-                <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+        <% table_hash = Category.table_hash %>
+        <!-- Begin Income -->
+        <!-- Begin Income Subcategories -->
+        <% table_hash.each do |root_cat, line_item| %>
+          <% line_item.each do |line_item, subcat| %>
+            <% if !subcat.empty? %>
+              <% subcat.each do |subcat, children| %>
+                <% if !children.empty? %>
+                  <% children.each do |leaf| %>
+                    <div class="tRow expenses leaves food" id="<%= id_format(leaf) %>">
+                      <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <%= leaf %></div>
+                      <% table_data.each do |m| %>
+                      <% x = m[m.keys.first][leaf] %>
+                      <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                      <% end %>
+                    </div>
+                  <% end %>
                 <% end %>
-              </div>
-
-              <div class="tRow expenses child fixed" id="utilities">
-                <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Utilities</div>
-                <% table_data.each do |m| %>
-                <% x = m[m.keys.first]["Utilities"] %>
-                <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-                <% end %>
-              </div>
-
-              <div class="tRow expenses child fixed" id="tv-internet">
-                <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp TV & Internet</div>
-                <% table_data.each do |m| %>
-                <% x = m[m.keys.first]["TV & Internet"] %>
-                <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-                <% end %>
-              </div>
-
-              <div class="tRow expenses child fixed" id="cell phone">
-                <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Cell Phone</div>
-                <% table_data.each do |m| %>
-                <% x = m[m.keys.first]["Cell Phone"] %>
-                <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-                <% end %>
-              </div>
-
-              <div class="tRow expenses child fixed" id="insurance">
-                <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Insurance</div>
-                <% table_data.each do |m| %>
-                <% x = m[m.keys.first]["Insurance"] %>
-                <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-                <% end %>
-              </div>
-
-              <div class="tRow expenses child fixed" id="transportation">
-                <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Transportation</div>
-                <% table_data.each do |m| %>
-                <% x = m[m.keys.first]["Transportation"] %>
-                <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-                <% end %>
-              </div>
-
-      <!-- End Fixed Expenses Children -->
-
-        <div class="tRow expenses subcategory" id="fixed">
-          <div class="tCell row-label">&nbsp&nbsp Fixed & Recurring</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Fixed & Recurring"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                  <div class="tRow <%= id_format(root_cat) %> child <%= id_format(line_item) %>" id="<%= id_format(subcat) %>">
+                    <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp <%= subcat %></div>
+                    <% table_data.each do |m| %>
+                    <% x = m[m.keys.first][subcat] %>
+                    <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                    <% end %>
+                  </div>
+              <% end %>
+            <% end %>
+            <div class="tRow <%= id_format(root_cat) %> subcategory" id="<%= id_format(line_item) %>">
+              <div class="tCell row-label">&nbsp&nbsp <%= line_item %></div>
+              <% table_data.each do |m| %>
+              <% x = m[m.keys.first][line_item] %>
+              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <% end %>
+            </div>
           <% end %>
-        </div>
-
-      <!-- Begin Variable Expenses Children -->
-
-            <div class="tRow expenses child variable" id="cars & vehicles">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Cars & Vehicles</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Cars & Vehicles"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child variable" id="children">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Children</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Children"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child variable" id="cleaning supplies & maids">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Cleaning Supplies</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Cleaning Supplies & Maids"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child variable" id="education">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Education</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Education"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child variable" id="fitness & recreation">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Fitness & Recreation</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Fitness & Recreation"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child variable" id="healthcare">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Healthcare</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Healthcare"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child variable" id="laundry">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Laundry</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Laundry"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child variable" id="personal care">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Personal Care</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Personal Care"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child variable" id="pets">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Pets</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Pets"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-      <!-- Begin Food Leaves -->
-
-                <div class="tRow expenses leaves food" id="alcohol">
-                  <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Alcohol & Bars</div>
-                  <% table_data.each do |m| %>
-                  <% x = m[m.keys.first]["Alcohol & Bars"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-                  <% end %>
-                </div>
-
-                <div class="tRow expenses leaves food" id="coffee-shops">
-                  <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Coffee Shops</div>
-                  <% table_data.each do |m| %>
-                  <% x = m[m.keys.first]["Coffee Shops"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-                  <% end %>
-                </div>
-
-                <div class="tRow expenses leaves food" id="fast-food">
-                  <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Fast Food & Delivery</div>
-                  <% table_data.each do |m| %>
-                  <% x = m[m.keys.first]["Fast Food & Delivery"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-                  <% end %>
-                </div>
-
-                <div class="tRow expenses leaves food" id="groceries">
-                  <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Groceries</div>
-                  <% table_data.each do |m| %>
-                  <% x = m[m.keys.first]["Groceries"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-                  <% end %>
-                </div>
-
-                <div class="tRow expenses leaves food" id="other-food">
-                  <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Other Food</div>
-                  <% table_data.each do |m| %>
-                  <% x = m[m.keys.first]["Other Food"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-                  <% end %>
-                </div>
-
-                <div class="tRow expenses leaves food" id="restaurants">
-                  <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Restaurants</div>
-                  <% table_data.each do |m| %>
-                  <% x = m[m.keys.first]["Restaurants"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-                  <% end %>
-                </div>
-
-                <div class="tRow expenses leaves food" id="work-meals">
-                  <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Work Meals</div>
-                  <% table_data.each do |m| %>
-                  <% x = m[m.keys.first]["Work Meals"] %>
-                  <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-                  <% end %>
-                </div>
-
-      <!-- End Food Leaves -->
-
-            <div class="tRow expenses variable child total-food" id="total-food">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Total Food</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Total Food"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-      <!-- End Variable Expenses Children -->
-
-        <div class="tRow expenses subcategory" id="variable">
-          <div class="tCell row-label">&nbsp&nbsp Variable</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Variable"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
-
-      <!-- Begin Discretionary Children -->
-
-            <div class="tRow expenses child discretionary" id="home">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Home</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Home"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child discretionary" id="shopping">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Shopping</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Shopping"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child discretionary" id="entertainment">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Entertainment</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Entertainment"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child discretionary" id="rental & taxi">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Rental & Taxi</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Rental & Taxi"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child discretionary" id="cash">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Cash</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Cash"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child discretionary" id="other">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Other</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Other"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-      <!-- End Discretionary Children -->
-
-        <div class="tRow expenses subcategory" id="discretionary">
-          <div class="tCell row-label">&nbsp&nbsp Discretionary</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Discretionary"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
-
-      <!-- Begin Life Expenses Children -->
-
-            <div class="tRow expenses child life" id="charity">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Charity & Community</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Charity & Community"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child life" id="gifts">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Gifts</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Gifts"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child life" id="trips">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Trips</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Trips"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-            <div class="tRow expenses child life" id="wedding">
-              <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Wedding</div>
-              <% table_data.each do |m| %>
-              <% x = m[m.keys.first]["Wedding"] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-              <% end %>
-            </div>
-
-      <!-- End Life Expenses Children -->
-
-        <div class="tRow expenses subcategory" id="life">
-          <div class="tCell row-label">&nbsp&nbsp Life</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Life"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
-
-      <!-- Begin Other Expenses Children -->
-
-           <div class="tRow expenses child other-exp" id="adjustments">
-            <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Adjustments</div>
+          <div class="tRow root <%=id_format(root_cat)%>">
+            <div class="tCell row-label">Total <%= root_cat %></div>
             <% table_data.each do |m| %>
-            <% x = m[m.keys.first]["Adjustments"] %>
+            <% x = m[m.keys.first][root_cat] %>
             <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
             <% end %>
           </div>
-
-          <div class="tRow expenses child other-exp" id="interest">
-            <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Interest & Fees</div>
-            <% table_data.each do |m| %>
-            <% x = m[m.keys.first]["Interest & Fees"] %>
-            <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-            <% end %>
-          </div>
-
-          <div class="tRow expenses child other-exp" id="reimbursable">
-            <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp Reimbursable Expenses</div>
-            <% table_data.each do |m| %>
-            <% x = m[m.keys.first]["Reimbursable Expenses"] %>
-            <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-            <% end %>
-          </div>
-
-      <!-- End Other Expenses Children -->
-
-        <div class="tRow expenses subcategory" id="other-exp">
-          <div class="tCell row-label">&nbsp&nbsp Other</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Other Expenses"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
-
-        <div class="tRow expenses subcategory" id="uncategorized">
-          <div class="tCell row-label">&nbsp&nbsp Uncategorized</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Special Expenses"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
-
-      <!-- End Expenses Subcategories -->
-
-        <div class="tRow root expenses">
-          <div class="tCell row-label">Total Expenses</div>
-          <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Expenses"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
-          <% end %>
-        </div>
-
-      <!-- End Expenses -->
+        <% end %>
 
         <div class="tRow root net">
           <div class="tCell row-label">Net Savings</div>

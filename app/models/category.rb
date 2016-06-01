@@ -5,6 +5,31 @@ class Category < ActiveRecord::Base
   has_many :budgets
   validates :name, uniqueness: true
 
+  def self.table_hash
+    hash = {}
+    hash["Income"] = {}
+    hash["Expenses"] = {}
+    income_cat = Category.find_by(name: "Income")
+    expenses_cat = Category.find_by(name: "Expenses")
+    income_cat.children.each do |sub|
+        hash["Income"][sub.name] = {}
+        sub.children.each do |grandsub|
+            hash["Income"][sub.name][grandsub.name] = []
+        end
+    end
+    expenses_cat.children.each do |sub|
+        hash["Expenses"][sub.name] = {}
+        sub.children.each do |grandsub|
+            hash["Expenses"][sub.name][grandsub.name] = []
+        end
+    end
+    food_cat = Category.find_by(name: "Total Food")
+    food_cat.children.each do |sub|
+        hash["Expenses"]["Variable"]["Total Food"] << sub.name
+    end
+    return hash
+  end
+
   def self.create_categories
     # top level categories
     income = Category.create!(name: "Income", default: true)
