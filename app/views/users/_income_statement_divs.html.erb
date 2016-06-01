@@ -22,14 +22,9 @@
 
       <div class="tBody">
 
-        <% ytd_data = IncomeStatement.year_to_date(@user.id) %>
-        <% budget_data = IncomeStatement.budget(@user.id) %>
-        <% ltm_data = IncomeStatement.last_twelve_months(@user.id) %>
-
-        <% table_data = ytd_data.values.first + budget_data.values.first %>
+        <% table_data = IncomeStatement.display_table_data(@user.id) %>
         <% table_hash = Category.table_hash %>
-        <!-- Begin Income -->
-        <!-- Begin Income Subcategories -->
+
         <% table_hash.each do |root_cat, line_item| %>
           <% line_item.each do |line_item, subcat| %>
             <% if !subcat.empty? %>
@@ -39,8 +34,7 @@
                     <div class="tRow expenses leaves food" id="<%= id_format(leaf) %>">
                       <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <%= leaf %></div>
                       <% table_data.each do |m| %>
-                      <% x = m[m.keys.first][leaf] %>
-                      <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                      <div class="tCell"><%= display_amount(m, leaf) %></div>
                       <% end %>
                     </div>
                   <% end %>
@@ -48,8 +42,7 @@
                   <div class="tRow <%= id_format(root_cat) %> child <%= id_format(line_item) %>" id="<%= id_format(subcat) %>">
                     <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp <%= subcat %></div>
                     <% table_data.each do |m| %>
-                    <% x = m[m.keys.first][subcat] %>
-                    <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+                    <div class="tCell"><%= display_amount(m, subcat) %></div>
                     <% end %>
                   </div>
               <% end %>
@@ -57,16 +50,14 @@
             <div class="tRow <%= id_format(root_cat) %> subcategory" id="<%= id_format(line_item) %>">
               <div class="tCell row-label">&nbsp&nbsp <%= line_item %></div>
               <% table_data.each do |m| %>
-              <% x = m[m.keys.first][line_item] %>
-              <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+              <div class="tCell"><%= display_amount(m, line_item) %></div>
               <% end %>
             </div>
           <% end %>
           <div class="tRow root <%=id_format(root_cat)%>">
             <div class="tCell row-label">Total <%= root_cat %></div>
             <% table_data.each do |m| %>
-            <% x = m[m.keys.first][root_cat] %>
-            <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+            <div class="tCell"><%= display_amount(m, root_cat) %></div>
             <% end %>
           </div>
         <% end %>
@@ -74,8 +65,7 @@
         <div class="tRow root net">
           <div class="tCell row-label">Net Savings</div>
           <% table_data.each do |m| %>
-          <% x = m[m.keys.first]["Net"] %>
-          <div class="tCell"><%= !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0" %></div>
+          <div class="tCell"><%= display_amount(m, "Net") %></div>
           <% end %>
         </div>
 

@@ -82,5 +82,15 @@ class IncomeStatement < ActiveRecord::Base
     return_hash = {}
     return_hash[period.first.first.year] = array_range
     return return_hash
-  end  
+  end
+
+  def self.display_table_data(user_id)
+    ytd_data = IncomeStatement.year_to_date(user_id)
+    budget_data = IncomeStatement.budget(user_id)
+    table_data = ytd_data.values.first + budget_data.values.first
+    return table_data
+  end
+
+  
+
 end
