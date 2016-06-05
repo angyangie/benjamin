@@ -30,16 +30,6 @@ class Category < ActiveRecord::Base
     return hash
   end
 
-  def self.table_hash_two
-    hash = {}
-    Category.roots.each do |category|
-        hash[category.name] = {}
-        category.children.each do |line_item|
-            hash[category.name]
-        end
-    end
-  end
-
   def self.table_hash_three(parents, hash)
     parents.each do |parent|
         if !parent.children.empty? 

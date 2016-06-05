@@ -8,7 +8,8 @@ class IncomeStatement < ActiveRecord::Base
       category_totals = {}
       category_totals[month.first.month] = {}
       @user.categories.uniq.each do |c| 
-        t = c.transactions.where(date: month.first..month.last).sum(:amount)*-1
+        t = @user.transactions.where({category: c, date: month.first..month.last}).sum(:amount)*-1
+        # categ.transactions.joins(account: :user).where('accounts.user_id' => 2)
         category_totals[month.first.month][c.name] = t
         
         c.ancestors.each do |a|
@@ -25,6 +26,27 @@ class IncomeStatement < ActiveRecord::Base
     return_hash[period.first.first.year] = array_range
     return return_hash
   end 
+
+  def self.year_to_date_by_cat(user_id, category)
+    @user = User.find(user_id)
+    period = TimePeriod.year_to_date
+    category_totals = period.map do |month|
+      @user.transactions.where({category: category, date: month.first..month.last}).sum(:amount)*-1
+    end
+    return category_totals
+  end
+
+  def self.different_method(parents, hash, user_id)
+    parents.each do |parent|
+        if !parent.children.empty? 
+            hash[parent.name] = {}
+            IncomeStatement.different_method(parent.children, hash[parent.name], user_id)
+        else
+            hash[parent.name] = IncomeStatement.year_to_date_by_cat(user_id, parent)
+        end
+    end
+    return hash
+  end
 
   def self.budget(user_id)
     @user = User.find(user_id)
@@ -91,6 +113,6 @@ class IncomeStatement < ActiveRecord::Base
     return table_data
   end
 
-  
+
 
 end
