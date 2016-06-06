@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
     if transactions.nil?
       ""
     else
-      transactions.where(date: Date.today.beginning_of_week..Date.today.end_of_week).sum(:amount)
+      transactions.where(day_id: Date.today.beginning_of_week..Date.today.end_of_week).sum(:amount)
     end
   end
 
@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
     if transactions.nil?
       ""
     else
-      transactions.where(date: Date.today.beginning_of_month..Date.today.end_of_month).sum(:amount)
+      transactions.where(day_id: Date.today.beginning_of_month..Date.today.end_of_month).sum(:amount)
     end
   end
   

@@ -8,7 +8,7 @@ class IncomeStatement < ActiveRecord::Base
       category_totals = {}
       category_totals[month.first.month] = {}
       @user.categories.uniq.each do |c| 
-        t = @user.transactions.where({category: c, date: month.first..month.last}).sum(:amount)*-1
+        t = @user.transactions.where({category: c, day_id: month.first..month.last}).sum(:amount)*-1
         # categ.transactions.joins(account: :user).where('accounts.user_id' => 2)
         category_totals[month.first.month][c.name] = t
         
@@ -27,11 +27,30 @@ class IncomeStatement < ActiveRecord::Base
     return return_hash
   end 
 
+  def self.generate(user, time_period)
+    array_range = []
+    time_period.each do |increment|
+      category_totals = {}
+      category_totals[increment.id] = {}
+      user.categories.uniq.each do |category|
+        total = user.transactions.joins(day: increment.class.model_name.human.downcase.to_sym).where("days.#{increment.class.model_name.human.downcase}_id" => increment.id, category: category).sum(:amount)*-1
+        category_totals[increment.id][category.name] = total
+
+        category.ancestors.each do |ancestor|
+          category_totals[increment.id][ancestor.name] = 0 if category_totals[increment.id][ancestor.name] == nil
+          category_totals[increment.id][ancestor.name] += total
+        end
+      end
+      array_range << category_totals
+    end
+    return array_range
+  end
+
   def self.year_to_date_by_cat(user_id, category)
     @user = User.find(user_id)
     period = TimePeriod.year_to_date
     category_totals = period.map do |month|
-      @user.transactions.where({category: category, date: month.first..month.last}).sum(:amount)*-1
+      @user.transactions.where({category: category, day_id: month.first..month.last}).sum(:amount)*-1
     end
     return category_totals
   end
@@ -88,7 +107,7 @@ class IncomeStatement < ActiveRecord::Base
       category_totals = {}
       category_totals[month.first.month] = {}
       @user.categories.uniq.each do |c| 
-        t = c.transactions.where(date: month.first..month.last).sum(:amount)*-1
+        t = c.transactions.where(day_id: month.first..month.last).sum(:amount)*-1
         category_totals[month.first.month][c.name] = t
         
         c.ancestors.each do |a|

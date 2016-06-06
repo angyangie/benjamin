@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524140753) do
+ActiveRecord::Schema.define(version: 20160605205324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,9 +52,23 @@ ActiveRecord::Schema.define(version: 20160524140753) do
     t.boolean  "default",    default: false
   end
 
+  create_table "days", id: false, force: :cascade do |t|
+    t.date     "date"
+    t.string   "month_id"
+    t.string   "year_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "week_id"
+  end
+
   create_table "income_statements", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "months", id: false, force: :cascade do |t|
+    t.string "month"
+    t.string "year_id"
   end
 
   create_table "plaid_categories", force: :cascade do |t|
@@ -81,7 +95,7 @@ ActiveRecord::Schema.define(version: 20160524140753) do
     t.string   "trans_name"
     t.integer  "plaid_cat_id"
     t.string   "plaid_cat_type"
-    t.date     "date"
+    t.date     "day_id"
     t.string   "vendor_address"
     t.string   "vendor_city"
     t.string   "vendor_state"
@@ -103,6 +117,15 @@ ActiveRecord::Schema.define(version: 20160524140753) do
     t.string   "password_digest"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+  end
+
+  create_table "weeks", id: false, force: :cascade do |t|
+    t.string "week"
+    t.string "year_id"
+  end
+
+  create_table "years", id: false, force: :cascade do |t|
+    t.string "year"
   end
 
 end

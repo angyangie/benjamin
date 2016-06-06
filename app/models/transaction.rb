@@ -3,6 +3,10 @@ class Transaction < ActiveRecord::Base
   belongs_to :account
   belongs_to :category
   delegate :user, :to => :account
+  belongs_to :day
+  delegate :year, :to => :day
+  delegate :month, :to => :day
+  delegate :week, :to => :day
 
   def self.create_accounts(plaid_user_accounts, public_token, user_id)
     plaid_user_accounts.each do |acct|
