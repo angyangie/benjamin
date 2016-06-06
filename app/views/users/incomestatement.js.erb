@@ -1,0 +1,69 @@
+alert("start")
+<% current_period = TimePeriod.dynamic_period(@increment, @start_date, @end_date) %>
+<% new_statement = IncomeStatement.generate(@user, current_period) %>
+
+$('div.table').html('<div class="tHead">\
+        <div class="tRow">\
+          <div class="tCell tHeader row-label"></div>\
+\
+          <% current_period.each do |increment| %>\
+          <div class="tCell tHeader month">\
+            <% if @increment == "day" %>\
+              <%= increment.date.strftime('%a') %>\
+            <% elsif @increment == "month" %>\
+              <%= increment.days.first.date.strftime('%b') %>\
+            <% end %>\
+          </div>\
+          <% end %>\
+        </div>\
+      </div>\
+\
+      <div class="tBody">\
+\
+        <% table_hash = Category.table_hash %>\
+\
+        <% table_hash.each do |root_cat, line_item| %>\
+          <% line_item.each do |line_item, subcat| %>\
+            <% if !subcat.empty? %>\
+              <% subcat.each do |subcat, children| %>\
+                <% if !children.empty? %>\
+                  <% children.each do |leaf| %>\
+                    <div class="tRow expenses leaves food" id="<%= id_format(leaf) %>">\
+                      <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <%= leaf %></div>\
+                      <% new_statement.each do |m| %>\
+                      <div class="tCell"><%= display_amount(m, leaf) %></div>\
+                      <% end %>\
+                    </div>\
+                  <% end %>\
+                <% end %>\
+                  <div class="tRow <%= id_format(root_cat) %> child <%= id_format(line_item) %>" id="<%= id_format(subcat) %>">\
+                    <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp <%= subcat %></div>\
+                    <% new_statement.each do |m| %>\
+                    <div class="tCell"><%= display_amount(m, subcat) %></div>\
+                    <% end %>\
+                  </div>\
+              <% end %>\
+            <% end %>\
+            <div class="tRow <%= id_format(root_cat) %> subcategory" id="<%= id_format(line_item) %>">\
+              <div class="tCell row-label">&nbsp&nbsp <%= line_item %></div>\
+              <% new_statement.each do |m| %>\
+              <div class="tCell"><%= display_amount(m, line_item) %></div>\
+              <% end %>\
+            </div>\
+          <% end %>\
+          <div class="tRow root <%=id_format(root_cat)%>">\
+            <div class="tCell row-label">Total <%= root_cat %></div>\
+            <% new_statement.each do |m| %>\
+            <div class="tCell"><%= display_amount(m, root_cat) %></div>\
+            <% end %>\
+          </div>\
+        <% end %>\
+\
+        <div class="tRow root net">\
+          <div class="tCell row-label">Net Savings</div>\
+          <% new_statement.each do |m| %>\
+          <div class="tCell"><%= display_amount(m, "Net") %></div>\
+          <% end %>\
+        </div>\
+\
+      </div class="tbody">')

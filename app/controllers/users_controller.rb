@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 before_action :set_user, only: [:show, :edit, :update, :destroy, :data]
-skip_before_action :verify_authenticity_token, only: [:linegraph, :piechart]
+skip_before_action :verify_authenticity_token, only: [:linegraph, :piechart, :incomestatement]
 
   def new
     @user = User.new
@@ -67,6 +67,16 @@ skip_before_action :verify_authenticity_token, only: [:linegraph, :piechart]
       format.json {
         render :json
       }
+    end
+  end
+
+  def incomestatement
+    @increment = params[:increment]
+    @start_date = Date.parse(params[:start_date])
+    @end_date = Date.parse(params[:end_date])
+    @user = User.find(session[:user_id])
+    respond_to do |format|
+      format.js
     end
   end
 

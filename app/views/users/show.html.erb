@@ -101,6 +101,8 @@
                             <div class="btn btn-primary btn-trans">
                                 <%= link_to "Update All Accounts", {controller: "plaidapi", action: "update_accounts"}, method: "patch" %>
                             </div>
+                            <%= link_to "Week", users_incomestatement_path(:increment => "day", :start_date => (Date.today - 1.week), :end_date => (Date.today - 1.day)), method: :post, remote: true %>
+                            <%= link_to "LTM", users_incomestatement_path(:increment => "month", :start_date => (Date.today - 1.year), :end_date => (Date.today - 1.month)), method: :post, remote: true %>
                                 <%= render "income_statement_divs" %>
 
             <!-- Modal start -->

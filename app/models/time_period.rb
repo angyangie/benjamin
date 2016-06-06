@@ -65,7 +65,7 @@ class TimePeriod < ActiveRecord::Base
     next_day = Day.find_by(date: (first_day.date + 1.day))
     until next_day == last_day
       time_period.insert(-2, next_day)
-      next_day = Day.find_by(date: (first_day.date + 1.day))
+      next_day = Day.find_by(date: (next_day.date + 1.day))
     end
     return time_period
   end

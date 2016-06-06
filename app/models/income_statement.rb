@@ -31,14 +31,18 @@ class IncomeStatement < ActiveRecord::Base
     array_range = []
     time_period.each do |increment|
       category_totals = {}
-      category_totals[increment.id] = {}
+      category_totals[increment.id.to_s] = {}
       user.categories.uniq.each do |category|
-        total = user.transactions.joins(day: increment.class.model_name.human.downcase.to_sym).where("days.#{increment.class.model_name.human.downcase}_id" => increment.id, category: category).sum(:amount)*-1
-        category_totals[increment.id][category.name] = total
+        if increment.class == Day
+          total = user.transactions.where(day_id: increment.id).sum(:amount)*-1
+        else
+          total = user.transactions.joins(day: increment.class.model_name.human.downcase.to_sym).where("days.#{increment.class.model_name.human.downcase}_id" => increment.id, category: category).sum(:amount)*-1
+        end
+        category_totals[increment.id.to_s][category.name] = total
 
         category.ancestors.each do |ancestor|
-          category_totals[increment.id][ancestor.name] = 0 if category_totals[increment.id][ancestor.name] == nil
-          category_totals[increment.id][ancestor.name] += total
+          category_totals[increment.id.to_s][ancestor.name] = 0 if category_totals[increment.id.to_s][ancestor.name] == nil
+          category_totals[increment.id.to_s][ancestor.name] += total
         end
       end
       array_range << category_totals
