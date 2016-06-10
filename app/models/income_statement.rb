@@ -1,4 +1,77 @@
-class IncomeStatement < ActiveRecord::Base
+class IncomeStatement
+
+  attr_accessor :user, :increment, :start_date, :end_date
+
+  def initialize(user, increment, start_date, end_date=Date.today)
+    @user = user
+    @increment = increment
+    @start_date = start_date
+    @end_date = end_date
+  end
+
+  def time_period
+    TimePeriod.dynamic_period(@increment.to_s, @start_date, @end_date)
+  end
+
+  def day_category_sum(category, day)
+    @user.transactions.where({day_id: day.id, category: category}).sum(:amount)*-1
+  end
+
+  def category_sum(category, period)
+    @user.transactions.joins(day: @increment).where({"days.#{@increment.to_s}_id": period.id, category: category}).sum(:amount)*-1
+  end
+
+  def category_over_time(category)
+    category_totals = time_period.map do |period|
+      if @increment == :day
+        day_category_sum(category, period)
+      else
+        category_sum(category, period)
+      end
+    end
+    return category_totals
+  end
+
+  def parent_period_sum(parent, period)
+    total = 0
+    parent.leaves.each do |leaf|
+      if @increment == :day
+        total += day_category_sum(leaf, period)
+      else
+        total += category_sum(leaf, period)
+      end
+    end
+    return total
+  end
+
+  def parent_category_over_time(parent, period)
+    parent_totals = time_period.map do |period|
+      parent_period_sum(parent, period)
+    end
+  end
+
+  def generate
+    array_range = []
+    time_period.each do |period|
+      category_totals = {}
+      category_totals[period.id.to_s] = {}
+      @user.categories.uniq.each do |category|
+        if @increment == :day
+          total = day_category_sum(category, period)
+        else
+          total = category_sum(category, period)
+        end
+        category_totals[period.id.to_s][category.name] = total
+
+        category.ancestors.each do |ancestor|
+          category_totals[period.id.to_s][ancestor.name] = 0 if category_totals[period.id.to_s][ancestor.name] == nil
+          category_totals[period.id.to_s][ancestor.name] += total
+        end
+      end
+      array_range << category_totals
+    end
+    return array_range
+  end
   
   def self.year_to_date(user_id)
     @user = User.find(user_id)
