@@ -8,4 +8,8 @@ module UsersHelper
     x = month[month.keys.first][key]
     !x.nil? ? number_to_currency(x, {precision: 0, negative_format: "(%u%n)"}) : "$0"
   end
+
+  def display(value)
+    !value.nil? ? number_to_currency(value, {precision: 0, negative_format: "(%u%n)"}) : "$0"
+  end
 end

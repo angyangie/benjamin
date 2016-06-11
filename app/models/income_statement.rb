@@ -44,10 +44,22 @@ class IncomeStatement
     return total
   end
 
-  def parent_category_over_time(parent, period)
+  def parent_category_over_time(parent)
     parent_totals = time_period.map do |period|
       parent_period_sum(parent, period)
     end
+  end
+
+  def generate_table_hash(parents=Category.roots, hash={})
+    parents.each do |parent|
+        if !parent.children.empty? 
+            hash[parent.name] = {}
+            generate_table_hash(parent.children, hash[parent.name])
+        else
+            hash[parent.name] = category_over_time(parent)
+        end
+    end
+    return hash
   end
 
   def generate

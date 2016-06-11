@@ -23,54 +23,86 @@
       <div class="tBody">
 
         <% table_data = IncomeStatement.display_table_data(@user.id) %>
-        <% table_hash = Category.table_hash %>
-
+        <% income_statement = IncomeStatement.new(@user, :month, Date.new(2015, 6, 1), Date.new(2016, 5, 1)) %>
+        <% table_hash = income_statement.generate_table_hash %>
+        
         <% table_hash.each do |root_cat, line_item| %>
+
           <% line_item.each do |line_item, subcat| %>
-            <% if !subcat.empty? %>
-              <% subcat.each do |subcat, children| %>
-                <% if !children.empty? %>
-                  <% children.each do |leaf| %>
-                    <div class="tRow expenses leaves food" id="<%= id_format(leaf) %>">
-                      <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <%= leaf %></div>
-                      <% table_data.each do |m| %>
-                      <div class="tCell"><%= display_amount(m, leaf) %></div>
+            <% if !subcat.kind_of?(Array) %>
+                  
+              <% subcat.each do |subcat, leaves| %>
+                <% if !leaves.kind_of?(Array) %> <!-- if subcat = total food -->
+                  <% leaves.each do |subfood, values| %>
+                    <div class="tRow expenses leaves food" id="<%= id_format(subfood) %>">
+                      <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <%= subfood %></div>
+                      <% values.each do |period| %>
+                        <div class="tCell"><%= display(period) %></div>
                       <% end %>
                     </div>
+
                   <% end %>
-                <% end %>
-                  <div class="tRow <%= id_format(root_cat) %> child <%= id_format(line_item) %>" id="<%= id_format(subcat) %>">
+
+                  <div class="tRow <%= id_format(root_cat) %> child <%= id_format(line_item) %>" id="<%= id_format(subcat) %>" >
                     <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp <%= subcat %></div>
-                    <% table_data.each do |m| %>
-                    <div class="tCell"><%= display_amount(m, subcat) %></div>
-                    <% end %>
+                      <% income_statement.parent_category_over_time(Category.find_by(name: subcat)).each do |period| %>
+                        <div class="tCell"><%= display(period) %></div>
+                      <% end %>
                   </div>
+
+                <% else %> <!-- if subcat ie shopping or most categories -->
+                  
+                  <div class="tRow <%= id_format(root_cat) %> child <%= id_format(line_item) %>" id="<%= id_format(subcat) %>" >
+                    <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp <%= subcat %></div>
+                      <% leaves.each do |period| %>
+                        <div class="tCell"><%= display(period) %></div>
+                      <% end %>
+                  </div>
+
+
+                <% end %>
+
               <% end %>
+              <div class="tRow <%= id_format(root_cat) %> subcategory" id="<%= id_format(line_item) %>">
+                <div class="tCell row-label">&nbsp&nbsp <%= line_item %></div>
+                <% income_statement.parent_category_over_time(Category.find_by(name: line_item)).each do |period| %>
+                  <div class="tCell"><%= display(period) %></div>
+                <% end %>
+              </div>
+
+            <% else %> <!-- if subcat = array so line_item = something like Bonus -->
+              
+              <div class="tRow <%= id_format(root_cat) %> subcategory" id="<%= id_format(line_item) %>">
+                <div class="tCell row-label">&nbsp&nbsp <%= line_item %></div>
+                <% subcat.each do |period| %>
+                  <div class="tCell"><%= display(period) %></div>
+                <% end %>
+              </div>
+
             <% end %>
-            <div class="tRow <%= id_format(root_cat) %> subcategory" id="<%= id_format(line_item) %>">
-              <div class="tCell row-label">&nbsp&nbsp <%= line_item %></div>
-              <% table_data.each do |m| %>
-              <div class="tCell"><%= display_amount(m, line_item) %></div>
-              <% end %>
-            </div>
           <% end %>
+
           <div class="tRow root <%=id_format(root_cat)%>">
             <div class="tCell row-label">Total <%= root_cat %></div>
-            <% table_data.each do |m| %>
-            <div class="tCell"><%= display_amount(m, root_cat) %></div>
-            <% end %>
+              <% income_statement.parent_category_over_time(Category.find_by(name: root_cat)).each do |period| %>
+                <div class="tCell"><%= display(period) %></div>
+              <% end %>
           </div>
         <% end %>
+
 
         <div class="tRow root net">
           <div class="tCell row-label">Net Savings</div>
           <% table_data.each do |m| %>
-          <div class="tCell"><%= display_amount(m, "Net") %></div>
+            <div class="tCell"><%= display_amount(m, "Net") %></div>
           <% end %>
         </div>
 
       </div class="tbody">
     </div>
+
+
+
 
     <% else %>
     <p>Please add an account using the link above.</p>
