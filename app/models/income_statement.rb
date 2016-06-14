@@ -1,16 +1,14 @@
 class IncomeStatement
 
   attr_accessor :user, :increment, :start_date, :end_date
+  attr_reader :time_period
 
   def initialize(user, increment, start_date, end_date=Date.today)
     @user = user
     @increment = increment
     @start_date = start_date
     @end_date = end_date
-  end
-
-  def time_period
-    TimePeriod.dynamic_period(@increment.to_s, @start_date, @end_date)
+    @time_period = TimePeriod.dynamic_period(@increment.to_s, @start_date, @end_date)
   end
 
   def day_category_sum(category, day)
@@ -22,7 +20,7 @@ class IncomeStatement
   end
 
   def category_over_time(category)
-    category_totals = time_period.map do |period|
+    category_totals = @time_period.map do |period|
       if @increment == :day
         day_category_sum(category, period)
       else
@@ -45,7 +43,7 @@ class IncomeStatement
   end
 
   def parent_category_over_time(parent)
-    parent_totals = time_period.map do |period|
+    parent_totals = @time_period.map do |period|
       parent_period_sum(parent, period)
     end
   end
@@ -62,9 +60,50 @@ class IncomeStatement
     return hash
   end
 
+  def to_sum(hash, array=[])
+    working_array = array
+    hash.each do |key,property|
+      if property.class == Array
+        working_array << property
+      elsif property.class == Hash
+        to_sum(property,working_array)
+      end
+    end
+    return working_array
+  end
+
+  def category_sums(arrayofarrays)
+    sums = []
+    @time_period.length.times do |i|
+      sums.push(0)
+    end
+    arrayofarrays.each do |array|
+      array.each_with_index do |period, index|
+        sums[index] += period
+      end
+    end
+    return sums
+  end
+
+  def parent_sum(parent_hash)
+    category_sums(to_sum(parent_hash))
+  end
+
+  def generate_net(table_hash)
+    sums = []
+    @time_period.length.times do |i|
+      sums.push(0)
+    end
+    expenses = parent_sum(table_hash["Expenses"])
+    income = parent_sum(table_hash["Income"])
+    sums.each_with_index do |period, idx|
+      sums[idx] = expenses[idx] + income[idx]
+    end
+  end
+
   def generate
     array_range = []
-    time_period.each do |period|
+    @time_period.each do |period|
       category_totals = {}
       category_totals[period.id.to_s] = {}
       @user.categories.uniq.each do |category|
