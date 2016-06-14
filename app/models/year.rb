@@ -3,7 +3,7 @@ class Year < ActiveRecord::Base
   has_many :months
   has_many :weeks
   has_many :days
-  has_many :transactions, through: :days
+  has_many :transactions
 
   def self.generate_year(year)
     date1 = Date.new(year, 1, 1)

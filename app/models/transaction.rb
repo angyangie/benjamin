@@ -4,9 +4,11 @@ class Transaction < ActiveRecord::Base
   belongs_to :category
   delegate :user, :to => :account
   belongs_to :day
-  delegate :year, :to => :day
-  delegate :month, :to => :day
-  delegate :week, :to => :day
+  belongs_to :week
+  belongs_to :month
+  belongs_to :year
+
+  after_initialize :set_week, :set_month, :set_year
 
   def self.create_accounts(plaid_user_accounts, public_token, user_id)
     plaid_user_accounts.each do |acct|
@@ -176,4 +178,20 @@ class Transaction < ActiveRecord::Base
       end
     end
   end
+
+  def set_week
+    self.week = self.day.week
+    save
+  end
+
+  def set_month
+    self.month = self.day.month
+    save
+  end
+
+  def set_year
+    self.year = self.day.year
+    save
+  end
+
 end

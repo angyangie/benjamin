@@ -1,22 +1,25 @@
 // alert("start")
 var data = []
 var format = d3.time.format("%Y-%m")
+var format2 = d3.time.format("%m%Y")
 var abbrevMonthFormat = d3.time.format("%b")
+<% income_statement = IncomeStatement.new(@user, @increment, @start_date, @end_date) %>
 
-<% ytd_data = IncomeStatement.year_to_date(@user.id) %>
-<% budget_data = IncomeStatement.budget(@user.id) %>
-<% ltm_data = IncomeStatement.last_twelve_months(@user.id) %>
 
-<% table_data = ytd_data.values.first + budget_data.values.first %>
-<% table_data.each_with_index do |hash, idx| %>
-  var line_hash = {}
-  <% hash_obj = OpenStruct.new(hash[idx + 1]) %>
-  line_hash["date"] = format.parse("2016-<%= idx + 1 %>")
-  line_hash["exp"] = Math.abs(<%= hash_obj.Expenses %>)
-  line_hash["inc"] = <%= hash_obj.Income %>
-  data.push(line_hash)
+// ---rebuilding-----
+<% expenses_array = income_statement.parent_category_over_time(Category.find_by(name: "Expenses")) %>
+<% income_array = income_statement.parent_category_over_time(Category.find_by(name: "Income")) %>
+<% if income_statement.increment == :month %>
+  <% income_statement.time_period.each_with_index do |period, idx| %>
+    var line_hash = {}
+    line_hash["date"] = format2.parse("<%= period.month %>")
+    line_hash["exp"] = Math.abs(<%= expenses_array[idx] %>)
+    line_hash["inc"] = <%= income_array[idx] %>
+    data.push(line_hash)
+    console.log(line_hash)
+  <% end %>
 <% end %>
-
+console.log(data)
 
 $(function() {
   var margin = {top: 20, right: 20, bottom: 30, left: 60},
@@ -61,6 +64,9 @@ $(function() {
       .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d.inc); });
 
+  if (d3.selectAll('#line-graph svg')[0].length != 0) {
+    d3.select('#line-graph svg').remove()
+  }
   var svg = d3.select("#line-graph").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)

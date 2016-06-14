@@ -102,7 +102,7 @@
                                 <%= link_to "Update All Accounts", {controller: "plaidapi", action: "update_accounts"}, method: "patch" %>
                             </div>
                             <%= link_to "Week", users_incomestatement_path(:increment => "day", :start_date => (Date.today - 1.week), :end_date => (Date.today - 1.day)), method: :post, remote: true %>
-                            <%= link_to "LTM", users_incomestatement_path(:increment => "month", :start_date => (Date.today - 1.year), :end_date => (Date.today - 1.month)), method: :post, remote: true %>
+                            <a href="#" id="ltm-link" data-remote="true" data-method="post">LTM</a>
                                 <%= render "income_statement_divs" %>
 
             <!-- Modal start -->
@@ -160,16 +160,35 @@
      -->
     <script type="javascript" src="income_statement.js"></script>
     <script>
+    function ltmCall() {
+        $('#ltm-link').on('click',function() {
+            $.ajax ({
+                url: '/users/incomestatement',
+                method: 'post',
+                data: {
+                    'increment': "month",
+                    'start_date': "<%= (Date.today - 1.year).to_s %>",
+                    'end_date': "<%= (Date.today - 1.month) %>"
+                }
+            })
+            $.ajax({
+                url: '/users/linegraph',
+                method: 'post',
+                data: {
+                    'increment': "month",
+                    'start_date': "<%= (Date.today - 1.year).to_s %>",
+                    'end_date': "<%= (Date.today - 1.month) %>"
+                }
+            })
+        })
+    }
     $(function(){
-        $.ajax ({
-             url: '/users/linegraph',
-             method: 'post'
-           }).done(console.log("done"))
         $.ajax ({
              url: '/users/piechart',
              method: 'post',
              data: { 'month' : <%= Date.today.month %> },
            })
+        ltmCall()
     })
     </script>
 </body>

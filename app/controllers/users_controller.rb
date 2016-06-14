@@ -57,6 +57,9 @@ skip_before_action :verify_authenticity_token, only: [:linegraph, :piechart, :in
 
   def linegraph
     @user = User.find(session[:user_id])
+    @start_date = Date.parse(params["start_date"])
+    @end_date = Date.parse(params["end_date"])
+    @increment = params["increment"].to_sym
     respond_to do |format|
       format.js
     end
@@ -71,7 +74,7 @@ skip_before_action :verify_authenticity_token, only: [:linegraph, :piechart, :in
   end
 
   def incomestatement
-    @increment = params[:increment]
+    @increment = params[:increment].to_sym
     @start_date = Date.parse(params[:start_date])
     @end_date = Date.parse(params[:end_date])
     @user = User.find(session[:user_id])

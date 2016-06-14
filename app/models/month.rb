@@ -2,7 +2,7 @@ class Month < ActiveRecord::Base
   self.primary_key = 'month'
   belongs_to :year
   has_many :days
-  has_many :transactions, through: :days
+  has_many :transactions
 
   after_initialize :set_year
 

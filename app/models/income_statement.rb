@@ -15,17 +15,13 @@ class IncomeStatement
     @user.transactions.where({day_id: day.id, category: category}).sum(:amount)*-1
   end
 
-  def category_sum(category, period)
-    @user.transactions.joins(day: @increment).where({"days.#{@increment.to_s}_id": period.id, category: category}).sum(:amount)*-1
+  def category_sum(categ, period)
+    @user.transactions.where({@increment => period, category: categ}).sum(:amount)*-1
   end
 
   def category_over_time(category)
     category_totals = @time_period.map do |period|
-      if @increment == :day
-        day_category_sum(category, period)
-      else
-        category_sum(category, period)
-      end
+      category_sum(category, period)
     end
     return category_totals
   end
@@ -33,11 +29,7 @@ class IncomeStatement
   def parent_period_sum(parent, period)
     total = 0
     parent.leaves.each do |leaf|
-      if @increment == :day
-        total += day_category_sum(leaf, period)
-      else
-        total += category_sum(leaf, period)
-      end
+      total += category_sum(leaf, period)
     end
     return total
   end

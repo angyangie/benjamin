@@ -1,68 +1,92 @@
-alert("start")
-<% current_period = TimePeriod.dynamic_period(@increment, @start_date, @end_date) %>
-<% new_statement = IncomeStatement.generate(@user, current_period) %>
+// alert("start")
+<% income_statement = IncomeStatement.new(@user, @increment, @start_date, @end_date) %>
 
 $('div.table').html('<div class="tHead">\
         <div class="tRow">\
           <div class="tCell tHeader row-label"></div>\
 \
-          <% current_period.each do |increment| %>\
-          <div class="tCell tHeader month">\
-            <% if @increment == "day" %>\
-              <%= increment.date.strftime('%a') %>\
-            <% elsif @increment == "month" %>\
-              <%= increment.days.first.date.strftime('%b') %>\
+          <% income_statement.time_period.each do |period| %>\
+            <% if income_statement.increment == :month %>\
+              <div class="tCell tHeader month"><%= Date.strptime(period.month.slice(0..1),'%m').strftime('%b') %></div>\
+            <% elsif income_statement.increment == :day %>\
+              <div class="tCell tHeader day"><%= period.date.strftime('%a') %></div>\
             <% end %>\
-          </div>\
           <% end %>\
         </div>\
       </div>\
-\
       <div class="tBody">\
 \
-        <% table_hash = Category.table_hash %>\
+        <% table_hash = income_statement.generate_table_hash %>\
 \
         <% table_hash.each do |root_cat, line_item| %>\
+\
           <% line_item.each do |line_item, subcat| %>\
-            <% if !subcat.empty? %>\
-              <% subcat.each do |subcat, children| %>\
-                <% if !children.empty? %>\
-                  <% children.each do |leaf| %>\
-                    <div class="tRow expenses leaves food" id="<%= id_format(leaf) %>">\
-                      <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <%= leaf %></div>\
-                      <% new_statement.each do |m| %>\
-                      <div class="tCell"><%= display_amount(m, leaf) %></div>\
+            <% if !subcat.kind_of?(Array) %>\
+\
+              <% subcat.each do |subcat, leaves| %>\
+                <% if !leaves.kind_of?(Array) %> <!-- if subcat = total food -->\
+                  <% leaves.each do |subfood, values| %>\
+                    <div class="tRow expenses leaves food" id="<%= id_format(subfood) %>">\
+                      <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <%= subfood %></div>\
+                      <% values.each do |period| %>\
+                        <div class="tCell"><%= display(period) %></div>\
                       <% end %>\
                     </div>\
+\
                   <% end %>\
-                <% end %>\
-                  <div class="tRow <%= id_format(root_cat) %> child <%= id_format(line_item) %>" id="<%= id_format(subcat) %>">\
+\
+                  <div class="tRow <%= id_format(root_cat) %> child <%= id_format(line_item) %>" id="<%= id_format(subcat) %>" >\
                     <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp <%= subcat %></div>\
-                    <% new_statement.each do |m| %>\
-                    <div class="tCell"><%= display_amount(m, subcat) %></div>\
-                    <% end %>\
+                      <% income_statement.parent_sum(table_hash[root_cat][line_item][subcat]).each do |period| %>\
+                        <div class="tCell"><%= display(period) %></div>\
+                      <% end %>\
                   </div>\
+\
+                <% else %> <!-- if subcat ie shopping or most categories -->\
+                  \
+                  <div class="tRow <%= id_format(root_cat) %> child <%= id_format(line_item) %>" id="<%= id_format(subcat) %>" >\
+                    <div class="tCell row-label">&nbsp&nbsp&nbsp&nbsp <%= subcat %></div>\
+                      <% leaves.each do |period| %>\
+                        <div class="tCell"><%= display(period) %></div>\
+                      <% end %>\
+                  </div>\
+\
+\
+                <% end %>\
+\
               <% end %>\
+              <div class="tRow <%= id_format(root_cat) %> subcategory" id="<%= id_format(line_item) %>">\
+                <div class="tCell row-label">&nbsp&nbsp <%= line_item %></div>\
+                <% income_statement.parent_sum(table_hash[root_cat][line_item]).each do |period| %>\
+                  <div class="tCell"><%= display(period) %></div>\
+                <% end %>\
+              </div>\
+\
+            <% else %> <!-- if subcat = array so line_item = something like Bonus -->\
+              \
+              <div class="tRow <%= id_format(root_cat) %> subcategory" id="<%= id_format(line_item) %>">\
+                <div class="tCell row-label">&nbsp&nbsp <%= line_item %></div>\
+                <% subcat.each do |period| %>\
+                  <div class="tCell"><%= display(period) %></div>\
+                <% end %>\
+              </div>\
+\
             <% end %>\
-            <div class="tRow <%= id_format(root_cat) %> subcategory" id="<%= id_format(line_item) %>">\
-              <div class="tCell row-label">&nbsp&nbsp <%= line_item %></div>\
-              <% new_statement.each do |m| %>\
-              <div class="tCell"><%= display_amount(m, line_item) %></div>\
-              <% end %>\
-            </div>\
           <% end %>\
+\
           <div class="tRow root <%=id_format(root_cat)%>">\
             <div class="tCell row-label">Total <%= root_cat %></div>\
-            <% new_statement.each do |m| %>\
-            <div class="tCell"><%= display_amount(m, root_cat) %></div>\
-            <% end %>\
+              <% income_statement.parent_sum(table_hash[root_cat]).each do |period| %>\
+                <div class="tCell"><%= display(period) %></div>\
+              <% end %>\
           </div>\
         <% end %>\
 \
+\
         <div class="tRow root net">\
           <div class="tCell row-label">Net Savings</div>\
-          <% new_statement.each do |m| %>\
-          <div class="tCell"><%= display_amount(m, "Net") %></div>\
+          <% income_statement.generate_net(table_hash).each do |m| %>\
+            <div class="tCell"><%= display(m) %></div>\
           <% end %>\
         </div>\
 \
