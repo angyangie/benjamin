@@ -4,26 +4,3 @@
 body {
   font: 11px sans-serif;
 }
-
-.axis path,
-.axis line {
-  fill: none !important;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-
-.line1 {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 2px;
-}
-
-.line2 {
-  fill: none;
-  stroke: red;
-  stroke-width: 2px;
-}

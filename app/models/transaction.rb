@@ -43,7 +43,6 @@ class Transaction < ActiveRecord::Base
   def self.create_transactions(plaid_user_transactions)
     plaid_user_transactions.each do |transaction|
       newtrans = Transaction.find_by(plaid_trans_id: transaction.id)
-
       vendor_address = transaction.location["address"]
       vendor_city = transaction.location["city"]
       vendor_state = transaction.location["state"]
@@ -134,7 +133,6 @@ class Transaction < ActiveRecord::Base
           user_id: public_token.user.id,
           public_token_id: public_token.id
           )
-
       end
     end
   end

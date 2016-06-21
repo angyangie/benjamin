@@ -5,9 +5,8 @@ skip_before_action :verify_authenticity_token, only: [:linegraph, :piechart]
   def new
     @user = User.new
   end
-
-  def index
-    @user = User.find(params[:id])
+  
+  def show
   end
 
   def create
@@ -41,10 +40,6 @@ skip_before_action :verify_authenticity_token, only: [:linegraph, :piechart]
         else
             redirect_to @user
         end
-  end
-
-  def show
-    @user = User.find(session[:user_id])
   end
 
   def piechart

@@ -20,7 +20,7 @@ var abbrevMonthFormat = d3.time.format("%b")
 
 $(function() {
   var margin = {top: 20, right: 20, bottom: 30, left: 60},
-      width = 720 - margin.left - margin.right,
+      width = $('#line-graph').width() - margin.left - margin.right,
       height = 360 - margin.top - margin.bottom;
 
   function make_x_axis() {
@@ -29,6 +29,7 @@ $(function() {
         .orient('bottom')
         .ticks(data.length)
   }
+
   function make_y_axis() {
     return d3.svg.axis()
         .scale(y)
@@ -64,18 +65,18 @@ $(function() {
   var svg = d3.select("#line-graph").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
-    .append("g")
+      .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     x.domain(d3.extent(data, function(d) { return d.date; }));
     y.domain([
       d3.min(data, function(d) {
         if (d.inc < d.exp){return d.inc - (.2*d.inc)} else {return d.exp - (.2*d.exp)}
-    }),
+      }),
       d3.max(data, function(d) {
         if (d.inc > d.exp){return d.inc + (.2*d.inc)} else {return d.exp + (.2*d.exp)}
-    })]);
-
+      })
+    ]);
 
     svg.append("g")
         .attr("class", "x axis")
@@ -85,12 +86,7 @@ $(function() {
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis)
-      .append("text")
-        // .attr("transform", "rotate(-90)")
-        .attr("dy", "1em")
-        .attr("dx", 20)
-        // .style("text-anchor", "end")
-        .text("Dollars ($)");
+        .append("text");
 
     svg.append('g')
         .attr('class', 'grid')
@@ -107,4 +103,5 @@ $(function() {
         .datum(data)
         .attr("class", "expenseLine")
         .attr("d", expLine);
-      })
+      
+})

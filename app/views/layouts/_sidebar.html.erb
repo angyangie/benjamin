@@ -7,7 +7,7 @@
         </center>
 
         <li class="nav-dropdown">
-           <%= link_to user_accounts_path(@user) do %>
+           <%= link_to new_user_account_path(@user) do %>
            <i class="fa fa-usd"></i> Add an account!
            <% end %>
         </li>
@@ -19,7 +19,7 @@
         </li>
 
         <li class="nav-dropdown">
-            <%= link_to edit_path(@user) do %>
+            <%= link_to edit_user_path(@user) do %>
             <i class="fa fa-table"></i> Profile
             <% end %>
         </li>

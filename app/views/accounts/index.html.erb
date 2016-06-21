@@ -1,39 +1,5 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Lemmen</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-</head>
-
-<body class="off-canvas">
-
-   <%= render template: "layouts/_header" %>
-   <%= render template: "layouts/_sidebar" %>
-
-   <!--main content start-->
-   <section class="main-content-wrapper">
-     <section id="main-content">
-         <%= render template: "layouts/_tiles_top" %>
-
-
-   <div class="row">
-   <div class="col-md-4"></div>
-   <div class="col-md-4">
-         <h3>See all your accounts in one place </h3><br>
-         <h4>Search for your bank, credit cards or investments:</h4>
-         <br><br>
-         <%= plaid_link(name:@user.email, action:'add_account', data: {longtail: true})%>
-   </div>
-   </div>
-
-     </section>
-   </section>
-  </body>
+<ul>
+<% @user.accounts.each do |a| %>
+<li><%= a.name %></li>
+<% end %>
+</ul>
