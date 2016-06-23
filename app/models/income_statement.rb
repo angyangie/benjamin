@@ -8,7 +8,7 @@ class IncomeStatement < ActiveRecord::Base
       category_totals = {}
       category_totals[month.first.month] = {}
       @user.categories.uniq.each do |c| 
-        t = c.transactions.where(date: month.first..month.last).sum(:amount)*-1
+        t = @user.transactions.where({category: c, date: month.first..month.last}).sum(:amount)*-1
         category_totals[month.first.month][c.name] = t
         
         c.ancestors.each do |a|
@@ -66,7 +66,7 @@ class IncomeStatement < ActiveRecord::Base
       category_totals = {}
       category_totals[month.first.month] = {}
       @user.categories.uniq.each do |c| 
-        t = c.transactions.where(date: month.first..month.last).sum(:amount)*-1
+        t = @user.transactions.where({category: c, date: month.first..month.last}).sum(:amount)*-1
         category_totals[month.first.month][c.name] = t
         
         c.ancestors.each do |a|
