@@ -1,0 +1,24 @@
+<body class="off-canvas">
+
+   <%= render template: "layouts/_header" %>
+   <%= render template: "layouts/_sidebar" %>
+
+   <!--main content start-->
+   <section class="main-content-wrapper">
+     <section id="main-content">
+         <%= render template: "layouts/_tiles_top" %>
+
+
+   <div class="row">
+   <div class="col-md-4"></div>
+   <div class="col-md-4">
+         <h3>See all your accounts in one place </h3><br>
+         <h4>Search for your bank, credit cards or investments:</h4>
+         <br><br>
+         <%= plaid_link(name:@user.email, action: user_accounts_path(@user), data: {longtail: true})%>
+   </div>
+   </div>
+
+     </section>
+   </section>
+  </body>

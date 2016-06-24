@@ -1,7 +1,8 @@
 <header id="header">
             <!--logo start-->
             <div class="brand">
-            <span><%= link_to "Lemmen", user_path(@user), class: "logo" %></span>
+                <% @user = User.find(session[:user_id])%>
+                <span><%= link_to "Lemmen", user_path(@user), class: "logo" %></span>
             </div>
             <!--logo end-->
 
@@ -24,7 +25,7 @@
                     </a>
                         <ul class="dropdown-menu animated fadeInDown">
                             <li>
-                            <%= link_to edit_path(@user)  do %>
+                            <%= link_to edit_user_path(@user)  do %>
                                 <i class="fa fa-user"></i>  Profile
                             <% end %>
                             </li>
