@@ -12,7 +12,7 @@ class AccountsController < ApplicationController
     
     # Database parsing & redirect
     @user = current_user
-    Account.create_accounts(plaid_user.accounts, public_token, @user.id)
+    Transaction.create_accounts(plaid_user.accounts, public_token, @user.id)
     Transaction.create_transactions(plaid_user.transactions)
     redirect_to @user
   end
@@ -22,7 +22,7 @@ class AccountsController < ApplicationController
       if exchange_token_response = Argyle.plaid_client.exchange_token(t.token)
         updated_response = HTTParty.post('https://tartan.plaid.com/connect/get', :body => {"client_id" => ENV["CLIENT_ID"], "secret" => ENV["SECRET"], "access_token" => exchange_token_response.access_token})
         user_obj = Hashie::Mash.new(updated_response)
-        Account.update_accounts(user_obj.accounts, t)
+        Transaction.update_accounts(user_obj.accounts, t)
         Transaction.update_transactions(user_obj.transactions, @user)
       end
     end
