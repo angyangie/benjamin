@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :transactions, only: [:index, :show, :edit, :update]
     resources :accounts
     resources :budgets, except: [:index]
+    resources :goals
   end
   
   # Clean up on these next... 

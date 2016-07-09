@@ -24,11 +24,19 @@
             <% end %>
         </li>
 
+       <li class="nav-dropdown">
+           <%= link_to goals_path(@user) do %>
+           <i class="fa fa-usd"></i> Goals
+           <% end %>
+        </li>
+
         <li class="nav-dropdown">
            <%= link_to user_transactions_path(@user) do %>
            <i class="fa fa-usd"></i> Transactions
            <% end %>
         </li>
+
+
     </ul>
 </nav>
 <!--sidebar left end-->

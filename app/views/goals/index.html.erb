@@ -1,0 +1,46 @@
+<body class="off-canvas">
+
+  <%= render template: "layouts/_header" %>
+  <%= render template: "layouts/_sidebar" %>
+  
+  <!--main content start-->
+  <section class="main-content-wrapper">
+    <section id="main-content">
+      <%= render template: "layouts/_tiles_top" %>
+      
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#goalModel">
+                + Add a goal
+      </button>
+
+      <div class="modal fade" id="goalModel" tabindex="-1" role="dialog" aria-labelledby="budetModelLabel">
+  
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-budget" id="add-budget">Budget</h4>
+        <p>Add a goal and select a category</p>
+      </div>
+      <div class="modal-body">
+        <%= form_for [@user, Goal.new] do |f| %>
+
+         <%= f.label :product_url %>
+        <%= f.text_field :product_url, placeholder: 'product to purchase' %>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= f.submit "Save Goal", class: 'btn btn-success' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--       <#% render 'goal_modal' %>
+ -->
+
+    </section>
+  </section>
+</body>
