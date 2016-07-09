@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :transactions, through: :accounts
   has_many :categories, through: :transactions
   has_many :budgets
+  has_many :goals
 
   def total_debt
     if accounts.nil?
@@ -58,5 +59,5 @@ class User < ActiveRecord::Base
       transactions.where(date: Date.today.beginning_of_month..Date.today.end_of_month).sum(:amount)
     end
   end
-  
+
 end
