@@ -2,15 +2,21 @@
 <html>
 <head>
 </head>
-<body >
+<body>
+  <style>
+    #mainlogo {
+      width: 350px
+    }
+  </style>
 
 
     <div class="text-center">
-      <br><br><br><br><br><br><br><br><br><br>
-      <font size="7">LEMMEN</font><br><br>
-      <h4><i>Connecting the dots on your personal finances</h4><br><br><br><br>
+      <br><br><br><br><br>
 
-      <%= link_to "Sign up", signup_path, class: "btn2 btn-primary" %><br><br><br><br>
+      <%= image_tag 'Benjamin-Logo-no-pad.png', id: "mainlogo" %>
+      <h4><i>It's all about the Benjamins</h4><br>
+
+      <%= link_to "Sign up", signup_path, class: "btn2 btn-primary" %><br><br><br>
       <%= link_to "Log in", login_path, class: "btn2 btn-primary" %><br>
 
     </div>
