@@ -786,6 +786,8 @@ label.valid {
   padding: 0 0 0 10px;
   position: relative;
   background: #ffffff no-repeat 25px 26px;
+  margin-top: 10px;
+  padding-right: 13px;
 }
 #header .logo {
   color: #fff;

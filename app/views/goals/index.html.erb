@@ -62,15 +62,16 @@
 
   <% if @user.goals.first %>
 <br><br>
-<div class="container-fluid" id="container">
+<div class="container-fluid" id="container" style="padding-left: 80px">
  <div class="col-md-4" id="watch">
    <%= image_tag "watch.png", class: "img-thumbnail", width: "200", height: "200"%>
  </div>
- <div class="col-md-2">
+ <div class="col-md-2" style="width: 130px; padding: 10px; border: 2px solid black">
    <h1 id="daysleft">233</h1>
    <h1>Days</h1>
  </div>
 </div>
+<div style="padding-left: 80px">
 <div>
  <h2>What can you do without?</h2>
 </div>
@@ -87,6 +88,7 @@
  <div>
    <%= check_box_tag "groceries", id: "groceries" %> Groceries: $217 per week
  </div>
+</div>
 </div>
 <% end %>
 
