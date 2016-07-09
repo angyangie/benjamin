@@ -758,13 +758,13 @@ label.valid {
   min-height: 80px;
   padding: 0 0 0 10px;
   position: relative;
-  background: #1abc9c url('../img/logo.png') no-repeat 25px 26px;
+  background: #99ccff url('../img/logo.png') no-repeat 25px 26px;
 }
 #header .logo {
-  color: #fff;
+  color: #99CCFF;
   font-size: 1.7em;
   text-transform: uppercase;
-  padding: 23px 0 0 57px;
+  padding: 0px 0 0 0px;
   display: inline-block;
 }
 #header .logo span {
@@ -774,7 +774,7 @@ label.valid {
 #header .toggle-navigation button:active,
 #header button#toggle-mail:hover,
 #header button#toggle-mail:active {
-  background: #1abc9c;
+  background: #99CCFF;
 }
 #header .toggle-navigation button:hover i,
 #header button#toggle-mail:hover i {

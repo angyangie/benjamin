@@ -1,4 +1,14 @@
+
 <body class="off-canvas">
+
+<style>
+#container {
+  padding-left: 0;
+}
+#watch {
+  padding-left: 0;
+}
+</style>
 
   <%= render template: "layouts/_header" %>
   <%= render template: "layouts/_sidebar" %>
@@ -12,35 +22,124 @@
                 + Add a goal
       </button>
 
+      <a id="simbtn" class="btn btn-default">Simulate</a>
+
       <div class="modal fade" id="goalModel" tabindex="-1" role="dialog" aria-labelledby="budetModelLabel">
   
 
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      
+
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-budget" id="add-budget">Budget</h4>
-        <p>Add a goal and select a category</p>
+        <p>What would you like to purchase?</p>
       </div>
       <div class="modal-body">
         <%= form_for [@user, Goal.new] do |f| %>
 
-         <%= f.label :product_url %>
-        <%= f.text_field :product_url, placeholder: 'product to purchase' %>
+        <label>Product Search</label>
+        <%= f.text_field :name, placeholder: 'product to purchase' %>
+
+        <button id="search-btn" type="button" class="btn btn-success"></span>Search</button>
 
       </div>
+
+      <div id="watch-picture" >
+        <%= image_tag "Amazon.png" %>
+      </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <%= f.submit "Save Goal", class: 'btn btn-success' %>
+        <%= f.submit "Save Goal", class: 'btn btn-success', id: 'goal_submit' %>
         <% end %>
       </div>
+
     </div>
   </div>
 </div>
+
+  <% if @user.goals.first %>
+<br><br>
+<div class="container-fluid" id="container">
+ <div class="col-md-4" id="watch">
+   <%= image_tag "watch.png", class: "img-thumbnail", width: "200", height: "200"%>
+ </div>
+ <div class="col-md-2">
+   <h1 id="daysleft">233</h1>
+   <h1>Days</h1>
+ </div>
+</div>
+<div>
+ <h2>What can you do without?</h2>
+</div>
+<div class="checkboxes">
+ <div>
+   <%= check_box_tag "restaurants", id: "restaurants" %> Restaurants: $12 per week
+ </div>
+ <div>
+   <%= check_box_tag "coffee", id: "coffee" %> Coffee Shops: $12 per week
+ </div>
+ <div>
+   <%= check_box_tag "laundry", id: "laundry" %> Laundry: $9 per week
+ </div>
+ <div>
+   <%= check_box_tag "groceries", id: "groceries" %> Groceries: $217 per week
+ </div>
+</div>
+<% end %>
+
+
+
+
 
 <!--       <#% render 'goal_modal' %>
  -->
 
     </section>
   </section>
+  <script>
+  $(function(){
+    $("#watch-picture").hide();
+    $("#search-btn").bind('click', function(evt){
+      evt.preventDefault();
+      $("#watch-picture").show();
+    })
+  })
+  </script>
+
+<script>
+  $(function(){
+    $("#restaurants").change(function(){
+      if(this.checked) {
+        $('#daysleft').html("175")
+      } else {
+        $('#daysleft').html("233")
+      }
+    })
+    $("#coffee").change(function(){
+      if(this.checked) {
+        $('#daysleft').html("87.5")
+      } else {
+        $('#daysleft').html("175")
+      }
+    })
+    var startTimer = function() {
+      setTimeout(function(){
+        $("#daysleft").html("88.5")
+        $.post("https://red.api.nimbleparse.com/transaction", function( data ) {
+          setTimeout(function(){
+            $("#daysleft").html("76")
+            $.post("https://red.api.nimbleparse.com/motivate");
+          }, 1500);
+        });
+      }, 1500);
+    }
+    $("#simbtn").on('click', function(evt){
+      startTimer();
+    })
+  })
+  </script>
+
 </body>

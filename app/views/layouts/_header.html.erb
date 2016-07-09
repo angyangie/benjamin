@@ -2,7 +2,7 @@
             <!--logo start-->
             <div class="brand">
                 <% @user = User.find(session[:user_id])%>
-                <span><%= link_to "Lemmen", user_path(@user), class: "logo" %></span>
+                <span><%= link_to image_tag("Benjamin-Logo-no-pad.png"), user_path(@user), class: "logo" %></span>
             </div>
             <!--logo end-->
 

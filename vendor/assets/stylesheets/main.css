@@ -20,13 +20,13 @@ a:link,
 a:visited {
   text-decoration: none;
   outline: none;
-  color: #1abc9c;
+  color: #006633;
 }
 a:hover,
 a:active {
   outline: none;
   text-decoration: none;
-  color: #16a086;
+  color: #66FF66;
 }
 
 
@@ -785,13 +785,13 @@ label.valid {
   min-height: 80px;
   padding: 0 0 0 10px;
   position: relative;
-  background: #1abc9c no-repeat 25px 26px;
+  background: #ffffff no-repeat 25px 26px;
 }
 #header .logo {
   color: #fff;
   font-size: 1.7em;
   text-transform: uppercase;
-  padding: 23px 0 0 57px;
+  padding: 0px 0 0 0px;
   display: inline-block;
 }
 #header .logo span {
@@ -1074,13 +1074,14 @@ label.valid {
   min-height: 100%;
   width: 240px;
   padding-top: 15px;
-  background: #293949;
+  background: #ffffff;
   -webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
   -o-transition: all 0.1s ease-in-out;
   -ms-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
   z-index: 999;
+  top: 168px;
 }
 .sidebar-header {
   color: #6F737E;
@@ -1145,7 +1146,7 @@ label.valid {
 .sidebar .nav-pills > li > a {
   padding: 12px 10px;
   font-size: 14px;
-  border-left: solid 4px #293949;
+  border-left: solid 4px #ffffff;
 }
 .nav > li > a:hover {
   color: #fff;
@@ -1635,19 +1636,19 @@ body.off-canvas.off-canvas-open #container {
   border-radius: 3px;
 }
 .dashboard-tile.tile-turquoise {
-  background-color: #1abc9c;
+  background-color: #66FF66;
   color: #fff;
 }
 .dashboard-tile.tile-red {
-  background-color: #e84c3d;
+  background-color: #006633;
   color: #fff;
 }
 .dashboard-tile.tile-blue {
-  background-color: #3598db;
+  background-color: #006633;
   color: #fff;
 }
 .dashboard-tile.tile-purple {
-  background-color: #9a59b5;
+  background-color: #66FF66;
   color: #fff;
 }
 .dashboard-tile .header {
