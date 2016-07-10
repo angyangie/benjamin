@@ -17,16 +17,23 @@
   <section class="main-content-wrapper">
     <section id="main-content">
       <%= render template: "layouts/_tiles_top" %>
+
+  <div class="container-fluid" id="container">
+ 
+      <div class="col-md-3 col-sm-6">
       
-      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#goalModel">
-                + Add a goal
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#goalModel">+ Add a goal
       </button>
 
       <a id="simbtn" class="btn btn-default">Simulate</a>
 
-      <div class="modal fade" id="goalModel" tabindex="-1" role="dialog" aria-labelledby="budetModelLabel">
-  
+      </div>
 
+  </div>
+
+
+<div class="modal fade" id="goalModel" tabindex="-1" role="dialog" aria-labelledby="budetModelLabel">
+  
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       
@@ -62,20 +69,23 @@
 
   <% if @user.goals.first %>
 <br><br>
-<div class="container-fluid" id="container" style="padding-left: 80px">
- <div class="col-md-4" id="watch">
-   <%= image_tag "watch.png", class: "img-thumbnail", width: "200", height: "200"%>
+<div class="container-fluid" id="container">
+ 
+ <div class="col-md-3 col-sm-6" id="watch">
+   <%= image_tag "watch.png", class: "img-thumbnail", width: "270", height: "143"%>
  </div>
- <div class="col-md-2" style="width: 130px; padding: 10px; border: 2px solid black">
-   <h1 id="daysleft">233</h1>
-   <h1>Days</h1>
- </div>
-</div>
-<div style="padding-left: 80px">
+
+ <div class="col-md-3 col-sm-6" width: "270", height: "143" >
+   <h1 id="daysleft" style="font-size: 150px; margin-bottom: 0px; line-height: 100%">233</h1>
+   <h1 style="margin-top: 0px; margin-bottom: 0px; text-align: center">Days Left</h1>
+  </div>
+
+<div class="col-md-3 col-sm-6" >
 <div>
  <h2>What can you do without?</h2>
 </div>
-<div class="checkboxes">
+
+<div>
  <div>
    <%= check_box_tag "restaurants", id: "restaurants" %> Restaurants: $12 per week
  </div>
@@ -90,15 +100,13 @@
  </div>
 </div>
 </div>
+
+
+
+</div>
+
+
 <% end %>
-
-
-
-
-
-<!--       <#% render 'goal_modal' %>
- -->
-
     </section>
   </section>
   <script>
@@ -115,16 +123,16 @@
   $(function(){
     $("#restaurants").change(function(){
       if(this.checked) {
-        $('#daysleft').html("175")
+        $('#daysleft').html("175 Days")
       } else {
-        $('#daysleft').html("233")
+        $('#daysleft').html("233 Days")
       }
     })
     $("#coffee").change(function(){
       if(this.checked) {
-        $('#daysleft').html("87.5")
+        $('#daysleft').html("87.5 Days")
       } else {
-        $('#daysleft').html("175")
+        $('#daysleft').html("175 Days")
       }
     })
     var startTimer = function() {
