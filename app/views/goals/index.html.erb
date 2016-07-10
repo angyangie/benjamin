@@ -185,17 +185,17 @@
 
   <%= render template: "layouts/_header" %>
   <%= render template: "layouts/_sidebar" %>
-  
+
   <!--main content start-->
   <section class="main-content-wrapper">
     <section id="main-content">
       <%= render template: "layouts/_tiles_top" %>
 
   <div class="container-fluid col-md-3 col-sm-6" id="container" style="padding-bottom: 15px; padding-top: 5px">
- 
+
       <a id="simbtn" class="btn btn-default">Simulate</a>
 
-      
+
   </div>
 
 
@@ -239,26 +239,35 @@
 <% end %>
     </section>
   </section>
- 
+
 
 <script>
   $(function(){
     $("#goal-container").hide();
     $("#circularG").hide();
     $("#restaurants").change(function(){
-      if(this.checked) {
+      if(this.checked && document.getElementById('coffee').checked) {
+        $('#daysleft').html("87")
+      } else if(this.checked){
+        $('#daysleft').html("175")
+      } else if (document.getElementById('coffee').checked){
         $('#daysleft').html("175")
       } else {
         $('#daysleft').html("233")
       }
     })
     $("#coffee").change(function(){
-      if(this.checked) {
+      if(this.checked && document.getElementById('restaurants').checked){
         $('#daysleft').html("87")
-      } else {
+      } else if(this.checked){
         $('#daysleft').html("175")
+      } else if(document.getElementById('restaurants').checked) {
+        $('#daysleft').html("175")
+      } else {
+        $('#daysleft').html("233")
       }
     })
+
     var startTimer = function() {
       setTimeout(function(){
         $("#daysleft").html("88")
