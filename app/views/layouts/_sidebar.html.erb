@@ -12,6 +12,12 @@
            <% end %>
         </li>
 
+        <li class="nav-dropdown" id="new-goal">
+            <%= link_to new_user_account_path(@user) do %>
+            <i class="fa fa-usd"></i>Add a goal
+            <% end %>
+        </li>
+
         <li class="nav-dropdown">
             <%= link_to user_path(@user) do %>
             <i class="fa fa-television"></i>Dashboard
@@ -39,4 +45,59 @@
 
     </ul>
 </nav>
+
+<div class="modal fade" id="goalModel" tabindex="-1" role="dialog" aria-labelledby="budetModelLabel">
+  
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-budget" id="add-budget">Budget</h4>
+        <p>What would you like to purchase?</p>
+      </div>
+      <div class="modal-body">
+        <%= form_for [@user, Goal.new] do |f| %>
+
+        <label>Product Search</label>
+        <%= f.text_field :name, placeholder: 'product to purchase' %>
+
+        <button id="search-btn" type="button" class="btn btn-success"></span>Search</button>
+
+      </div>
+
+      <div id="watch-picture" style="padding:0px;" >
+        <%= image_tag "Amazon.png" %>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= f.submit "Save Goal", class: 'btn btn-success', id: 'goal_submit' %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+  $("#new-goal").on("click", function(e) {
+    e.preventDefault()
+
+    $('#goalModel').modal('toggle')
+  })
+
+</script>
+
+   <script>
+  $(function(){
+    $("#watch-picture").hide();
+    $("#search-btn").bind('click', function(evt){
+      evt.preventDefault();
+      $("#watch-picture").show();
+    })
+  })
+  </script>
 <!--sidebar left end-->

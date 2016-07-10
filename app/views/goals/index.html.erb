@@ -2,11 +2,184 @@
 <body class="off-canvas">
 
 <style>
-#container {
+.container-fluid {
   padding-left: 0;
 }
 #watch {
   padding-left: 0;
+}
+
+#circularG{
+    position:absolute;
+    left:50%;
+    top:35%;
+    width:58px;
+    height:58px;
+    margin: auto;
+}
+
+.circularG{
+    position:absolute;
+    background-color:rgb(0,0,0);
+    width:14px;
+    height:14px;
+    border-radius:9px;
+        -o-border-radius:9px;
+        -ms-border-radius:9px;
+        -webkit-border-radius:9px;
+        -moz-border-radius:9px;
+    animation-name:bounce_circularG;
+        -o-animation-name:bounce_circularG;
+        -ms-animation-name:bounce_circularG;
+        -webkit-animation-name:bounce_circularG;
+        -moz-animation-name:bounce_circularG;
+    animation-duration:1.1s;
+        -o-animation-duration:1.1s;
+        -ms-animation-duration:1.1s;
+        -webkit-animation-duration:1.1s;
+        -moz-animation-duration:1.1s;
+    animation-iteration-count:infinite;
+        -o-animation-iteration-count:infinite;
+        -ms-animation-iteration-count:infinite;
+        -webkit-animation-iteration-count:infinite;
+        -moz-animation-iteration-count:infinite;
+    animation-direction:normal;
+        -o-animation-direction:normal;
+        -ms-animation-direction:normal;
+        -webkit-animation-direction:normal;
+        -moz-animation-direction:normal;
+}
+
+#circularG_1{
+    left:0;
+    top:23px;
+    animation-delay:0.41s;
+        -o-animation-delay:0.41s;
+        -ms-animation-delay:0.41s;
+        -webkit-animation-delay:0.41s;
+        -moz-animation-delay:0.41s;
+}
+
+#circularG_2{
+    left:6px;
+    top:6px;
+    animation-delay:0.55s;
+        -o-animation-delay:0.55s;
+        -ms-animation-delay:0.55s;
+        -webkit-animation-delay:0.55s;
+        -moz-animation-delay:0.55s;
+}
+
+#circularG_3{
+    top:0;
+    left:23px;
+    animation-delay:0.69s;
+        -o-animation-delay:0.69s;
+        -ms-animation-delay:0.69s;
+        -webkit-animation-delay:0.69s;
+        -moz-animation-delay:0.69s;
+}
+
+#circularG_4{
+    right:6px;
+    top:6px;
+    animation-delay:0.83s;
+        -o-animation-delay:0.83s;
+        -ms-animation-delay:0.83s;
+        -webkit-animation-delay:0.83s;
+        -moz-animation-delay:0.83s;
+}
+
+#circularG_5{
+    right:0;
+    top:23px;
+    animation-delay:0.97s;
+        -o-animation-delay:0.97s;
+        -ms-animation-delay:0.97s;
+        -webkit-animation-delay:0.97s;
+        -moz-animation-delay:0.97s;
+}
+
+#circularG_6{
+    right:6px;
+    bottom:6px;
+    animation-delay:1.1s;
+        -o-animation-delay:1.1s;
+        -ms-animation-delay:1.1s;
+        -webkit-animation-delay:1.1s;
+        -moz-animation-delay:1.1s;
+}
+
+#circularG_7{
+    left:23px;
+    bottom:0;
+    animation-delay:1.24s;
+        -o-animation-delay:1.24s;
+        -ms-animation-delay:1.24s;
+        -webkit-animation-delay:1.24s;
+        -moz-animation-delay:1.24s;
+}
+
+#circularG_8{
+    left:6px;
+    bottom:6px;
+    animation-delay:1.38s;
+        -o-animation-delay:1.38s;
+        -ms-animation-delay:1.38s;
+        -webkit-animation-delay:1.38s;
+        -moz-animation-delay:1.38s;
+}
+
+
+
+@keyframes bounce_circularG{
+    0%{
+        transform:scale(1);
+    }
+
+    100%{
+        transform:scale(.3);
+    }
+}
+
+@-o-keyframes bounce_circularG{
+    0%{
+        -o-transform:scale(1);
+    }
+
+    100%{
+        -o-transform:scale(.3);
+    }
+}
+
+@-ms-keyframes bounce_circularG{
+    0%{
+        -ms-transform:scale(1);
+    }
+
+    100%{
+        -ms-transform:scale(.3);
+    }
+}
+
+@-webkit-keyframes bounce_circularG{
+    0%{
+        -webkit-transform:scale(1);
+    }
+
+    100%{
+        -webkit-transform:scale(.3);
+    }
+}
+
+@-moz-keyframes bounce_circularG{
+    0%{
+        -moz-transform:scale(1);
+    }
+
+    100%{
+        -moz-transform:scale(.3);
+    }
 }
 </style>
 
@@ -18,69 +191,28 @@
     <section id="main-content">
       <%= render template: "layouts/_tiles_top" %>
 
-  <div class="container-fluid" id="container">
+  <div class="container-fluid col-md-3 col-sm-6" id="container" style="padding-bottom: 15px; padding-top: 5px">
  
-      <div class="col-md-3 col-sm-6">
-      
-      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#goalModel">+ Add a goal
-      </button>
-
       <a id="simbtn" class="btn btn-default">Simulate</a>
 
-      </div>
-
-  </div>
-
-
-<div class="modal fade" id="goalModel" tabindex="-1" role="dialog" aria-labelledby="budetModelLabel">
-  
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
       
-
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-budget" id="add-budget">Budget</h4>
-        <p>What would you like to purchase?</p>
-      </div>
-      <div class="modal-body">
-        <%= form_for [@user, Goal.new] do |f| %>
-
-        <label>Product Search</label>
-        <%= f.text_field :name, placeholder: 'product to purchase' %>
-
-        <button id="search-btn" type="button" class="btn btn-success"></span>Search</button>
-
-      </div>
-
-      <div id="watch-picture" >
-        <%= image_tag "Amazon.png" %>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <%= f.submit "Save Goal", class: 'btn btn-success', id: 'goal_submit' %>
-        <% end %>
-      </div>
-
-    </div>
   </div>
-</div>
+
+
 
   <% if @user.goals.first %>
 <br><br>
-<div class="container-fluid" id="container">
- 
+<div class="container-fluid" id="goal-container">
  <div class="col-md-3 col-sm-6" id="watch">
    <%= image_tag "watch.png", class: "img-thumbnail", width: "270", height: "143"%>
  </div>
 
- <div class="col-md-3 col-sm-6" width: "270", height: "143" >
-   <h1 id="daysleft" style="font-size: 150px; margin-bottom: 0px; line-height: 100%">233</h1>
+ <div class="col-md-3 col-sm-6" width: "300", height: "143", style:"padding: 0px" >
+   <h1 id="daysleft" style="font-size: 150px; margin-bottom: 0px; line-height: 100%; text-align: center">233</h1>
    <h1 style="margin-top: 0px; margin-bottom: 0px; text-align: center">Days Left</h1>
   </div>
 
-<div class="col-md-3 col-sm-6" >
+<div class="col-md-3 col-sm-6" style="width: 300px; margin-left: 20px" >
 <div>
  <h2>What can you do without?</h2>
 </div>
@@ -101,55 +233,73 @@
 </div>
 </div>
 
-
-
 </div>
 
 
 <% end %>
     </section>
   </section>
-  <script>
-  $(function(){
-    $("#watch-picture").hide();
-    $("#search-btn").bind('click', function(evt){
-      evt.preventDefault();
-      $("#watch-picture").show();
-    })
-  })
-  </script>
+ 
 
 <script>
   $(function(){
+    $("#goal-container").hide();
+    $("#circularG").hide();
     $("#restaurants").change(function(){
       if(this.checked) {
-        $('#daysleft').html("175 Days")
+        $('#daysleft').html("175")
       } else {
-        $('#daysleft').html("233 Days")
+        $('#daysleft').html("233")
       }
     })
     $("#coffee").change(function(){
       if(this.checked) {
-        $('#daysleft').html("87.5 Days")
+        $('#daysleft').html("87")
       } else {
-        $('#daysleft').html("175 Days")
+        $('#daysleft').html("175")
       }
     })
     var startTimer = function() {
       setTimeout(function(){
-        $("#daysleft").html("88.5")
+        $("#daysleft").html("88")
         $.post("https://red.api.nimbleparse.com/transaction", function( data ) {
           setTimeout(function(){
             $("#daysleft").html("76")
             $.post("https://red.api.nimbleparse.com/motivate");
-          }, 1500);
+          }, 3000);
         });
       }, 1500);
     }
     $("#simbtn").on('click', function(evt){
       startTimer();
     })
+
+    $("#goal_submit").on('click', function(evt){
+      evt.preventDefault()
+      $('#goalModel').modal('hide')
+      $("#circularG").show();
+      //$("#goal-container").append($("#spinner").html())
+      setTimeout(function(){
+        $("#goal-container").show()
+        $("#circularG").hide();
+      }, 3000);
+    })
   })
   </script>
+
+
+<div id="circularG">
+  <div id="circularG_1" class="circularG"></div>
+  <div id="circularG_2" class="circularG"></div>
+  <div id="circularG_3" class="circularG"></div>
+  <div id="circularG_4" class="circularG"></div>
+  <div id="circularG_5" class="circularG"></div>
+  <div id="circularG_6" class="circularG"></div>
+  <div id="circularG_7" class="circularG"></div>
+  <div id="circularG_8" class="circularG"></div>
+  <p style="padding-top:60px">Processing...</p>
+</div>
+
+
 
 </body>
